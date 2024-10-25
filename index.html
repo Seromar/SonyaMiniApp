@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniApp</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(1700deg, #8e2de2, #4a00e0);
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            text-align: left;
+            background: linear-gradient(1000deg, #8e2de2, #4a00e0);
+            position: relative;
+            background-image: url('Strelki.png'); /* Замените на ваш URL изображения */
+            background-size: cover;
+            background-position: center 20px; /* Сдвиг фона немного вниз */
+            padding: 60px;
+            border-radius: 15px;
+            
+        }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        .header img {
+            width: 200px;
+            height: 150px;
+        }
+        .header .title {
+            font-size: 25px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-top: 40px;
+            margin-left: -10px;
+        }
+        .header .title .main-text {
+            display: block;
+        }
+        .header .title .sub-text {
+            display: block;
+            text-align: center;
+            margin-left: 30px;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .button {
+            width: 45%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #f5f5dc;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-5px);
+        }
+        .buttons button:nth-child(odd) {
+            align-self: flex-start;
+        }
+        .buttons button:nth-child(even) {
+            align-self: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="Logo.png" alt="Logo">
+            <div class="title">
+                <span class="main-text">Learn English</span>
+                <span class="sub-text">   every day</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="button">Модуль 1</button>
+            <button class="button">Модуль 2</button>
+            <button class="button">Модуль 3</button>
+        </div>
+    </div>
+</body>
+</html>
