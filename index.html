@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(1700deg, #8e2de2, #4a00e0);
+            background: linear-gradient(170deg, #8e2de2, #4a00e0);
             color: #333;
         }
         .container {
@@ -22,13 +22,10 @@
             position: relative;
             background-image: url('Strelki.png'); /* Замените на ваш URL изображения */
             background-size: cover;
-            background-position: center 20px; /* Сдвиг фона немного вниз */
+            background-position: center 20px;
             padding: 100px;
             margin-top: -40px;
             padding-bottom: 100px;
-            
-
-            
         }
         .header {
             display: flex;
@@ -38,24 +35,18 @@
             color: #fff;
         }
         .header img {
-            width: 200px;
-            height: 150px;
+            width: 270px;
+            height: 200px;
+            margin-left: -80px; /* Сдвиг иконки левее */
         }
         .header .title {
-            font-size: 25px;
+            font-size: 45px;
             font-weight: bold;
-            line-height: 1.2;
-            margin-top: 40px;
-            margin-left: -10px;
-        }
-        .header .title .main-text {
-            display: block;
-        }
-        .header .title .sub-text {
-            display: block;
-            text-align: center;
+            margin-top: 35px;
+            max-width: 10500px; /* Ограничение ширины, чтобы текст не переносился */
             margin-left: 30px;
         }
+        
         .buttons {
             display: flex;
             flex-direction: column;
@@ -63,7 +54,7 @@
         }
         .button {
             width: 250px;
-            height: 50px;
+            height: 70px;
             padding: 12px;
             border: none;
             border-radius: 20px;
@@ -72,15 +63,18 @@
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s;
+            font-size: 20px;
         }
         .button:hover {
             transform: translateY(-5px);
         }
         .buttons button:nth-child(odd) {
             align-self: flex-start;
+            margin-left: -30px; /* Первая и третья кнопки левее */
         }
         .buttons button:nth-child(even) {
             align-self: flex-end;
+            margin-right: -50px; /* Вторая кнопка правее */
         }
     </style>
 </head>
@@ -88,10 +82,7 @@
     <div class="container">
         <div class="header">
             <img src="Logo.png" alt="Logo">
-            <div class="title">
-                <span class="main-text">Learn English<br>every day</span>
-               
-            </div>
+            <div class="title">Learn English</div>
         </div>
         <div class="buttons">
             <button class="button">Модуль 1</button>
@@ -100,4 +91,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
