@@ -11,21 +11,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100vw;
             height: 100vh;
+            overflow: hidden; /* Отключение прокрутки */
             background: linear-gradient(170deg, #8e2de2, #4a00e0);
             color: #333;
         }
         .container {
-            width: 150%;
+            width: 90%;
             max-width: 400px;
             text-align: left;
             position: relative;
             background-image: url('Strelki.png'); /* Замените на ваш URL изображения */
             background-size: cover;
             background-position: center 20px;
-            padding: 100px;
-            margin-top: -40px;
-            padding-bottom: 100px;
+            padding: 80px 20px;
+            border-radius: 15px;
         }
         .header {
             display: flex;
@@ -44,14 +45,14 @@
             font-size: 45px;
             font-weight: bold;
             margin-top: 35px;
-            max-width: 10500px; /* Ограничение ширины, чтобы текст не переносился */
+            max-width: 200px; /* Ограничение ширины, чтобы текст не переносился */
             margin-left: -5px;
         }
         
         .buttons {
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 30px;
         }
         .button {
             width: 200px;
