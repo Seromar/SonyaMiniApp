@@ -1,0 +1,557 @@
+<!-- modules/module3/lesson8.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 8: Cleft Sentences and Emphatic Structures (Расщепленные предложения и эмфатические структуры)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в расщепленные предложения и эмфатические структуры -->
+    <div class="section">
+        <h3>Введение в расщепленные предложения и эмфатические структуры</h3>
+        <p>Расщепленные предложения (Cleft Sentences) и эмфатические структуры (Emphatic Structures) используются для выделения определенных частей предложения, придавая им дополнительную выразительность и акцент.</p>
+    </div>
+
+    <!-- 2. Расщепленные предложения -->
+    <div class="section">
+        <h3>Расщепленные предложения</h3>
+        <p>Расщепленные предложения состоят из двух частей: вводной и основной. Они помогают сделать речь более разнообразной и подчеркнуть важные детали.</p>
+        <p><strong>Типы расщепленных предложений:</strong></p>
+        <ul>
+            <li><strong>It-cleft:</strong> Используется для выделения субъекта или объекта.</li>
+            <li><strong>What-cleft:</strong> Используется для выделения самого действия или предмета.</li>
+            <li><strong>All-cleft:</strong> Используется для выделения всей информации в предложении.</li>
+        </ul>
+        <p><strong>Примеры:</strong></p>
+        <ul>
+            <li>It was <em>John</em> who broke the window.</li>
+            <li>What I need is more time.</li>
+            <li>All we need is a miracle.</li>
+        </ul>
+    </div>
+
+    <!-- 3. Задание 1: Заполните пропуски (It-cleft) -->
+    <div class="section">
+        <h3>Задание 1: Заполните пропуски (It-cleft)</h3>
+        <p>Превратите обычные предложения в <strong>It-cleft</strong> конструкции:</p>
+        <div class="quiz-question">
+            <label>1. John wrote the article.</label>
+            <input type="text" id="ic1" placeholder="Например: It was John who wrote the article.">
+        </div>
+        <div class="quiz-question">
+            <label>2. Sarah called me last night.</label>
+            <input type="text" id="ic2" placeholder="Например: It was Sarah who called me last night.">
+        </div>
+        <button class="submit-btn" onclick="checkItCleftLesson8()">Проверить</button>
+        <div class="feedback" id="itcleftlesson8-feedback"></div>
+    </div>
+
+    <!-- 4. Задание 2: Сопоставьте предложения с типом расщепленного предложения -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте предложения с типом расщепленного предложения</h3>
+        <p>Сопоставьте обычные предложения с их расщепленными эквивалентами:</p>
+        <div class="quiz-question">
+            <label>1. I want to sleep.</label>
+            <select id="wc1">
+                <option value="">Выберите вариант</option>
+                <option value="1">What I want is to sleep.</option>
+                <option value="2">It was to sleep that I want.</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. She likes chocolate.</label>
+            <select id="wc2">
+                <option value="">Выберите вариант</option>
+                <option value="1">What she likes is chocolate.</option>
+                <option value="2">It was chocolate that she likes.</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkWhatCleftLesson8()">Проверить</button>
+        <div class="feedback" id="whatcleftlesson8-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 3: Radio Quiz (Cleft Types) -->
+    <div class="section">
+        <h3>Задание 3: Определите тип расщепленного предложения</h3>
+        <p>Выберите правильный тип расщепленного предложения:</p>
+        <div class="quiz-question">
+            <label>1. "It was yesterday that I saw her."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="r3" value="It-cleft">It-cleft</label><br>
+                <label><input type="radio" name="r3" value="What-cleft">What-cleft</label><br>
+                <label><input type="radio" name="r3" value="All-cleft">All-cleft</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. "What surprises me is your confidence."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="r4" value="It-cleft">It-cleft</label><br>
+                <label><input type="radio" name="r4" value="What-cleft">What-cleft</label><br>
+                <label><input type="radio" name="r4" value="All-cleft">All-cleft</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkRadioQuizLesson8()">Проверить</button>
+        <div class="feedback" id="radioquizlesson8-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 4: Drag & Drop (All-cleft) -->
+    <div class="section">
+        <h3>Задание 4: Соберите предложение (All-cleft)</h3>
+        <p>Соберите предложение: <em>"All she wants is a cup of coffee."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">all</div>
+            <div class="draggable" draggable="true">she</div>
+            <div class="draggable" draggable="true">wants</div>
+            <div class="draggable" draggable="true">is</div>
+            <div class="draggable" draggable="true">a</div>
+            <div class="draggable" draggable="true">cup</div>
+            <div class="draggable" draggable="true">of</div>
+            <div class="draggable" draggable="true">coffee.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-cc8"></div>
+        <button class="submit-btn" onclick="checkDragLesson8()">Проверить</button>
+        <div class="feedback" id="draglesson8-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 5: Перепишите предложения (Emphatic structures) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с эмфатическим акцентом</h3>
+        <p>Сделайте речь более выразительной, используя cleft-сентенсы и похожие структуры:</p>
+        <ol>
+            <li>
+                "I missed the train because of the traffic."
+                <br><input type="text" id="rw1" placeholder="Например: It was because of the traffic that I missed the train.">
+            </li>
+            <li>
+                "My sister fixed the computer."
+                <br><input type="text" id="rw2" placeholder="Например: It was my sister who fixed the computer.">
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkRewriteLesson8()">Проверить</button>
+        <div class="feedback" id="rewritelesson8-feedback"></div>
+    </div>
+
+    <!-- 8. Задание 6: Error Correction (Cleft Sentences) -->
+    <div class="section">
+        <h3>Задание 6: Исправьте ошибки (Cleft Sentences)</h3>
+        <p>В тексте допущены ошибки в использовании cleft-структур. Исправьте их (contenteditable):</p>
+        <p>
+            <strong>Текст:</strong><br>
+            1) It was <span contenteditable="true" class="error-input" id="e1">John that wrote the letter</span>.<br>
+            2) What I need <span contenteditable="true" class="error-input" id="e2">are more time</span>.<br>
+            3) All he wanted <span contenteditable="true" class="error-input" id="e3">were a good rest</span>.<br>
+        </p>
+        <button class="submit-btn" onclick="checkErrorLesson8()">Проверить ошибки</button>
+        <div class="feedback" id="errorlesson8-feedback"></div>
+    </div>
+
+    <!-- 9. Задание 7: Matching vocabulary (Emphasis) -->
+    <div class="section">
+        <h3>Задание 7: Сопоставьте термины с переводом</h3>
+        <p>Сопоставьте термин с корректным переводом:</p>
+        <div class="quiz-question">
+            <label>1. Ambiguity</label>
+            <select id="voc1">
+                <option value="">Выберите перевод</option>
+                <option value="1">Акцент, усиление</option>
+                <option value="2">Двусмысленность</option>
+                <option value="3">Ясность, чёткость</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. Emphasis</label>
+            <select id="voc2">
+                <option value="">Выберите перевод</option>
+                <option value="1">Двусмысленность</option>
+                <option value="2">Ясность, чёткость</option>
+                <option value="3">Акцент, усиление</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkVocabularyLesson8()">Проверить</button>
+        <div class="feedback" id="voclesson8-feedback"></div>
+    </div>
+
+    <!-- 10. Задание 8: Radio Quiz (Mixed) -->
+    <div class="section">
+        <h3>Задание 8: Смешанный тест по cleft-сентенсам</h3>
+        <p>Выберите правильный ответ:</p>
+        <div class="quiz-question">
+            <label>1. ___ I really need is a vacation.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="r5" value="What">What</label><br>
+                <label><input type="radio" name="r5" value="It">It</label><br>
+                <label><input type="radio" name="r5" value="All">All</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. "It was the teacher ___ corrected the exam papers."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="r6" value="who">who</label><br>
+                <label><input type="radio" name="r6" value="which">which</label><br>
+                <label><input type="radio" name="r6" value="what">what</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>3. "All we want ___ some peace and quiet."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="r7" value="is">is</label><br>
+                <label><input type="radio" name="r7" value="are">are</label><br>
+                <label><input type="radio" name="r7" value="was">was</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkMixedRadioLesson8()">Проверить</button>
+        <div class="feedback" id="mixedlesson8-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: It-cleft
+     ************************************************************/
+    function checkItCleftLesson8() {
+        // Примеры эталонных ответов
+        // ic1 -> "It was John who wrote the article."
+        // ic2 -> "It was Sarah who called me last night."
+
+        let correct = [
+            { 
+                id: 'ic1', 
+                structure: [
+                    "it was john who wrote the article",
+                    "it was john that wrote the article"
+                ] 
+            },
+            {
+                id: 'ic2', 
+                structure: [
+                    "it was sarah who called me last night",
+                    "it was sarah that called me last night"
+                ]
+            }
+        ];
+
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            user = user.replace(/\./g,''); // Удаляем точки
+            if (item.structure.includes(user)) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+
+        const feedback = document.getElementById('itcleftlesson8-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! It-cleft конструкции сформированы правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Исправьте или уточните формулировку.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: What-cleft matching
+     ************************************************************/
+    function checkWhatCleftLesson8() {
+        // wc1 -> 1 ("What I want is to sleep.")
+        // wc2 -> 1 ("What she likes is chocolate.")
+
+        let answers = { wc1: '1', wc2: '1' };
+        let score = 0;
+        let total = 2;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('whatcleftlesson8-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы корректно выбрали What-cleft эквиваленты.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Cleft Types)
+     ************************************************************/
+    function checkRadioQuizLesson8() {
+        // r3 -> "It-cleft"
+        // r4 -> "What-cleft"
+        // r5 -> "is"
+
+        const correct = { r3: 'It-cleft', r4: 'What-cleft', r5: 'is' };
+        let total = 3;
+        let score = 0;
+
+        // r3
+        let userAnswer3 = '';
+        document.getElementsByName('r3').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.r3) score++;
+
+        // r4
+        let userAnswer4 = '';
+        document.getElementsByName('r4').forEach(radio => {
+            if (radio.checked) userAnswer4 = radio.value;
+        });
+        if (userAnswer4 === correct.r4) score++;
+
+        // r5
+        let userAnswer5 = '';
+        document.getElementsByName('r7').forEach(radio => {
+            if (radio.checked) userAnswer5 = radio.value;
+        });
+        if (userAnswer5 === correct.r5) score++;
+
+        const feedback = document.getElementById('mixedlesson8-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Замечательно! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (All-cleft)
+     ************************************************************/
+    function checkDragLesson8() {
+        // "All she wants is a cup of coffee."
+        const words = Array.from(dropZoneCC8.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "all she wants is a cup of coffee.";
+        const feedback = document.getElementById('draglesson8-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! All-cleft предложение собрано правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Rewrite Sentences (Emphatic structures)
+     ************************************************************/
+    function checkRewriteLesson8() {
+        // rw1: "It was because of the traffic that I missed the train."
+        // rw2: "It was my sister who fixed the computer."
+
+        let user1 = document.getElementById('rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('rw2').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 2;
+
+        // Первый
+        if (user1 === "it was because of the traffic that i missed the train" ||
+            user1 === "it was because of the traffic that i missed the train.") {
+            score++;
+            document.getElementById('rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй
+        if (user2 === "it was my sister who fixed the computer" ||
+            user2 === "it was my sister that fixed the computer") {
+            score++;
+            document.getElementById('rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rw2').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('rewritelesson8-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Предложения переделаны в эмфатические структуры.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Исправлено верно: ${score} из ${total}. Попробуйте улучшить формулировку.`;
+        }
+    }
+</script>

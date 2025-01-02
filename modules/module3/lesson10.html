@@ -1,0 +1,525 @@
+<!-- modules/module3/lesson10.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 10: Inversion and Emphatic Structures (Инверсия и эмфатические конструкции)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в инверсию и эмфатические конструкции -->
+    <div class="section">
+        <h3>Введение в инверсию и эмфатические конструкции</h3>
+        <p>Инверсия и эмфатические конструкции используются для усиления акцента на определенных частях предложения, делая речь более выразительной и разнообразной.</p>
+    </div>
+
+    <!-- 2. Инверсия (Inversion) -->
+    <div class="section">
+        <h3>Инверсия (Inversion)</h3>
+        <p>Инверсия – это изменение стандартного порядка слов в предложении, обычно для усиления или стилистического эффекта.</p>
+        <p><strong>Примеры:</strong></p>
+        <ul>
+            <li>Rarely have I seen such a beautiful sunset.</li>
+            <li>Never did he admit his mistake.</li>
+            <li>Seldom do they visit their grandparents.</li>
+        </ul>
+        <p>Инверсия часто используется с отрицательными наречиями времени, места или степени.</p>
+    </div>
+
+    <!-- 3. Эмфатические конструкции -->
+    <div class="section">
+        <h3>Эмфатические конструкции</h3>
+        <p>Эмфатические конструкции используются для выделения определенных частей предложения. Они помогают сделать речь более выразительной и акцентировать внимание на важной информации.</p>
+        <p><strong>Типы эмфатических конструкций:</strong></p>
+        <ul>
+            <li><strong>It-cleft:</strong> Выделяет субъекта или объект.</li>
+            <li><strong>Wh-cleft:</strong> Выделяет действие или предмет.</li>
+            <li><strong>All-cleft:</strong> Выделяет всю информацию в предложении.</li>
+        </ul>
+        <p><strong>Примеры:</strong></p>
+        <ul>
+            <li>It was Mary who called you yesterday.</li>
+            <li>What I need is a new laptop.</li>
+            <li>All we have is hope.</li>
+        </ul>
+    </div>
+
+    <!-- 4. Задание 1: Заполните пропуски (Инверсия) -->
+    <div class="section">
+        <h3>Задание 1: Заполните пропуски (Инверсия)</h3>
+        <p>Заполните пропуски правильным порядком слов, используя инверсию:</p>
+        <div class="quiz-question">
+            <label>1. _______ (never) have I seen such a stunning performance.</label>
+            <input type="text" id="inversion1" placeholder="Например: Never">
+        </div>
+        <div class="quiz-question">
+            <label>2. _______ (rarely) does she exercise.</label>
+            <input type="text" id="inversion2" placeholder="Например: Rarely">
+        </div>
+        <button class="submit-btn" onclick="checkInversion()">Проверить</button>
+        <div class="feedback" id="inversion-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 2: Сопоставьте предложения с типом эмфатической конструкции -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте предложения с типом эмфатической конструкции</h3>
+        <p>Сопоставьте обычные предложения с их эмфатическими эквивалентами:</p>
+        <div class="quiz-question">
+            <label>1. She is the one who helped me.</label>
+            <select id="emph_match1">
+                <option value="">Выберите тип</option>
+                <option value="1">It-cleft</option>
+                <option value="2">Wh-cleft</option>
+                <option value="3">All-cleft</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. What I need is a break.</label>
+            <select id="emph_match2">
+                <option value="">Выберите тип</option>
+                <option value="1">It-cleft</option>
+                <option value="2">Wh-cleft</option>
+                <option value="3">All-cleft</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>3. All we have is hope.</label>
+            <select id="emph_match3">
+                <option value="">Выберите тип</option>
+                <option value="1">It-cleft</option>
+                <option value="2">Wh-cleft</option>
+                <option value="3">All-cleft</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkEmphaticMatching()">Проверить</button>
+        <div class="feedback" id="emphaticmatching-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 3: Radio Quiz (Инверсия и эмфатические конструкции) -->
+    <div class="section">
+        <h3>Задание 3: Определите тип конструкции</h3>
+        <p>Выберите правильный тип конструкции для каждого предложения:</p>
+        <div class="quiz-question">
+            <label>1. "It was John who fixed the computer."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="inversion1" value="It-cleft">It-cleft</label><br>
+                <label><input type="radio" name="inversion1" value="Wh-cleft">Wh-cleft</label><br>
+                <label><input type="radio" name="inversion1" value="All-cleft">All-cleft</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. "What surprises me is your dedication."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="inversion2" value="It-cleft">It-cleft</label><br>
+                <label><input type="radio" name="inversion2" value="Wh-cleft">Wh-cleft</label><br>
+                <label><input type="radio" name="inversion2" value="All-cleft">All-cleft</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>3. "All I want is peace and quiet."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="inversion3" value="It-cleft">It-cleft</label><br>
+                <label><input type="radio" name="inversion3" value="Wh-cleft">Wh-cleft</label><br>
+                <label><input type="radio" name="inversion3" value="All-cleft">All-cleft</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkInversionEmphaticQuiz()">Проверить</button>
+        <div class="feedback" id="inversionemphaticquiz-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 4: Drag & Drop (Инверсия) -->
+    <div class="section">
+        <h3>Задание 4: Соберите предложение с инверсией</h3>
+        <p>Соберите предложение: <em>"Never have I seen such a beautiful view."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">never</div>
+            <div class="draggable" draggable="true">have</div>
+            <div class="draggable" draggable="true">i</div>
+            <div class="draggable" draggable="true">seen</div>
+            <div class="draggable" draggable="true">such</div>
+            <div class="draggable" draggable="true">a</div>
+            <div class="draggable" draggable="true">beautiful</div>
+            <div class="draggable" draggable="true">view.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-inversion"></div>
+        <button class="submit-btn" onclick="checkInversionDrag()">Проверить</button>
+        <div class="feedback" id="inversiondrag-feedback"></div>
+    </div>
+
+    <!-- 8. Задание 5: Rewrite Sentences (Эмфатические конструкции) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с использованием эмфатических конструкций</h3>
+        <p>Перепишите предложения, используя cleft-сентенсы или другие эмфатические конструкции:</p>
+        <ol>
+            <li>
+                "I need a new laptop."
+                <br><input type="text" id="emph_rw1" placeholder="Например: What I need is a new laptop.">
+            </li>
+            <li>
+                "They won the championship."
+                <br><input type="text" id="emph_rw2" placeholder="Например: It was they who won the championship.">
+            </li>
+            <li>
+                "We have only one option."
+                <br><input type="text" id="emph_rw3" placeholder="Например: All we have is one option.">
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkEmphaticRewrite()">Проверить</button>
+        <div class="feedback" id="emphatichrewrite-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: Заполните пропуски (Инверсия)
+     ************************************************************/
+    function checkInversion() {
+        // inversion1 -> "Never"
+        // inversion2 -> "Rarely"
+    
+        let correct = [
+            { 
+                id: 'inversion1', 
+                answer: 'never' 
+            },
+            {
+                id: 'inversion2', 
+                answer: 'rarely' 
+            }
+        ];
+    
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            if (user === item.answer) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+    
+        const feedback = document.getElementById('inversion-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Инверсия использована правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте использование инверсии.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Emphatic Matching
+     ************************************************************/
+    function checkEmphaticMatching() {
+        // emph_match1: "It-cleft"
+        // emph_match2: "Wh-cleft"
+        // emph_match3: "All-cleft"
+
+        let answers = { emph_match1: '1', emph_match2: '2', emph_match3: '3' };
+        let score = 0;
+        let total = 3;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('emphaticmatching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно сопоставили предложения с типами эмфатических конструкций.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте типы эмфатических конструкций.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Инверсия и эмфатические конструкции)
+     ************************************************************/
+    function checkInversionEmphaticQuiz() {
+        // r3 -> "It-cleft"
+        // r4 -> "Wh-cleft"
+        // r5 -> "All-cleft"
+
+        const correct = { r3: 'It-cleft', r4: 'Wh-cleft', r5: 'All-cleft' };
+        let total = 3;
+        let score = 0;
+
+        // r3
+        let userAnswer3 = '';
+        document.getElementsByName('inversion1').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.r3) score++;
+
+        // r4
+        let userAnswer4 = '';
+        document.getElementsByName('inversion2').forEach(radio => {
+            if (radio.checked) userAnswer4 = radio.value;
+        });
+        if (userAnswer4 === correct.r4) score++;
+
+        // r5
+        let userAnswer5 = '';
+        document.getElementsByName('inversion3').forEach(radio => {
+            if (radio.checked) userAnswer5 = radio.value;
+        });
+        if (userAnswer5 === correct.r5) score++;
+
+        const feedback = document.getElementById('inversionemphaticquiz-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отлично! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Инверсия)
+     ************************************************************/
+    function checkInversionDrag() {
+        // "Never have I seen such a beautiful view."
+        const words = Array.from(document.getElementById('drop-zone-inversion').querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "never have i seen such a beautiful view.";
+        const feedback = document.getElementById('inversiondrag-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! Предложение собрано правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Rewrite Sentences (Эмфатические конструкции)
+     ************************************************************/
+    function checkEmphaticRewrite() {
+        // emph_rw1: "What I need is a break."
+        // emph_rw2: "It was they who won the championship."
+        // emph_rw3: "All we have is hope."
+
+        let user1 = document.getElementById('emph_rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('emph_rw2').value.trim().toLowerCase();
+        let user3 = document.getElementById('emph_rw3').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Первый
+        if (user1 === "what i need is a break" ||
+            user1 === "what i need is a break.") {
+            score++;
+            document.getElementById('emph_rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('emph_rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй
+        if (user2 === "it was they who won the championship" ||
+            user2 === "it was they who won the championship.") {
+            score++;
+            document.getElementById('emph_rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('emph_rw2').style.border = '2px solid #dc3545';
+        }
+
+        // Третий
+        if (user3 === "all we have is hope" ||
+            user3 === "all we have is hope.") {
+            score++;
+            document.getElementById('emph_rw3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('emph_rw3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('emphatichrewrite-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все предложения переделаны с использованием эмфатических конструкций правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте использование эмфатических конструкций.`;
+        }
+    }
+</script>

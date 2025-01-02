@@ -1,0 +1,551 @@
+<!-- modules/module3/lesson1.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" (иконка Font Awesome или любая другая) */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 3: Conditional Sentences (Типы условных предложений)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в условные предложения -->
+    <div class="section">
+        <h3>Введение в условные предложения</h3>
+        <p>Условные предложения (Conditional Sentences) используются для выражения гипотетических ситуаций и их возможных последствий. Они состоят из двух частей: условия (if-clause) и результата (main clause).</p>
+        <p>Существует четыре основных типа условных предложений:</p>
+        <ul>
+            <li><strong>Zero Conditional</strong> – Реальные и общие истины.</li>
+            <li><strong>First Conditional</strong> – Возможные будущие события.</li>
+            <li><strong>Second Conditional</strong> – Гипотетические и маловероятные ситуации в настоящем или будущем.</li>
+            <li><strong>Third Conditional</strong> – Гипотетические ситуации в прошлом, которые не могут быть изменены.</li>
+        </ul>
+    </div>
+
+    <!-- 2. Структуры условных предложений -->
+    <div class="section">
+        <h3>Структуры условных предложений</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Структура</th>
+                    <th>Пример</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Zero Conditional</td>
+                    <td>If + Present Simple, Present Simple</td>
+                    <td>If you heat water, it boils.</td>
+                </tr>
+                <tr>
+                    <td>First Conditional</td>
+                    <td>If + Present Simple, Future Simple (will)</td>
+                    <td>If it rains tomorrow, we will cancel the trip.</td>
+                </tr>
+                <tr>
+                    <td>Second Conditional</td>
+                    <td>If + Past Simple, would + Base Verb</td>
+                    <td>If I won the lottery, I would travel the world.</td>
+                </tr>
+                <tr>
+                    <td>Third Conditional</td>
+                    <td>If + Past Perfect, would have + Past Participle</td>
+                    <td>If she had studied harder, she would have passed the exam.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Важно помнить о согласовании времен и правильном порядке слов при построении условных предложений.</p>
+    </div>
+
+    <!-- 3. Задание 1: Заполните пропуски (First Conditional) -->
+    <div class="section">
+        <h3>Задание 1: Заполните пропуски (First Conditional)</h3>
+        <p>Заполните пропуски правильной формой глагола:</p>
+        <div class="quiz-question">
+            <label>1. If it _______ (rain) tomorrow, we _______ (stay) at home.</label>
+            <input type="text" id="fc1" placeholder="Например: If it rains, we will stay.">
+        </div>
+        <div class="quiz-question">
+            <label>2. If she _______ (finish) her work early, she _______ (join) us for dinner.</label>
+            <input type="text" id="fc2" placeholder="Например: If she finishes, she will join.">
+        </div>
+        <button class="submit-btn" onclick="checkFirstConditional()">Проверить</button>
+        <div class="feedback" id="firstconditional-feedback"></div>
+    </div>
+
+    <!-- 4. Задание 2: Сопоставьте тип условного предложения -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте тип условного предложения</h3>
+        <div class="quiz-question">
+            <label>1. If I were you, I would take the job offer.</label>
+            <select id="cc1">
+                <option value="">Выберите тип</option>
+                <option value="Second Conditional">Second Conditional</option>
+                <option value="First Conditional">First Conditional</option>
+                <option value="Third Conditional">Third Conditional</option>
+                <option value="Zero Conditional">Zero Conditional</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. If you heat ice, it melts.</label>
+            <select id="cc2">
+                <option value="">Выберите тип</option>
+                <option value="Second Conditional">Second Conditional</option>
+                <option value="First Conditional">First Conditional</option>
+                <option value="Third Conditional">Third Conditional</option>
+                <option value="Zero Conditional">Zero Conditional</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkConditionalMatching()">Проверить</button>
+        <div class="feedback" id="conditionalmatching-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 3: Тест с радиокнопками (Conditional Types) -->
+    <div class="section">
+        <h3>Задание 3: Определите тип условного предложения</h3>
+        <p>Выберите правильный тип условного предложения:</p>
+        <div class="quiz-question">
+            <label>1. If they had left earlier, they would have caught the train.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="cc3" value="Third Conditional">Third Conditional</label><br>
+                <label><input type="radio" name="cc3" value="Second Conditional">Second Conditional</label><br>
+                <label><input type="radio" name="cc3" value="First Conditional">First Conditional</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. If it rains tomorrow, we will cancel the picnic.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="cc4" value="Third Conditional">Third Conditional</label><br>
+                <label><input type="radio" name="cc4" value="Second Conditional">Second Conditional</label><br>
+                <label><input type="radio" name="cc4" value="First Conditional">First Conditional</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkConditionalQuiz()">Проверить</button>
+        <div class="feedback" id="conditionalquiz-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 4: Drag & Drop (Conditional Structures) -->
+    <div class="section">
+        <h3>Задание 4: Соберите условное предложение</h3>
+        <p>Соберите предложение: <em>"If I had known about the party, I would have attended."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">if</div>
+            <div class="draggable" draggable="true">I</div>
+            <div class="draggable" draggable="true">had</div>
+            <div class="draggable" draggable="true">known</div>
+            <div class="draggable" draggable="true">about</div>
+            <div class="draggable" draggable="true">the</div>
+            <div class="draggable" draggable="true">party,</div>
+            <div class="draggable" draggable="true">I</div>
+            <div class="draggable" draggable="true">would</div>
+            <div class="draggable" draggable="true">have</div>
+            <div class="draggable" draggable="true">attended.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-cc"></div>
+        <button class="submit-btn" onclick="checkConditionalDrag()">Проверить</button>
+        <div class="feedback" id="conditionaldrag-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 5: Перепишите предложения (Advanced Conditional Structures) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с использованием условных структур</h3>
+        <p>Используйте соответствующие типы условных предложений для переписывания:</p>
+        <ol>
+            <li>
+                "She didn't study, so she failed the exam."
+                <br><input type="text" id="cc_rw1" placeholder='Например: If she had studied, she would have passed the exam.'>
+            </li>
+            <li>
+                "If I were taller, I could join the basketball team."
+                <br><input type="text" id="cc_rw2" placeholder='Например: ...'>
+            </li>
+            <li>
+                "Water boils at 100 degrees Celsius."
+                <br><input type="text" id="cc_rw3" placeholder='Например: If you heat water, it boils.'>
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkConditionalRewrite()">Проверить</button>
+        <div class="feedback" id="conditionalrewrite-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: First Conditional
+     ************************************************************/
+    function checkFirstConditional() {
+        let correct = [
+            { 
+                id: 'fc1', 
+                structure: [
+                    "if it rains tomorrow, we will stay at home",
+                    "if it rains, we will stay at home"
+                ] 
+            },
+            {
+                id: 'fc2', 
+                structure: [
+                    "if she finishes her work early, she will join us for dinner",
+                    "if she finishes early, she will join us for dinner"
+                ]
+            }
+        ];
+
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            user = user.replace(/\./g,''); // Удаляем точки
+            if (item.structure.includes(user)) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+
+        const feedback = document.getElementById('firstconditional-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Условные предложения первого типа сформированы правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте структуру предложения.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Conditional Types Matching
+     ************************************************************/
+    function checkConditionalMatching() {
+        // cc1: "If I were you, I would take the job offer." => Second Conditional
+        // cc2: "If you heat ice, it melts." => Zero Conditional
+        let answers = { cc1: 'Second Conditional', cc2: 'Zero Conditional' };
+        let score = 0;
+        let total = 2;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('conditionalmatching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно сопоставили типы условных предложений.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте снова.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Conditional Types)
+     ************************************************************/
+    function checkConditionalQuiz() {
+        // cc3 -> "If they had left earlier, they would have caught the train." => Third Conditional
+        // cc4 -> "If it rains tomorrow, we will cancel the picnic." => First Conditional
+        const correct = { cc3: 'Third Conditional', cc4: 'First Conditional' };
+        let total = 2;
+        let score = 0;
+
+        // cc3
+        let userAnswer3 = '';
+        document.getElementsByName('cc3').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.cc3) score++;
+
+        // cc4
+        let userAnswer4 = '';
+        document.getElementsByName('cc4').forEach(radio => {
+            if (radio.checked) userAnswer4 = radio.value;
+        });
+        if (userAnswer4 === correct.cc4) score++;
+
+        const feedback = document.getElementById('conditionalquiz-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Conditional Structures)
+     ************************************************************/
+    const dragItemsCC = document.querySelectorAll('.draggable');
+    const dropZoneCC = document.getElementById('drop-zone-cc');
+    let dragSourceCC = null;
+
+    dragItemsCC.forEach(item => {
+        item.addEventListener('dragstart', handleDragStartCC);
+        item.addEventListener('dragend', handleDragEndCC);
+    });
+    dropZoneCC.addEventListener('dragover', handleDragOverCC);
+    dropZoneCC.addEventListener('drop', handleDropCC);
+
+    function handleDragStartCC(e) {
+        dragSourceCC = e.target;
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.target.style.opacity = '0.4';
+    }
+    function handleDragEndCC(e) {
+        e.target.style.opacity = '1';
+    }
+    function handleDragOverCC(e) {
+        e.preventDefault();
+        dropZoneCC.classList.add('dragover');
+    }
+    function handleDropCC(e) {
+        e.preventDefault();
+        dropZoneCC.classList.remove('dragover');
+        if (dragSourceCC) {
+            dropZoneCC.appendChild(dragSourceCC);
+            dragSourceCC = null;
+        }
+    }
+
+    function checkConditionalDrag() {
+        // "If I had known about the party, I would have attended."
+        const words = Array.from(dropZoneCC.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "if i had known about the party, i would have attended.";
+        const feedback = document.getElementById('conditionaldrag-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! Вы собрали условное предложение корректно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Conditional Rewrite
+     ************************************************************/
+    function checkConditionalRewrite() {
+        // Примеры правильных вариантов:
+        // 1) "If she had studied, she would have passed the exam."
+        // 2) "If I were more organized, I would manage my time better."
+        // 3) "If you heat water, it boils."
+
+        let user1 = document.getElementById('cc_rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('cc_rw2').value.trim().toLowerCase();
+        let user3 = document.getElementById('cc_rw3').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Первый: Third Conditional
+        if (user1 === "if she had studied, she would have passed the exam" ||
+            user1 === "if she had studied she would have passed the exam") {
+            score++;
+            document.getElementById('cc_rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('cc_rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй: Second Conditional
+        if (user2 === "if i were more organized, i would manage my time better" ||
+            user2 === "if i were more organized i would manage my time better") {
+            score++;
+            document.getElementById('cc_rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('cc_rw2').style.border = '2px solid #dc3545';
+        }
+
+        // Третий: Zero Conditional
+        if (user3 === "if you heat water, it boils" ||
+            user3 === "if you heat water it boils") {
+            score++;
+            document.getElementById('cc_rw3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('cc_rw3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('conditionalrewrite-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все предложения переписаны правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте структуру предложений.`;
+        }
+    }
+</script>

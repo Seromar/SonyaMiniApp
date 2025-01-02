@@ -1,0 +1,234 @@
+<!-- modules/module2/test2.html -->
+
+<style>
+    .test-container {
+        max-height: 80vh;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .quiz-question {
+        margin-bottom: 20px;
+    }
+
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .quiz-question input[type="text"],
+    .quiz-question select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: #218838;
+    }
+
+    .feedback {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #d4edda;
+        color: #155724;
+        display: none;
+        font-size: 18px;
+    }
+</style>
+
+<div class="test-container">
+    <h2>Тест 2: Phrasal Verbs and Idiomatic Expressions</h2>
+    
+    <div class="section">
+        <!-- Вопрос 1 -->
+        <div class="quiz-question">
+            <label>1. What is the meaning of the phrasal verb "look after"?</label>
+            <select id="q1">
+                <option value="">Выберите ответ</option>
+                <option value="take care of someone/something">take care of someone/something</option>
+                <option value="search for">search for</option>
+                <option value="ignore">ignore</option>
+            </select>
+        </div>
+        
+        <!-- Вопрос 2 -->
+        <div class="quiz-question">
+            <label>2. Fill in the blank: She decided to ___ her old clothes by donating them to charity.</label>
+            <input type="text" id="q2" placeholder="Например, give away">
+        </div>
+        
+        <!-- Вопрос 3 -->
+        <div class="quiz-question">
+            <label>3. Choose the correct idiomatic expression: "It's raining cats and ___."</label>
+            <select id="q3">
+                <option value="">Выберите ответ</option>
+                <option value="dogs">dogs</option>
+                <option value="birds">birds</option>
+                <option value="mice">mice</option>
+            </select>
+        </div>
+        
+        <!-- Вопрос 4 -->
+        <div class="quiz-question">
+            <label>4. What does the idiom "break the ice" mean?</label>
+            <input type="text" id="q4" placeholder="Например, to initiate conversation">
+        </div>
+        
+        <!-- Вопрос 5 -->
+        <div class="quiz-question">
+            <label>5. Fill in the blank: After a long day, he likes to ___ and relax.</label>
+            <input type="text" id="q5" placeholder="Например, wind down">
+        </div>
+        
+        <!-- Вопрос 6 -->
+        <div class="quiz-question">
+            <label>6. Choose the correct phrasal verb: "I need to ___ my car; it's making strange noises."</label>
+            <select id="q6">
+                <option value="">Выберите ответ</option>
+                <option value="take care of">take care of</option>
+                <option value="fix up">fix up</option>
+                <option value="look into">look into</option>
+            </select>
+        </div>
+        
+        <!-- Вопрос 7 -->
+        <div class="quiz-question">
+            <label>7. What is the meaning of the idiom "spill the beans"?</label>
+            <input type="text" id="q7" placeholder="Например, reveal a secret">
+        </div>
+        
+        <!-- Вопрос 8 -->
+        <div class="quiz-question">
+            <label>8. Fill in the blank: They decided to ___ the old building to make way for a new shopping center.</label>
+            <input type="text" id="q8" placeholder="Например, tear down">
+        </div>
+        
+        <!-- Вопрос 9 -->
+        <div class="quiz-question">
+            <label>9. Choose the correct idiomatic expression: "Once in a ___ moon."</label>
+            <select id="q9">
+                <option value="">Выберите ответ</option>
+                <option value="blue">blue</option>
+                <option value="green">green</option>
+                <option value="red">red</option>
+            </select>
+        </div>
+        
+        <!-- Вопрос 10 -->
+        <div class="quiz-question">
+            <label>10. What does the phrasal verb "turn down" mean?</label>
+            <input type="text" id="q10" placeholder="Например, reject an offer">
+        </div>
+        
+        <button class="submit-btn" onclick="checkTest2()">Проверить тест</button>
+        <div class="feedback" id="test2-feedback"></div>
+    </div>
+</div>
+
+<script>
+    // Функция проверки теста 2 для Модуля 2
+    function checkTest2() {
+        const answers = {
+            q1: 'take care of someone/something',
+            q2: 'give away',
+            q3: 'dogs',
+            q4: 'to initiate conversation',
+            q5: 'wind down',
+            q6: 'look into',
+            q7: 'reveal a secret',
+            q8: 'tear down',
+            q9: 'blue',
+            q10: 'reject an offer'
+        };
+
+        let score = 0;
+        let totalQuestions = Object.keys(answers).length;
+
+        for (let key in answers) {
+            let userInput = document.getElementById(key).value.trim().toLowerCase();
+            let correctAnswer = answers[key].toLowerCase();
+
+            // Для вопросов с несколькими правильными вариантами можно добавить дополнительные проверки
+            if (key === 'q1') {
+                if (userInput === 'take care of someone/something' || userInput === 'take care of someone or something') {
+                    score++;
+                    document.getElementById(key).style.borderColor = '#28a745';
+                    continue;
+                }
+            }
+
+            if (key === 'q4') {
+                if (userInput === 'to initiate conversation' || userInput === 'initiate conversation') {
+                    score++;
+                    document.getElementById(key).style.borderColor = '#28a745';
+                    continue;
+                }
+            }
+
+            if (key === 'q7') {
+                if (userInput === 'reveal a secret' || userInput === 'to reveal a secret') {
+                    score++;
+                    document.getElementById(key).style.borderColor = '#28a745';
+                    continue;
+                }
+            }
+
+            if (userInput === correctAnswer) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545'; // Красный
+            }
+        }
+
+        const feedback = document.getElementById('test2-feedback');
+        feedback.style.display = 'block';
+        feedback.textContent = `Вы ответили правильно на ${score} из ${totalQuestions} вопросов.`;
+
+        // Дополнительные сообщения о результате
+        if (score === totalQuestions) {
+            feedback.textContent += ' Отличная работа!';
+        } else if (score >= totalQuestions * 0.7) {
+            feedback.textContent += ' Хороший результат!';
+        } else {
+            feedback.textContent += ' Потренируйтесь ещё.';
+        }
+    }
+</script>

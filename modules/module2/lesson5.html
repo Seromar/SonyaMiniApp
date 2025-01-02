@@ -1,0 +1,535 @@
+<!-- modules/module2/lesson5.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Примеры использования */
+    .example {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-left: 4px solid #17a2b8;
+        margin-bottom: 10px;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"],
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 5: Idiomatic Expressions in Daily Conversations (Идиоматические выражения в повседневном общении)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="assets/images/back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение -->
+    <div class="section">
+        <h3>Введение</h3>
+        <p>Идиоматические выражения придают речи живость и естественность. В этом уроке мы изучим наиболее распространённые идиомы, используемые в повседневных разговорах.</p>
+    </div>
+
+    <!-- 2. Что такое идиомы? -->
+    <div class="section">
+        <h3>Что такое идиомы?</h3>
+        <p>**Идиома** — это выражение, смысл которого не вытекает напрямую из значений отдельных слов. Идиомы часто используются для более выразительного и образного выражения мыслей.</p>
+    </div>
+
+    <!-- 3. Популярные идиомы и их значения -->
+    <div class="section">
+        <h3>Популярные идиомы и их значения</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Идиома</th>
+                    <th>Значение</th>
+                    <th>Пример использования</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Break the ice</td>
+                    <td>Разрядить обстановку, начать разговор</td>
+                    <td>She told a joke to break the ice at the meeting.</td>
+                </tr>
+                <tr>
+                    <td>Hit the nail on the head</td>
+                    <td>Попасть в точку, точно выразить мысль</td>
+                    <td>His analysis hit the nail on the head.</td>
+                </tr>
+                <tr>
+                    <td>Spill the beans</td>
+                    <td>Раскрыть секрет</td>
+                    <td>Don't spill the beans about the surprise party.</td>
+                </tr>
+                <tr>
+                    <td>Once in a blue moon</td>
+                    <td>Очень редко</td>
+                    <td>We go out to dinner once in a blue moon.</td>
+                </tr>
+                <tr>
+                    <td>Under the weather</td>
+                    <td>Чувствовать себя плохо</td>
+                    <td>I'm feeling a bit under the weather today.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Примеры использования идиом в разговорах -->
+    <div class="section">
+        <h3>Примеры использования идиом в разговорах</h3>
+        <div class="example">
+            <p><strong>Situation:</strong> Новый сотрудник пришёл на первое собрание.</p>
+            <p><strong>Person A:</strong> "Hi everyone! I'm excited to be here. To break the ice, let me share a funny story."</p>
+        </div>
+        <div class="example">
+            <p><strong>Situation:</strong> Обсуждение проекта.</p>
+            <p><strong>Person B:</strong> "I think you've hit the nail on the head with your proposal."</p>
+        </div>
+    </div>
+
+    <!-- 5. Практические упражнения -->
+    <div class="section">
+        <h3>Практические упражнения</h3>
+        <ol>
+            <li>
+                <strong>Переведите на английский:</strong> "Не раскрывай секреты."
+                <br><input type="text" id="ie1" placeholder="Например, Don't spill the beans.">
+            </li>
+            <li>
+                <strong>Вставьте подходящую идиому:</strong> "He rarely goes out, only ___ times a year."
+                <br><input type="text" id="ie2" placeholder="Например, once in a blue moon">
+            </li>
+            <li>
+                <strong>Выберите правильную идиому:</strong> "She felt ___ and decided to stay home."
+                <br>
+                <select id="ie3">
+                    <option value="">Выберите ответ</option>
+                    <option value="break the ice">Break the ice</option>
+                    <option value="under the weather">Under the weather</option>
+                    <option value="hit the nail on the head">Hit the nail on the head</option>
+                </select>
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkIdioms()">Проверить</button>
+        <div class="feedback" id="idioms-feedback"></div>
+    </div>
+
+    <!-- 6. Итоги -->
+    <div class="section">
+        <h3>Итоги</h3>
+        <p>Идиоматические выражения обогащают вашу речь и делают её более естественной. Регулярная практика поможет вам уверенно использовать их в повседневных разговорах.</p>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: Perfect Modals
+     ************************************************************/
+    function checkPerfectModals() {
+        const answers = {
+            pm1: 'should have',
+            pm2: 'could have',
+            pm3: 'must have'
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+
+        for (let key in answers) {
+            let userInput = document.getElementById(key).value.trim().toLowerCase();
+            if (userInput === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545'; // Красный
+            }
+        }
+
+        const feedback = document.getElementById('perfect-modal-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все перфектные модальные глаголы использованы правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте свои ответы.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Modal Verbs Matching
+     ************************************************************/
+    function checkModalMatching() {
+        // mm1: "should have" -> "Должен был" (2)
+        // mm2: "could have" -> "Мог бы" (1)
+        // mm3: "must have" -> "Должен был" (2)
+        const answers = {
+            mm1: '2',
+            mm2: '1',
+            mm3: '2'
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+
+        for (let key in answers) {
+            let userChoice = document.getElementById(key).value;
+            if (userChoice === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('modal-matching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Замечательно! Вы правильно сопоставили термины.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Верных сопоставлений: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Mixed Conditionals)
+     ************************************************************/
+    function checkMixedConditionals() {
+        const correct = {
+            r1: 'Mixed Conditional',
+            r2: 'Mixed Conditional'
+        };
+        let score = 0;
+        let total = Object.keys(correct).length;
+
+        for (let key in correct) {
+            let userAnswer = '';
+            document.getElementsByName(key).forEach(radio => {
+                if (radio.checked) userAnswer = radio.value;
+            });
+            if (userAnswer === correct[key]) {
+                score++;
+            }
+        }
+
+        const feedback = document.getElementById('mixed-conditional-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Превосходно! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Mixed Conditionals)
+     ************************************************************/
+    const dragItemsMixed = document.querySelectorAll('.draggable');
+    const dropZoneMixed = document.getElementById('drop-zone');
+    let dragSourceMixed = null;
+
+    dragItemsMixed.forEach(item => {
+        item.addEventListener('dragstart', handleDragStartMixed);
+        item.addEventListener('dragend', handleDragEndMixed);
+    });
+
+    dropZoneMixed.addEventListener('dragover', handleDragOverMixed);
+    dropZoneMixed.addEventListener('drop', handleDropMixed);
+
+    function handleDragStartMixed(e) {
+        dragSourceMixed = e.target;
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.target.style.opacity = '0.4';
+    }
+    function handleDragEndMixed(e) {
+        e.target.style.opacity = '1';
+    }
+    function handleDragOverMixed(e) {
+        e.preventDefault();
+        dropZoneMixed.classList.add('dragover');
+    }
+    function handleDropMixed(e) {
+        e.preventDefault();
+        dropZoneMixed.classList.remove('dragover');
+        if (dragSourceMixed) {
+            dropZoneMixed.appendChild(dragSourceMixed);
+            dragSourceMixed = null;
+        }
+    }
+
+    function checkMixedDrag() {
+        // "If I had taken that job, I would be living abroad now."
+        const words = Array.from(dropZoneMixed.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ').replace(/,\s*/g, ', '); // Сохраняем запятые
+
+        const correctSentence = "if i had taken that job, i would be living abroad now.";
+        const feedback = document.getElementById('mixed-drag-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы собрали смешанное условное предложение правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Попробуйте другой порядок.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Rewriting with Mixed Conditionals
+     ************************************************************/
+    function checkMixedRewrite() {
+        // Примеры правильных ответов:
+        // rw1: "If he had saved money, he could afford a new car now."
+        // rw2: "If they had caught the bus, they wouldn't be late for the meeting."
+
+        let user1 = document.getElementById('rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('rw2').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 2;
+
+        // Проверка первого предложения
+        if (user1.includes("if he had saved money") && user1.includes("could afford a new car now")) {
+            score++;
+            document.getElementById('rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Проверка второго предложения
+        if (user2.includes("if they had caught the bus") && user2.includes("wouldn't be late for the meeting")) {
+            score++;
+            document.getElementById('rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rw2').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('mixed-rewrite-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно использовали смешанные условные предложения.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Исправлено верно: ${score} из ${total}. Проверьте формулировки.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 6: Error Correction (Mixed Conditionals)
+     ************************************************************/
+    function checkMixedErrors() {
+        // Текст:
+        // 1) If she had studied medicine, she would be a doctor now.
+        // 2) If they were more careful, they would have avoided the accident.
+        // 3) If I had known about the party, I would attend it yesterday.
+
+        // Правильные варианты:
+        // 1) If she had studied medicine, she would be a doctor now.
+        // 2) If they had been more careful, they would have avoided the accident.
+        // 3) If I had known about the party, I would have attended it yesterday.
+
+        let e1Val = document.getElementById('e1').textContent.trim().toLowerCase();
+        let e2Val = document.getElementById('e2').textContent.trim().toLowerCase();
+        let e3Val = document.getElementById('e3').textContent.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Проверка 1
+        if (e1Val === "if she had studied medicine, she would be a doctor now") {
+            score++;
+            document.getElementById('e1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('e1').style.border = '2px solid #dc3545';
+        }
+
+        // Проверка 2
+        if (e2Val === "if they had been more careful, they would have avoided the accident") {
+            score++;
+            document.getElementById('e2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('e2').style.border = '2px solid #dc3545';
+        }
+
+        // Проверка 3
+        if (e3Val === "if i had known about the party, i would have attended it yesterday") {
+            score++;
+            document.getElementById('e3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('e3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('mixed-error-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Все ошибки исправлены правильно. Отличная работа!';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Исправлено верно: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 7: Vocabulary Matching (Emphasis)
+     ************************************************************/
+    function checkTermMatching() {
+        // term1: "Mixed Conditional" -> "Смешанное условное предложение" (1)
+        // term2: "Perfect Modals" -> "Перфектные модальные глаголы" (3)
+        const answers = {
+            term1: '1',
+            term2: '3'
+        };
+        let score = 0;
+        let total = 2;
+
+        for (let key in answers) {
+            let userChoice = document.getElementById(key).value;
+            if (userChoice === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('term-matching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Замечательно! Вы правильно сопоставили термины.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Верных сопоставлений: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 8: Radio Quiz (Advanced Mixed Conditionals)
+     ************************************************************/
+    function checkAdvancedMixedQuiz() {
+        const correct = {
+            r3: 'would have arrived',
+            r4: 'would apply',
+            r5: 'could'
+        };
+        let score = 0;
+        let total = Object.keys(correct).length;
+
+        for (let key in correct) {
+            let userAnswer = '';
+            document.getElementsByName(key).forEach(radio => {
+                if (radio.checked) userAnswer = radio.value;
+            });
+            if (userAnswer === correct[key]) {
+                score++;
+            }
+        }
+
+        const feedback = document.getElementById('advanced-mixed-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отлично! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+</script>

@@ -1,0 +1,570 @@
+<!-- modules/module3/lesson9.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 9: Advanced Phrasal Verbs (Продвинутые фразовые глаголы)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в продвинутые фразовые глаголы -->
+    <div class="section">
+        <h3>Введение в продвинутые фразовые глаголы</h3>
+        <p>Фразовые глаголы (Phrasal Verbs) состоят из глагола и одного или нескольких частиц (предлогов или наречий). Продвинутые фразовые глаголы часто имеют идиоматическое значение, которое может отличаться от значений отдельных компонентов.</p>
+    </div>
+
+    <!-- 2. Таблица с продвинутыми фразовыми глаголами -->
+    <div class="section">
+        <h3>Таблица с продвинутыми фразовыми глаголами</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Фразовый глагол</th>
+                    <th>Значение</th>
+                    <th>Пример</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Bring up</td>
+                    <td>Поднимать тему</td>
+                    <td>She brought up an interesting point during the meeting.</td>
+                </tr>
+                <tr>
+                    <td>Carry out</td>
+                    <td>Выполнять</td>
+                    <td>The scientists carried out the experiment successfully.</td>
+                </tr>
+                <tr>
+                    <td>Come across</td>
+                    <td>Случайно встретить</td>
+                    <td>I came across an old friend in the bookstore yesterday.</td>
+                </tr>
+                <tr>
+                    <td>Look forward to</td>
+                    <td>С нетерпением ждать</td>
+                    <td>They are looking forward to their vacation next month.</td>
+                </tr>
+                <tr>
+                    <td>Run into</td>
+                    <td>Встретить случайно</td>
+                    <td>He ran into his teacher at the mall.</td>
+                </tr>
+                <tr>
+                    <td>Set up</td>
+                    <td>Организовывать, устанавливать</td>
+                    <td>They set up a new company last year.</td>
+                </tr>
+                <tr>
+                    <td>Take over</td>
+                    <td>Перенимать контроль</td>
+                    <td>The new manager will take over the department next week.</td>
+                </tr>
+                <tr>
+                    <td>Turn down</td>
+                    <td>Отклонять, уменьшать громкость</td>
+                    <td>She turned down the job offer because it didn't meet her expectations.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Важно понимать идиоматические значения фразовых глаголов и их правильное использование в контексте.</p>
+    </div>
+
+    <!-- 3. Задание 1: Заполните пропуски (Продвинутые фразовые глаголы) -->
+    <div class="section">
+        <h3>Задание 1: Заполните пропуски (Продвинутые фразовые глаголы)</h3>
+        <p>Заполните пропуски подходящими продвинутыми фразовыми глаголами из таблицы выше.</p>
+        <div class="quiz-question">
+            <label>1. She _______ (bring up) an important issue during the discussion.</label>
+            <input type="text" id="av1" placeholder="Например: brought up">
+        </div>
+        <div class="quiz-question">
+            <label>2. They _______ (carry out) the survey to gather data.</label>
+            <input type="text" id="av2" placeholder="Например: carried out">
+        </div>
+        <div class="quiz-question">
+            <label>3. I _______ (look forward to) meeting you next week.</label>
+            <input type="text" id="av3" placeholder="Например: am looking forward to">
+        </div>
+        <button class="submit-btn" onclick="checkAdvancedPhrasalVerbs()">Проверить</button>
+        <div class="feedback" id="advancedphrasalverbs-feedback"></div>
+    </div>
+
+    <!-- 4. Задание 2: Сопоставьте фразовые глаголы с их значениями -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте фразовые глаголы с их значениями</h3>
+        <p>Сопоставьте фразовые глаголы с их значениями:</p>
+        <div class="quiz-question">
+            <label>1. Come across</label>
+            <select id="av_match1">
+                <option value="">Выберите значение</option>
+                <option value="1">Организовывать, устанавливать</option>
+                <option value="2">Встретить случайно</option>
+                <option value="3">Поднимать тему</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. Set up</label>
+            <select id="av_match2">
+                <option value="">Выберите значение</option>
+                <option value="1">Встретить случайно</option>
+                <option value="2">Перенимать контроль</option>
+                <option value="3">Организовывать, устанавливать</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>3. Take over</label>
+            <select id="av_match3">
+                <option value="">Выберите значение</option>
+                <option value="1">Перенимать контроль</option>
+                <option value="2">Отклонять</option>
+                <option value="3">С нетерпением ждать</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkPhrasalMatching()">Проверить</button>
+        <div class="feedback" id="phrasalmatching-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 3: Radio Quiz (Фразовые глаголы) -->
+    <div class="section">
+        <h3>Задание 3: Определите правильный фразовый глагол</h3>
+        <p>Выберите правильный фразовый глагол для завершения предложения:</p>
+        <div class="quiz-question">
+            <label>1. He _______ (развернуть) новый проект в прошлом месяце.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="phrasal1" value="carry out">carry out</label><br>
+                <label><input type="radio" name="phrasal1" value="look forward to">look forward to</label><br>
+                <label><input type="radio" name="phrasal1" value="turn down">turn down</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. They _______ (отклонить) предложение о сотрудничестве.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="phrasal2" value="turn down">turn down</label><br>
+                <label><input type="radio" name="phrasal2" value="set up">set up</label><br>
+                <label><input type="radio" name="phrasal2" value="come across">come across</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>3. I _______ (встретить случайно) своего старого друга в кафе.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="phrasal3" value="come across">come across</label><br>
+                <label><input type="radio" name="phrasal3" value="take over">take over</label><br>
+                <label><input type="radio" name="phrasal3" value="should">should</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkRadioQuizPhrasal()">Проверить</button>
+        <div class="feedback" id="radioquizphrasal-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 4: Drag & Drop (Фразовые глаголы) -->
+    <div class="section">
+        <h3>Задание 4: Соберите предложение с фразовым глаголом</h3>
+        <p>Соберите предложение: <em>"They set up a new branch office in Berlin."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">they</div>
+            <div class="draggable" draggable="true">set</div>
+            <div class="draggable" draggable="true">up</div>
+            <div class="draggable" draggable="true">a</div>
+            <div class="draggable" draggable="true">new</div>
+            <div class="draggable" draggable="true">branch</div>
+            <div class="draggable" draggable="true">office</div>
+            <div class="draggable" draggable="true">in</div>
+            <div class="draggable" draggable="true">berlin.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-phrasal"></div>
+        <button class="submit-btn" onclick="checkDragPhrasal()">Проверить</button>
+        <div class="feedback" id="dragphrasal-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 5: Rewrite Sentences (Фразовые глаголы) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с использованием фразовых глаголов</h3>
+        <p>Перепишите предложения, используя подходящие фразовые глаголы:</p>
+        <ol>
+            <li>
+                "He organized a conference for the new project."
+                <br><input type="text" id="phrasal_rw1" placeholder="Например: He set up a conference for the new project.">
+            </li>
+            <li>
+                "She declined the invitation to the party."
+                <br><input type="text" id="phrasal_rw2" placeholder="Например: She turned down the invitation to the party.">
+            </li>
+            <li>
+                "They implemented the new strategy successfully."
+                <br><input type="text" id="phrasal_rw3" placeholder="Например: They carried out the new strategy successfully.">
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkPhrasalRewrite()">Проверить</button>
+        <div class="feedback" id="phrasalrewrite-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: Заполните пропуски (Продвинутые фразовые глаголы)
+     ************************************************************/
+    function checkAdvancedPhrasalVerbs() {
+        // av1 -> "brought up"
+        // av2 -> "carried out"
+        // av3 -> "am looking forward to"
+
+        let correct = [
+            { 
+                id: 'av1', 
+                structure: [
+                    "brought up",
+                    "brought up."
+                ] 
+            },
+            {
+                id: 'av2', 
+                structure: [
+                    "carried out",
+                    "carried out."
+                ] 
+            },
+            {
+                id: 'av3', 
+                structure: [
+                    "am looking forward to",
+                    "am looking forward to."
+                ] 
+            }
+        ];
+
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            if (item.structure.includes(user)) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+
+        const feedback = document.getElementById('advancedphrasalverbs-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно использовали фразовые глаголы.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте использование фразовых глаголов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Modal Phrasal Verbs Matching
+     ************************************************************/
+    function checkPhrasalMatching() {
+        // av_match1: "Come across" -> "Встретить случайно" -> option2
+        // av_match2: "Set up" -> "Организовывать, устанавливать" -> option3
+        // av_match3: "Take over" -> "Перенимать контроль" -> option1
+
+        let answers = { av_match1: '2', av_match2: '3', av_match3: '1' };
+        let score = 0;
+        let total = 3;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('phrasalmatching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно сопоставили фразовые глаголы с их значениями.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте значения фразовых глаголов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Фразовые глаголы)
+     ************************************************************/
+    function checkRadioQuizPhrasal() {
+        // phrasal1 -> "carry out"
+        // phrasal2 -> "turn down"
+        // phrasal3 -> "come across"
+
+        const correct = { phrasal1: 'carry out', phrasal2: 'turn down', phrasal3: 'come across' };
+        let total = 3;
+        let score = 0;
+
+        // phrasal1
+        let userAnswer1 = '';
+        document.getElementsByName('phrasal1').forEach(radio => {
+            if (radio.checked) userAnswer1 = radio.value;
+        });
+        if (userAnswer1 === correct.phrasal1) score++;
+
+        // phrasal2
+        let userAnswer2 = '';
+        document.getElementsByName('phrasal2').forEach(radio => {
+            if (radio.checked) userAnswer2 = radio.value;
+        });
+        if (userAnswer2 === correct.phrasal2) score++;
+
+        // phrasal3
+        let userAnswer3 = '';
+        document.getElementsByName('phrasal3').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.phrasal3) score++;
+
+        const feedback = document.getElementById('radioquizphrasal-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Фразовые глаголы)
+     ************************************************************/
+    function checkDragPhrasal() {
+        // "They set up a new branch office in Berlin."
+        const words = Array.from(document.getElementById('drop-zone-phrasal').querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "they set up a new branch office in berlin.";
+        const feedback = document.getElementById('dragphrasal-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! Предложение собрано правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Rewrite Sentences (Фразовые глаголы)
+     ************************************************************/
+    function checkPhrasalRewrite() {
+        // phrasal_rw1: "He set up a conference for the new project."
+        // phrasal_rw2: "She turned down the invitation to the party."
+        // phrasal_rw3: "They carried out the new strategy successfully."
+
+        let user1 = document.getElementById('phrasal_rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('phrasal_rw2').value.trim().toLowerCase();
+        let user3 = document.getElementById('phrasal_rw3').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Первый
+        if (user1 === "he set up a conference for the new project" ||
+            user1 === "he set up a conference for the new project.") {
+            score++;
+            document.getElementById('phrasal_rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('phrasal_rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй
+        if (user2 === "she turned down the invitation to the party" ||
+            user2 === "she turned down the invitation to the party.") {
+            score++;
+            document.getElementById('phrasal_rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('phrasal_rw2').style.border = '2px solid #dc3545';
+        }
+
+        // Третий
+        if (user3 === "they carried out the new strategy successfully" ||
+            user3 === "they carried out the new strategy successfully.") {
+            score++;
+            document.getElementById('phrasal_rw3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('phrasal_rw3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('phrasalrewrite-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все предложения переписаны с использованием фразовых глаголов правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте использование фразовых глаголов.`;
+        }
+    }
+</script>

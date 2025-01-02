@@ -1,0 +1,536 @@
+<!-- modules/module3/lesson6.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 3: Reported Questions and Commands (Непрямая речь для вопросов и приказов)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в непрямую речь для вопросов и приказов -->
+    <div class="section">
+        <h3>Введение в непрямую речь для вопросов и приказов</h3>
+        <p>Непрямая речь используется не только для утверждений, но и для вопросов и приказов. При преобразовании прямых вопросов и приказов в непрямую речь происходят определенные изменения в структуре предложения.</p>
+    </div>
+
+    <!-- 2. Преобразование прямых вопросов в непрямую речь -->
+    <div class="section">
+        <h3>Преобразование прямых вопросов в непрямую речь</h3>
+        <p>При преобразовании прямых вопросов в непрямую речь:</p>
+        <ul>
+            <li>Удаляются вопросительные слова (если они присутствуют).</li>
+            <li>Изменяется порядок слов с вопросительного на утвердительный.</li>
+            <li>Добавляется вводное слово (например, <strong>ask</strong>, <strong>wonder</strong>, <strong>inquire</strong>).</li>
+        </ul>
+        <p><strong>Примеры:</strong></p>
+        <ul>
+            <li>Прямая речь: "Where do you live?" he asked.</li>
+            <li>Непрямая речь: He asked where I lived.</li>
+        </ul>
+    </div>
+
+    <!-- 3. Преобразование прямых приказов в непрямую речь -->
+    <div class="section">
+        <h3>Преобразование прямых приказов в непрямую речь</h3>
+        <p>При преобразовании прямых приказов в непрямую речь:</p>
+        <ul>
+            <li>Используется глагол <strong>tell</strong>, <strong>order</strong>, <strong>ask</strong> с дополнением.</li>
+            <li>После глагола следует инфинитив без частицы <strong>to</strong>.</li>
+        </ul>
+        <p><strong>Примеры:</strong></p>
+        <ul>
+            <li>Прямая речь: "Close the door," she said.</li>
+            <li>Непрямая речь: She told me to close the door.</li>
+        </ul>
+    </div>
+
+    <!-- 4. Задание 1: Преобразуйте прямые вопросы в непрямую речь -->
+    <div class="section">
+        <h3>Задание 1: Преобразуйте прямые вопросы в непрямую речь</h3>
+        <p>Преобразуйте следующие прямые вопросы в непрямую речь:</p>
+        <div class="quiz-question">
+            <label>1. "What time is the meeting?" he asked.</label>
+            <input type="text" id="rq1" placeholder="Например: He asked what time the meeting was.">
+        </div>
+        <div class="quiz-question">
+            <label>2. "Do you like this song?" she inquired.</label>
+            <input type="text" id="rq2" placeholder="Например: She inquired if I liked that song.">
+        </div>
+        <button class="submit-btn" onclick="checkReportedQuestions()">Проверить</button>
+        <div class="feedback" id="reportedquestions-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 2: Сопоставьте прямые и непрямые высказывания -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте прямые и непрямые высказывания</h3>
+        <p>Сопоставьте прямые высказывания с их преобразованными формами в непрямую речь.</p>
+        <div class="quiz-question">
+            <label>1. "Please, sit down," he said.</label>
+            <select id="rq_match1">
+                <option value="">Выберите вариант</option>
+                <option value="1">He asked me to sit down.</option>
+                <option value="2">He told me to sit down.</option>
+                <option value="3">He requested me sit down.</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. "Where did you go on vacation?" they wondered.</label>
+            <select id="rq_match2">
+                <option value="">Выберите вариант</option>
+                <option value="1">They wondered where I went on vacation.</option>
+                <option value="2">They asked me where I went on vacation.</option>
+                <option value="3">They told me where I went on vacation.</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkReportedMatchingQuestions()">Проверить</button>
+        <div class="feedback" id="reportedmatchingquestions-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 3: Radio Quiz (Reported Speech for Questions and Commands) -->
+    <div class="section">
+        <h3>Задание 3: Определите тип непрямой речи</h3>
+        <p>Выберите правильный тип непрямой речи для каждого предложения:</p>
+        <div class="quiz-question">
+            <label>1. "Tell me the truth," she demanded.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="rq3" value="Question">Question</label><br>
+                <label><input type="radio" name="rq3" value="Command">Command</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. "Have you finished your homework?" he asked.</label>
+            <div class="radio-group">
+                <label><input type="radio" name="rq4" value="Question">Question</label><br>
+                <label><input type="radio" name="rq4" value="Command">Command</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkReportedQuizQuestions()">Проверить</button>
+        <div class="feedback" id="reportedquizquestions-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 4: Drag & Drop (Reported Speech) -->
+    <div class="section">
+        <h3>Задание 4: Соберите предложение в непрямой речи</h3>
+        <p>Соберите предложение: <em>"She asked me where I had been."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">she</div>
+            <div class="draggable" draggable="true">asked</div>
+            <div class="draggable" draggable="true">me</div>
+            <div class="draggable" draggable="true">where</div>
+            <div class="draggable" draggable="true">i</div>
+            <div class="draggable" draggable="true">had</div>
+            <div class="draggable" draggable="true">been.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-rq"></div>
+        <button class="submit-btn" onclick="checkReportedDragQuestions()">Проверить</button>
+        <div class="feedback" id="reporteddragquestions-feedback"></div>
+    </div>
+
+    <!-- 8. Задание 5: Rewrite Sentences (Reported Speech for Questions and Commands) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с использованием непрямой речи для вопросов и приказов</h3>
+        <p>Перепишите предложения, используя непрямую речь для вопросов и приказов:</p>
+        <ol>
+            <li>
+                "Can you pass the salt?" he asked.
+                <br><input type="text" id="rq_rw1" placeholder="Например: He asked if I could pass the salt.">
+            </li>
+            <li>
+                "Please, be quiet," she requested.
+                <br><input type="text" id="rq_rw2" placeholder="Например: She requested me to be quiet.">
+            </li>
+            <li>
+                "What is your favorite color?" they inquired.
+                <br><input type="text" id="rq_rw3" placeholder="Например: They inquired what my favorite color was.">
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkReportedRewriteQuestions()">Проверить</button>
+        <div class="feedback" id="reportedrewritequestions-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: Reported Questions
+     ************************************************************/
+    function checkReportedQuestions() {
+        // Примеры эталонных ответов
+        // rq1 -> "he asked what time the meeting was"
+        // rq2 -> "she inquired if i liked that song"
+
+        let correct = [
+            { 
+                id: 'rq1', 
+                structure: [
+                    "he asked what time the meeting was",
+                    "he asked what time the meeting was."
+                ] 
+            },
+            {
+                id: 'rq2', 
+                structure: [
+                    "she inquired if i liked that song",
+                    "she inquired if i liked that song."
+                ] 
+            }
+        ];
+
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            user = user.replace(/\./g,''); // Удаляем точки
+            if (item.structure.includes(user)) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+
+        const feedback = document.getElementById('reportedquestions-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно преобразовали вопросы в непрямую речь.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте структуру предложений.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Reported Speech Matching for Questions and Commands
+     ************************************************************/
+    function checkReportedMatchingQuestions() {
+        // rq_match1: "He asked me to sit down."
+        // rq_match2: "They asked where I went on vacation."
+
+        let answers = { rq_match1: '1', rq_match2: '1' };
+        let score = 0;
+        let total = 2;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('reportedmatchingquestions-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно сопоставили прямые и непрямые высказывания.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте преобразование предложений.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Reported Speech for Questions and Commands)
+     ************************************************************/
+    function checkReportedQuizQuestions() {
+        // rq3 -> "Command"
+        // rq4 -> "Question"
+
+        const correct = { rq3: 'Command', rq4: 'Question' };
+        let total = 2;
+        let score = 0;
+
+        // rq3
+        let userAnswer3 = '';
+        document.getElementsByName('rq3').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.rq3) score++;
+
+        // rq4
+        let userAnswer4 = '';
+        document.getElementsByName('rq4').forEach(radio => {
+            if (radio.checked) userAnswer4 = radio.value;
+        });
+        if (userAnswer4 === correct.rq4) score++;
+
+        const feedback = document.getElementById('reportedquizquestions-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Reported Speech for Questions and Commands)
+     ************************************************************/
+    const dragItemsRQ = document.querySelectorAll('.draggable');
+    const dropZoneRQ = document.getElementById('drop-zone-rq');
+    let dragSourceRQ = null;
+
+    dragItemsRQ.forEach(item => {
+        item.addEventListener('dragstart', handleDragStartRQ);
+        item.addEventListener('dragend', handleDragEndRQ);
+    });
+    dropZoneRQ.addEventListener('dragover', handleDragOverRQ);
+    dropZoneRQ.addEventListener('drop', handleDropRQ);
+
+    function handleDragStartRQ(e) {
+        dragSourceRQ = e.target;
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.target.style.opacity = '0.4';
+    }
+    function handleDragEndRQ(e) {
+        e.target.style.opacity = '1';
+    }
+    function handleDragOverRQ(e) {
+        e.preventDefault();
+        dropZoneRQ.classList.add('dragover');
+    }
+    function handleDropRQ(e) {
+        e.preventDefault();
+        dropZoneRQ.classList.remove('dragover');
+        if (dragSourceRQ) {
+            dropZoneRQ.appendChild(dragSourceRQ);
+            dragSourceRQ = null;
+        }
+    }
+
+    function checkReportedDragQuestions() {
+        // "She asked me where I had been."
+        const words = Array.from(dropZoneRQ.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "she asked me where i had been.";
+        const feedback = document.getElementById('reporteddragquestions-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! Непрямая речь собрана правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Reported Speech Rewrite for Questions and Commands
+     ************************************************************/
+    function checkReportedRewriteQuestions() {
+        // rq_rw1: "He asked if i could pass the salt."
+        // rq_rw2: "She requested me to be quiet."
+        // rq_rw3: "They inquired what my favorite color was."
+
+        let user1 = document.getElementById('rq_rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('rq_rw2').value.trim().toLowerCase();
+        let user3 = document.getElementById('rq_rw3').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Первый
+        if (user1 === "he asked if i could pass the salt" ||
+            user1 === "he asked if i could pass the salt.") {
+            score++;
+            document.getElementById('rq_rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rq_rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй
+        if (user2 === "she requested me to be quiet" ||
+            user2 === "she requested me to be quiet.") {
+            score++;
+            document.getElementById('rq_rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rq_rw2').style.border = '2px solid #dc3545';
+        }
+
+        // Третий
+        if (user3 === "they inquired what my favorite color was" ||
+            user3 === "they inquired what my favorite color was.") {
+            score++;
+            document.getElementById('rq_rw3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('rq_rw3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('reportedrewritequestions-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все предложения переписаны с использованием непрямой речи правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте структуру предложений.`;
+        }
+    }
+</script>

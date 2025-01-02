@@ -1,0 +1,589 @@
+<!-- modules/module3/lesson7.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Радиокнопки */
+    .radio-group {
+        margin-left: 20px;
+    }
+    .radio-group input[type="radio"] {
+        margin-right: 8px;
+    }
+
+    /* Drag & Drop */
+    .drag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .draggable {
+        padding: 8px 12px;
+        background-color: #ffc107;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+    }
+    .drop-zone {
+        flex: 1 1 100%;
+        min-height: 50px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+    .drop-zone.dragover {
+        border-color: #28a745; /* Зеленый при наведении */
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #ffe4c4;
+        color: #000;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+        width: 120px;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #ffc299;
+    }
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 7: Advanced Modal Verbs (Расширенное использование модальных глаголов)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение в модальные глаголы -->
+    <div class="section">
+        <h3>Введение в модальные глаголы</h3>
+        <p>Модальные глаголы (Modal Verbs) используются для выражения возможностей, вероятностей, разрешений, обязанностей и других модальных значений. Расширенное использование модальных глаголов включает их комбинацию с другими структурами для выражения более сложных значений.</p>
+    </div>
+
+    <!-- 2. Расширенные модальные глаголы и их функции -->
+    <div class="section">
+        <h3>Расширенные модальные глаголы и их функции</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Модальный глагол</th>
+                    <th>Функция</th>
+                    <th>Пример</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Should</td>
+                    <td>Совет, рекомендация</td>
+                    <td>You should see a doctor.</td>
+                </tr>
+                <tr>
+                    <td>Could</td>
+                    <td>Возможность в прошлом, вежливые просьбы</td>
+                    <td>Could you help me?</td>
+                </tr>
+                <tr>
+                    <td>Must</td>
+                    <td>Необходимость, обязанность</td>
+                    <td>You must wear a helmet.</td>
+                </tr>
+                <tr>
+                    <td>Ought to</td>
+                    <td>Совет, моральная обязанность</td>
+                    <td>You ought to apologize.</td>
+                </tr>
+                <tr>
+                    <td>Shall</td>
+                    <td>Предложения, намерения</td>
+                    <td>Shall we dance?</td>
+                </tr>
+                <tr>
+                    <td>Might</td>
+                    <td>Возможность, вероятность</td>
+                    <td>It might rain today.</td>
+                </tr>
+                <tr>
+                    <td>Need to</td>
+                    <td>Необходимость</td>
+                    <td>You need to finish your homework.</td>
+                </tr>
+                <tr>
+                    <td>Dare</td>
+                    <td>Смелость, вызов</td>
+                    <td>Dare you jump off the cliff?</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Важно помнить, что модальные глаголы не изменяются по лицам и числам, всегда используются в форме основы.</p>
+    </div>
+
+    <!-- 3. Задание 1: Заполните пропуски (Advanced Modal Verbs) -->
+    <div class="section">
+        <h3>Задание 1: Заполните пропуски (Advanced Modal Verbs)</h3>
+        <p>Заполните пропуски подходящими модальными глаголами: <strong>should, could, must, ought to, shall, might, need to, dare</strong>.</p>
+        <div class="quiz-question">
+            <label>1. You _______ take an umbrella; it looks like it might rain.</label>
+            <input type="text" id="mv1" placeholder="Например: should">
+        </div>
+        <div class="quiz-question">
+            <label>2. _______ I open the window?</label>
+            <input type="text" id="mv2" placeholder="Например: Shall">
+        </div>
+        <div class="quiz-question">
+            <label>3. She _______ speak three languages fluently.</label>
+            <input type="text" id="mv3" placeholder="Например: can">
+        </div>
+        <button class="submit-btn" onclick="checkAdvancedModalVerbs()">Проверить</button>
+        <div class="feedback" id="advancedmodalverbs-feedback"></div>
+    </div>
+
+    <!-- 4. Задание 2: Сопоставьте модальные глаголы с функциями -->
+    <div class="section">
+        <h3>Задание 2: Сопоставьте модальные глаголы с функциями</h3>
+        <p>Сопоставьте модальные глаголы с их функциями:</p>
+        <div class="quiz-question">
+            <label>1. Must</label>
+            <select id="mv_match1">
+                <option value="">Выберите функцию</option>
+                <option value="1">Совет</option>
+                <option value="2">Необходимость</option>
+                <option value="3">Возможность</option>
+            </select>
+        </div>
+        <div class="quiz-question">
+            <label>2. Might</label>
+            <select id="mv_match2">
+                <option value="">Выберите функцию</option>
+                <option value="1">Возможность</option>
+                <option value="2">Обязанность</option>
+                <option value="3">Предложение</option>
+            </select>
+        </div>
+        <button class="submit-btn" onclick="checkModalMatching()">Проверить</button>
+        <div class="feedback" id="modalmatching-feedback"></div>
+    </div>
+
+    <!-- 5. Задание 3: Radio Quiz (Advanced Modal Verbs) -->
+    <div class="section">
+        <h3>Задание 3: Определите правильный модальный глагол</h3>
+        <p>Выберите правильный модальный глагол для каждого предложения:</p>
+        <div class="quiz-question">
+            <label>1. "You _______ finish your work by tonight."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="mv3" value="must">must</label><br>
+                <label><input type="radio" name="mv3" value="might">might</label><br>
+                <label><input type="radio" name="mv3" value="shall">shall</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>2. "________ we go for a walk?"</label>
+            <div class="radio-group">
+                <label><input type="radio" name="mv4" value="Shall">Shall</label><br>
+                <label><input type="radio" name="mv4" value="Should">Should</label><br>
+                <label><input type="radio" name="mv4" value="Could">Could</label>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <label>3. "She _______ speak five languages."</label>
+            <div class="radio-group">
+                <label><input type="radio" name="mv5" value="could">could</label><br>
+                <label><input type="radio" name="mv5" value="ought to">ought to</label><br>
+                <label><input type="radio" name="mv5" value="dare">dare</label>
+            </div>
+        </div>
+        <button class="submit-btn" onclick="checkAdvancedModalQuiz()">Проверить</button>
+        <div class="feedback" id="advancedmodalquiz-feedback"></div>
+    </div>
+
+    <!-- 6. Задание 4: Drag & Drop (Advanced Modal Verbs) -->
+    <div class="section">
+        <h3>Задание 4: Соберите предложение с модальным глаголом</h3>
+        <p>Соберите предложение: <em>"You should see a doctor."</em></p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true">you</div>
+            <div class="draggable" draggable="true">should</div>
+            <div class="draggable" draggable="true">see</div>
+            <div class="draggable" draggable="true">a</div>
+            <div class="draggable" draggable="true">doctor.</div>
+        </div>
+        <div class="drop-zone" id="drop-zone-mv"></div>
+        <button class="submit-btn" onclick="checkModalDrag()">Проверить</button>
+        <div class="feedback" id="modaldrag-feedback"></div>
+    </div>
+
+    <!-- 7. Задание 5: Rewrite Sentences (Advanced Modal Structures) -->
+    <div class="section">
+        <h3>Задание 5: Перепишите предложения с использованием модальных глаголов</h3>
+        <p>Перепишите предложения, используя подходящие модальные глаголы:</p>
+        <ol>
+            <li>
+                "It is necessary for you to submit the report by tomorrow."
+                <br><input type="text" id="mv_rw1" placeholder="Например: You must submit the report by tomorrow.">
+            </li>
+            <li>
+                "He has the ability to solve complex problems."
+                <br><input type="text" id="mv_rw2" placeholder="Например: He can solve complex problems.">
+            </li>
+            <li>
+                "You are encouraged to participate in the workshop."
+                <br><input type="text" id="mv_rw3" placeholder="Например: You should participate in the workshop.">
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkModalRewrite()">Проверить</button>
+        <div class="feedback" id="modalrewrite-feedback"></div>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание 1: Advanced Modal Verbs
+     ************************************************************/
+    function checkAdvancedModalVerbs() {
+        // Примеры эталонных ответов
+        // mv1 -> "should"
+        // mv2 -> "Shall"
+        // mv3 -> "can"
+
+        let correct = [
+            { 
+                id: 'mv1', 
+                structure: [
+                    "should",
+                    "should."
+                ] 
+            },
+            {
+                id: 'mv2', 
+                structure: [
+                    "shall",
+                    "shall."
+                ] 
+            },
+            {
+                id: 'mv3', 
+                structure: [
+                    "can",
+                    "can."
+                ] 
+            }
+        ];
+
+        let score = 0;
+        correct.forEach(item => {
+            let user = document.getElementById(item.id).value.trim().toLowerCase();
+            if (item.structure.includes(user)) {
+                score++;
+                document.getElementById(item.id).style.border = '2px solid #28a745';
+            } else {
+                document.getElementById(item.id).style.border = '2px solid #dc3545';
+            }
+        });
+
+        const feedback = document.getElementById('advancedmodalverbs-feedback');
+        feedback.style.display = 'block';
+        if (score === correct.length) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно использовали модальные глаголы.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте использование модальных глаголов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 2: Modal Verbs Matching
+     ************************************************************/
+    function checkModalMatching() {
+        // mv_match1: "must" -> "Необходимость"
+        // mv_match2: "might" -> "Возможность"
+
+        let answers = { mv_match1: '2', mv_match2: '1' };
+        let score = 0;
+        let total = 2;
+
+        for (let key in answers) {
+            let user = document.getElementById(key).value;
+            if (user === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745';
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('modalmatching-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Вы правильно сопоставили модальные глаголы с их функциями.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте функции модальных глаголов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 3: Radio Quiz (Advanced Modal Verbs)
+     ************************************************************/
+    function checkAdvancedModalQuiz() {
+        // mv3 -> "must"
+        // mv4 -> "Shall"
+        // mv5 -> "can"
+
+        const correct = { mv3: 'must', mv4: 'Shall', mv5: 'can' };
+        let total = 3;
+        let score = 0;
+
+        // mv3
+        let userAnswer3 = '';
+        document.getElementsByName('mv3').forEach(radio => {
+            if (radio.checked) userAnswer3 = radio.value;
+        });
+        if (userAnswer3 === correct.mv3) score++;
+
+        // mv4
+        let userAnswer4 = '';
+        document.getElementsByName('mv4').forEach(radio => {
+            if (radio.checked) userAnswer4 = radio.value;
+        });
+        if (userAnswer4 === correct.mv4) score++;
+
+        // mv5
+        let userAnswer5 = '';
+        document.getElementsByName('mv5').forEach(radio => {
+            if (radio.checked) userAnswer5 = radio.value;
+        });
+        if (userAnswer5 === correct.mv5) score++;
+
+        const feedback = document.getElementById('advancedmodalquiz-feedback');
+        feedback.style.display = 'block';
+
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 4: Drag & Drop (Advanced Modal Verbs)
+     ************************************************************/
+    const dragItemsMV = document.querySelectorAll('.draggable');
+    const dropZoneMV = document.getElementById('drop-zone-mv');
+    let dragSourceMV = null;
+
+    dragItemsMV.forEach(item => {
+        item.addEventListener('dragstart', handleDragStartMV);
+        item.addEventListener('dragend', handleDragEndMV);
+    });
+    dropZoneMV.addEventListener('dragover', handleDragOverMV);
+    dropZoneMV.addEventListener('drop', handleDropMV);
+
+    function handleDragStartMV(e) {
+        dragSourceMV = e.target;
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.target.style.opacity = '0.4';
+    }
+    function handleDragEndMV(e) {
+        e.target.style.opacity = '1';
+    }
+    function handleDragOverMV(e) {
+        e.preventDefault();
+        dropZoneMV.classList.add('dragover');
+    }
+    function handleDropMV(e) {
+        e.preventDefault();
+        dropZoneMV.classList.remove('dragover');
+        if (dragSourceMV) {
+            dropZoneMV.appendChild(dragSourceMV);
+            dragSourceMV = null;
+        }
+    }
+
+    function checkModalDrag() {
+        // "You should see a doctor."
+        const words = Array.from(dropZoneMV.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
+        let userSentence = words.join(' ');
+
+        const correctSentence = "you should see a doctor.";
+        const feedback = document.getElementById('modaldrag-feedback');
+        feedback.style.display = 'block';
+
+        if (userSentence === correctSentence) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Превосходно! Предложение собрано правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
+        }
+    }
+
+    /************************************************************
+     * Задание 5: Modal Verbs Rewrite
+     ************************************************************/
+    function checkModalRewrite() {
+        // mv_rw1: "You must submit the report by tomorrow."
+        // mv_rw2: "He can solve complex problems."
+        // mv_rw3: "You should participate in the workshop."
+
+        let user1 = document.getElementById('mv_rw1').value.trim().toLowerCase();
+        let user2 = document.getElementById('mv_rw2').value.trim().toLowerCase();
+        let user3 = document.getElementById('mv_rw3').value.trim().toLowerCase();
+
+        let score = 0;
+        let total = 3;
+
+        // Первый
+        if (user1 === "you must submit the report by tomorrow" ||
+            user1 === "you must submit the report by tomorrow.") {
+            score++;
+            document.getElementById('mv_rw1').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('mv_rw1').style.border = '2px solid #dc3545';
+        }
+
+        // Второй
+        if (user2 === "he can solve complex problems" ||
+            user2 === "he can solve complex problems.") {
+            score++;
+            document.getElementById('mv_rw2').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('mv_rw2').style.border = '2px solid #dc3545';
+        }
+
+        // Третий
+        if (user3 === "you should participate in the workshop" ||
+            user3 === "you should participate in the workshop.") {
+            score++;
+            document.getElementById('mv_rw3').style.border = '2px solid #28a745';
+        } else {
+            document.getElementById('mv_rw3').style.border = '2px solid #dc3545';
+        }
+
+        const feedback = document.getElementById('modalrewrite-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все предложения переписаны с использованием модальных глаголов правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте использование модальных глаголов.`;
+        }
+    }
+</script>

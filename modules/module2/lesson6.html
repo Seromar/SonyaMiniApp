@@ -1,0 +1,324 @@
+<!-- modules/module2/lesson6.html -->
+
+<style>
+    /* Локальные стили для урока */
+    .lesson-container {
+        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
+        overflow-y: auto; /* Добавление вертикальной прокрутки */
+        padding-right: 10px; /* Отступ для полосы прокрутки */
+    }
+
+    h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .section h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .section p,
+    .section li {
+        color: #333;
+    }
+
+    /* Таблицы */
+    .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .section th, .section td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+    .section th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    /* Примеры использования */
+    .example {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-left: 4px solid #17a2b8;
+        margin-bottom: 10px;
+    }
+
+    /* Кнопка для проверки */
+    .submit-btn {
+        display: inline-block;
+        padding: 10px;
+        background-color: #8e2de2;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #4a00e0;
+    }
+
+    /* Поля ввода и фидбек */
+    .quiz-question {
+        margin-bottom: 15px;
+    }
+    .quiz-question label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .quiz-question input[type="text"],
+    .quiz-question select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+    }
+    .feedback.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .feedback.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Видео и аудио */
+    .media-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .media-container video,
+    .media-container audio {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div class="lesson-container">
+    <h2>Урок 6: Advanced Vocabulary Building (Продвинутое расширение словарного запаса)</h2>
+
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="window.history.back()">
+        <img src="assets/images/back.png" alt="Назад" class="back-icon">
+        Назад
+    </button>
+
+    <!-- 1. Введение -->
+    <div class="section">
+        <h3>Введение</h3>
+        <p>Расширение словарного запаса — ключевой аспект овладения языком. В этом уроке мы рассмотрим стратегии и методы для эффективного увеличения количества выученных слов и их использования в речи.</p>
+    </div>
+
+    <!-- 2. Стратегии запоминания новых слов -->
+    <div class="section">
+        <h3>Стратегии запоминания новых слов</h3>
+        <ul>
+            <li><strong>Мнемонические устройства:</strong> Использование ассоциаций для запоминания значений слов.</li>
+            <li><strong>Контекстуальное обучение:</strong> Запоминание слов через примеры предложений.</li>
+            <li><strong>Регулярное повторение:</strong> Повторение слов через интервалы времени для долгосрочного запоминания.</li>
+            <li><strong>Визуализация:</strong> Создание ментальных образов для ассоциации с новыми словами.</li>
+        </ul>
+    </div>
+
+    <!-- 3. Тематические списки слов -->
+    <div class="section">
+        <h3>Тематические списки слов</h3>
+        <p>Изучение слов по темам помогает лучше их запоминать и использовать в соответствующих контекстах. Вот несколько полезных тем:</p>
+        <ul>
+            <li>Бизнес и экономика</li>
+            <li>Здоровье и медицина</li>
+            <li>Технологии и IT</li>
+            <li>Путешествия и туризм</li>
+            <li>Культура и искусство</li>
+        </ul>
+        <p>Пример тематического списка:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Слово</th>
+                    <th>Перевод</th>
+                    <th>Пример предложения</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Entrepreneur</td>
+                    <td>Предприниматель</td>
+                    <td>She is a successful entrepreneur who founded several startups.</td>
+                </tr>
+                <tr>
+                    <td>Innovation</td>
+                    <td>Инновация</td>
+                    <td>Innovation is crucial for the growth of any business.</td>
+                </tr>
+                <tr>
+                    <td>Revenue</td>
+                    <td>Доход</td>
+                    <td>The company's revenue has increased by 20% this quarter.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Упражнения на использование слов -->
+    <div class="section">
+        <h3>Упражнения на использование слов</h3>
+        <ol>
+            <li>
+                <strong>Заполните пропуски:</strong>
+                <br>
+                The ___ (innovation) brought by the new technology has revolutionized the industry.
+                <br><input type="text" id="avb1" placeholder="Например, innovation">
+            </li>
+            <li>
+                <strong>Составьте предложение:</strong>
+                <br>
+                Используйте слово "entrepreneur" в предложении.
+                <br><input type="text" id="avb2" placeholder="Например, She is a successful entrepreneur.">
+            </li>
+            <li>
+                <strong>Выберите правильный вариант:</strong>
+                <br>
+                Revenue is most closely associated with:
+                <br>
+                <select id="avb3">
+                    <option value="">Выберите ответ</option>
+                    <option value="profit">Прибыль</option>
+                    <option value="income">Доход</option>
+                    <option value="expenses">Расходы</option>
+                </select>
+            </li>
+        </ol>
+        <button class="submit-btn" onclick="checkVocabulary()">Проверить</button>
+        <div class="feedback" id="vocabulary-feedback"></div>
+    </div>
+
+    <!-- 5. Видео урок -->
+    <div class="section">
+        <h3>Видео урок: Эффективные методы запоминания слов</h3>
+        <div class="media-container">
+            <video controls>
+                <source src="assets/videos/vocabulary_tips.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+        <p>Просмотрите видео, чтобы узнать о лучших методах запоминания новых слов.</p>
+    </div>
+
+    <!-- 6. Аудио тренировка -->
+    <div class="section">
+        <h3>Аудио тренировка: Использование новых слов в речи</h3>
+        <div class="media-container">
+            <audio controls>
+                <source src="assets/audios/vocabulary_practice.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает аудио.
+            </audio>
+        </div>
+        <p>Прослушайте примеры использования новых слов и повторите их вслух.</p>
+    </div>
+
+    <!-- 7. Итоги -->
+    <div class="section">
+        <h3>Итоги</h3>
+        <p>Расширение словарного запаса требует регулярной практики и применения различных стратегий. Используйте изученные методы для эффективного запоминания и использования новых слов в повседневной речи.</p>
+    </div>
+</div>
+
+<script>
+    /************************************************************
+     * Задание: Vocabulary Exercises
+     ************************************************************/
+    function checkIdioms() {
+        const answers = {
+            ie1: "don't spill the beans",
+            ie2: "once in a blue moon",
+            ie3: "under the weather"
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+
+        for (let key in answers) {
+            let userInput = document.getElementById(key).value.trim().toLowerCase();
+            if (userInput === answers[key]) {
+                score++;
+                document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
+            } else {
+                document.getElementById(key).style.borderColor = '#dc3545'; // Красный
+            }
+        }
+
+        const feedback = document.getElementById('idioms-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все ответы правильные.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    }
+
+    function checkVocabulary() {
+        const answers = {
+            avb1: 'innovation',
+            avb2: 'She is a successful entrepreneur.',
+            avb3: 'income'
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+
+        for (let key in answers) {
+            let userInput = document.getElementById(key).value.trim().toLowerCase();
+            let correctAnswer = answers[key].toLowerCase();
+
+            if (key === 'avb2') {
+                // Проверка корректности предложения
+                if (userInput === answers[key].toLowerCase()) {
+                    score++;
+                    document.getElementById(key).style.borderColor = '#28a745';
+                } else {
+                    document.getElementById(key).style.borderColor = '#dc3545';
+                }
+            } else {
+                if (userInput === correctAnswer) {
+                    score++;
+                    document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
+                } else {
+                    document.getElementById(key).style.borderColor = '#dc3545'; // Красный
+                }
+            }
+        }
+
+        const feedback = document.getElementById('vocabulary-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все упражнения выполнены правильно.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте свои ответы.`;
+        }
+    }
+</script>
