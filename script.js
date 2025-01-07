@@ -1,4 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
+function getTelegramUserId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('user_id');
+  }
+
+document.addEventListener('DOMContentLoaded', async () => {
     const moduleButtons = document.querySelectorAll('.button[id$="-btn"]');
     const mainButtons = document.getElementById('main-buttons');
     const moduleMenus = document.querySelectorAll('.buttons.hidden[id$="-menu"]');
@@ -9,8 +14,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const lessonDetails = document.getElementById('lesson-details');
     const appHeader = document.getElementById('app-header');
 
+    const userId = getTelegramUserId() || "guest";
+    window.userId = userId; // сохраним глобально
+
+    console.log("Приложение запущено для user_id:", userId);
+
+    // Загрузим данные из localStorage/сервера, если есть
+    await loadUserDataFromServer(userId);
+
+    async function loadUserDataFromServer(userId) {
+        try {
+            const savedDataJson = localStorage.getItem(`appdata_${userId}`);
+            if (!savedDataJson) {
+                console.log("Нет сохранённых данных для", userId);
+                return;
+            }
+            const savedData = JSON.parse(savedDataJson);
+            
+            if (savedData.userStats) {
+                window.userStats = savedData.userStats;
+            }
+            if (savedData.completedItems) {
+                window.completedItems = new Set(savedData.completedItems);
+            }
+            // Пробуем восстановить разблокированные элементы
+            restoreUnlockedItems();
+        } catch (err) {
+            console.error("Ошибка при загрузке данных:", err);
+        }
+    }
+
+    function restoreUnlockedItems() {
+        // Для каждого uniqueID в completedItems повторим
+        // логику разблокировки 
+        // (осторожнее с тем, что unlockNext() может сдвинуть порядок;
+        //  возможно, потребуется более тонкая реализация)
+        for (const uid of window.completedItems) {
+            const [modulePath, filename] = uid.split("-");
+            // Пример: uid="module1-lesson5.html"
+            // modulePath="module1", filename="lesson5.html"
+            unlockNext(modulePath, filename);
+        }
+    }
+    
+    // Пример функции сохранения
+    function saveUserDataToServer(userId) {
+        const dataToSave = {
+            userStats: window.userStats,
+            completedItems: Array.from(window.completedItems)
+        };
+        // локально
+        localStorage.setItem(`appdata_${userId}`, JSON.stringify(dataToSave));
+        // при желании - fetch на сервер
+    }
 
     
+
 
     // Блокируем доступ к модулям 2 и 3 по умолчанию
     const module2Btn = document.getElementById('module2-btn');
@@ -100,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (completedFile.includes('finaltest')) {
                 window.userStats.modulesCompleted += 1;
             }
+
+            saveUserDataToServer(window.userId);
         }
         // --- КОНЕЦ добавленного кода для статистики ---
     
@@ -3151,6 +3212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         statsModal.classList.remove('hidden');
     }
 
-        
+   
     
 });
