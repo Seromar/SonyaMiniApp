@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const appHeader = document.getElementById('app-header');
 
     const userId = getTelegramUserId() || "guest";
-    window.userId = userId; // сохраним глобально
+    window.userId = userId; // сохраним глобальноке
 
     console.log("Приложение запущено для user_id:", userId);
 
