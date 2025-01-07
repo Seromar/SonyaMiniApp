@@ -1,330 +1,258 @@
-<!-- modules/module2/lesson10.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Урок 10: Effective Communication Skills in English</title>
+    <style>
+        /* -- Единый стиль, аналогичный Уроку 4 -- */
 
-<style>
-    /* Локальные стили для урока */
-    .lesson-container {
-        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
-        overflow-y: auto; /* Добавление вертикальной прокрутки */
-        padding-right: 10px; /* Отступ для полосы прокрутки */
-        background-color: #f8f9fa;
-    }
-
-    h2 {
-        text-align: center;
-        color: #343a40;
-    }
-
-    .section {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .section h3 {
-        margin-top: 0;
-        color: #495057;
-    }
-
-    .section p,
-    .section li {
-        color: #495057;
-        line-height: 1.6;
-    }
-
-    /* Таблицы */
-    .section table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-    .section th, .section td {
-        border: 1px solid #dee2e6;
-        padding: 8px;
-    }
-    .section th {
-        background-color: #e9ecef;
-        text-align: left;
-    }
-
-    /* Примеры использования */
-    .example {
-        background-color: #e2e3e5;
-        padding: 10px;
-        border-left: 4px solid #17a2b8;
-        margin-bottom: 10px;
-    }
-
-    /* Кнопка для проверки */
-    .submit-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 10px 0;
-        transition: background-color 0.3s ease;
-    }
-    .submit-btn:hover {
-        background-color: #0069d9;
-    }
-
-    /* Поля ввода и фидбек */
-    .quiz-question {
-        margin-bottom: 15px;
-    }
-    .quiz-question label {
-        display: block;
-        margin-bottom: 5px;
-        color: #343a40;
-    }
-    .quiz-question input[type="text"],
-    .quiz-question select {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-    }
-    .feedback {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 10px;
-        display: none;
-    }
-    .feedback.success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .feedback.error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-
-    /* Видео и аудио */
-    .media-container {
-        text-align: center;
-        margin: 20px 0;
-    }
-
-    .media-container video,
-    .media-container audio {
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* Кнопка "Назад" */
-    .back-button {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background-color: #ffc107;
-        color: #343a40;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin-bottom: 20px;
-        text-decoration: none;
-        width: 150px;
-        justify-content: center;
-        transition: background-color 0.3s;
-    }
-    .back-button:hover {
-        background-color: #e0a800;
-    }
-    .back-icon {
-        width: 20px;
-        height: 20px;
-    }
-</style>
-
-<div class="lesson-container">
-    <h2>Урок 10: Effective Communication Skills in English (Эффективные коммуникативные навыки на английском языке)</h2>
-
-    <!-- Кнопка "Назад" -->
-    <button class="back-button" onclick="window.history.back()">
-        <img src="assets/images/back.png" alt="Назад" class="back-icon">
-        Назад
-    </button>
-
-    <!-- 1. Введение -->
-    <div class="section">
-        <h3>Введение</h3>
-        <p>Эффективные коммуникативные навыки являются основой успешного общения на английском языке. В этом уроке мы рассмотрим ключевые аспекты эффективной коммуникации, включая вербальные и невербальные техники, активное слушание и обратную связь.</p>
-    </div>
-
-    <!-- 2. Основные элементы эффективной коммуникации -->
-    <div class="section">
-        <h3>Основные элементы эффективной коммуникации</h3>
-        <ul>
-            <li><strong>Ясность и точность:</strong> Четкое выражение мыслей и идей.</li>
-            <li><strong>Активное слушание:</strong> Полное внимание к собеседнику.</li>
-            <li><strong>Невербальные сигналы:</strong> Жесты, мимика, зрительный контакт.</li>
-            <li><strong>Обратная связь:</strong> Конструктивные комментарии и уточнения.</li>
-        </ul>
-    </div>
-
-    <!-- 3. Вербальные техники коммуникации -->
-    <div class="section">
-        <h3>Вербальные техники коммуникации</h3>
-        <p>Ключевые аспекты вербальной коммуникации включают:</p>
-        <ul>
-            <li><strong>Использование простого языка:</strong> Избегание сложных конструкций и терминов.</li>
-            <li><strong>Контроль тона голоса:</strong> Поддержание дружелюбного и уверенного тона.</li>
-            <li><strong>Структурирование речи:</strong> Логичное и последовательное изложение мыслей.</li>
-            <li><strong>Использование вопросов:</strong> Вовлечение собеседника через вопросы.</li>
-        </ul>
-    </div>
-
-    <!-- 4. Невербальные техники коммуникации -->
-    <div class="section">
-        <h3>Невербальные техники коммуникации</h3>
-        <p>Невербальные сигналы могут значительно повлиять на восприятие вашей речи:</p>
-        <ul>
-            <li><strong>Зрительный контакт:</strong> Поддержание соответствующего уровня глазного контакта.</li>
-            <li><strong>Жесты и мимика:</strong> Использование выразительных жестов для подкрепления слов.</li>
-            <li><strong>Поза:</strong> Открытая и уверенная поза.</li>
-            <li><strong>Темп речи:</strong> Поддержание умеренного темпа для лучшего понимания.</li>
-        </ul>
-    </div>
-
-    <!-- 5. Примеры использования -->
-    <div class="section">
-        <h3>Примеры использования техник</h3>
-        <div class="example">
-            <p><strong>Situation:</strong> Презентация проекта на работе.</p>
-            <p><strong>Sentence:</strong> "Thank you for attending my presentation. If you have any questions, feel free to ask."</p>
-        </div>
-        <div class="example">
-            <p><strong>Situation:</strong> Обсуждение идеи с коллегой.</p>
-            <p><strong>Sentence:</strong> "I understand your point of view. Let's explore this further together."</p>
-        </div>
-    </div>
-
-    <!-- 6. Практические упражнения -->
-    <div class="section">
-        <h3>Практические упражнения</h3>
-        <ol>
-            <li>
-                <strong>Переведите на английский:</strong>
-                <br>
-                "Спасибо за вашу помощь. Я ценю вашу поддержку."
-                <br><input type="text" id="ecc1" placeholder="Например, Thank you for your help. I appreciate your support.">
-            </li>
-            <li>
-                <strong>Выберите правильный ответ:</strong>
-                <br>
-                "She maintained good ___ during the meeting."
-                <br>
-                <select id="ecc2">
-                    <option value="">Выберите ответ</option>
-                    <option value="eye contact">eye contact</option>
-                    <option value="voice tone">voice tone</option>
-                    <option value="speech speed">speech speed</option>
-                </select>
-            </li>
-            <li>
-                <strong>Заполните пропуски:</strong>
-                <br>
-                "It's important to ___ actively when someone is speaking to you."
-                <br><input type="text" id="ecc3" placeholder="Например, listen">
-            </li>
-        </ol>
-        <button class="submit-btn" onclick="checkEffectiveCommunication()">Проверить</button>
-        <div class="feedback" id="effective-communication-feedback"></div>
-    </div>
-
-    <!-- 7. Видео урок -->
-    <div class="section">
-        <h3>Видео урок: Советы по эффективной коммуникации</h3>
-        <div class="media-container">
-            <video controls>
-                <source src="assets/videos/effective_communication_tips.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
-        </div>
-        <p>Просмотрите видео, чтобы узнать о дополнительных советах по улучшению коммуникативных навыков.</p>
-    </div>
-
-    <!-- 8. Аудио тренировка -->
-    <div class="section">
-        <h3>Аудио тренировка: Практика коммуникативных навыков</h3>
-        <div class="media-container">
-            <audio controls>
-                <source src="assets/audios/effective_communication_practice.mp3" type="audio/mpeg">
-                Ваш браузер не поддерживает аудио.
-            </audio>
-        </div>
-        <p>Прослушайте диалог и выполните упражнения для тренировки навыков эффективной коммуникации.</p>
-    </div>
-
-    <!-- 9. Итоги -->
-    <div class="section">
-        <h3>Итоги</h3>
-        <p>Эффективные коммуникативные навыки позволяют вам ясно и уверенно выражать свои мысли, улучшать взаимодействие с окружающими и достигать поставленных целей. Регулярная практика этих техник приведет к заметному улучшению ваших навыков общения на английском языке.</p>
-    </div>
-</div>
-
-<script>
-    /************************************************************
-     * Задание: Effective Communication Exercises
-     ************************************************************/
-    function checkEffectiveCommunication() {
-        const answers = {
-            ecc1: 'Thank you for your help. I appreciate your support.',
-            ecc2: 'eye contact',
-            ecc3: 'listen'
-        };
-
-        let score = 0;
-        let total = Object.keys(answers).length;
-
-        // Вопрос 1: Перевод
-        let userInput1 = document.getElementById('ecc1').value.trim().toLowerCase();
-        let correctAnswer1 = 'thank you for your help. i appreciate your support.';
-
-        if (userInput1 === correctAnswer1) {
-            score++;
-            document.getElementById('ecc1').style.borderColor = '#28a745'; // Зеленый
-        } else {
-            document.getElementById('ecc1').style.borderColor = '#dc3545'; // Красный
+        .lesson-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            background-color: #333; /* Тёмный фон */
+            padding: 20px;
+            border-radius: 10px;
         }
 
-        // Вопрос 2: Выбор правильного ответа
-        let userChoice2 = document.getElementById('ecc2').value;
-        let correctAnswer2 = 'eye contact';
-
-        if (userChoice2 === correctAnswer2) {
-            score++;
-            document.getElementById('ecc2').style.borderColor = '#28a745';
-        } else {
-            document.getElementById('ecc2').style.borderColor = '#dc3545';
+        h2 {
+            text-align: center;
+            color: #fff; /* Белый цвет заголовка */
         }
 
-        // Вопрос 3: Заполнение пропусков
-        let userInput3 = document.getElementById('ecc3').value.trim().toLowerCase();
-        let correctAnswer3 = 'listen';
-
-        if (userInput3 === correctAnswer3) {
-            score++;
-            document.getElementById('ecc3').style.borderColor = '#28a745';
-        } else {
-            document.getElementById('ecc3').style.borderColor = '#dc3545';
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        const feedback = document.getElementById('effective-communication-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Все ответы правильные.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте свои ответы.`;
+        .section h3 {
+            margin-top: 0;
+            color: #333;
         }
-    }
-</script>
+
+        .section p,
+        .section li {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Таблицы */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        /* Примеры использования */
+        .example {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-left: 4px solid #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        /* Кнопка "Назад" */
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #ffe4c4;
+            color: #000;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: 120px;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #ffc299;
+        }
+        .back-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Кнопка для проверки */
+        .submit-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: #8e2de2;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #4a00e0;
+        }
+
+        /* Поля ввода и фидбек */
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        .quiz-question label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .quiz-question input[type="text"],
+        .quiz-question select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Дополнительно: стили для медиа (видео/аудио) */
+        .media-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .media-container video,
+        .media-container audio {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Стили для кнопки "Next Lesson" */
+        .next-lesson-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+        }
+        .next-lesson-btn:hover {
+            background-color: #0056b3;
+        }
+        .next-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <h2>Урок 10: Effective Communication Skills in English (Эффективные коммуникативные навыки на английском языке)</h2>
+
+        <!-- Кнопка "Назад" -->
+        <button class="back-button"
+                onclick="
+                    // 1. Скрываем контент урока
+                    document.getElementById('lesson-content').classList.add('hidden');
+                    // 2. Очищаем содержимое
+                    document.getElementById('lesson-details').innerHTML = '';
+                    // 3. Показываем снова заголовок приложения
+                    document.getElementById('app-header').classList.remove('hidden');
+                    // 4. Показываем список уроков Модуля 2
+                    document.getElementById('module2-list').classList.remove('hidden');
+                ">
+            <img class="back-icon" src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="Back">
+            Назад
+        </button>
+
+        <!-- 1. Введение -->
+        <div class="section">
+            <h3>Введение</h3>
+            <p>Эффективные коммуникативные навыки являются основой успешного общения на английском языке. В этом уроке мы рассмотрим ключевые аспекты эффективной коммуникации, включая вербальные и невербальные техники, активное слушание и обратную связь.</p>
+        </div>
+
+        <!-- 2. Основные элементы эффективной коммуникации -->
+        <div class="section">
+            <h3>Основные элементы эффективной коммуникации</h3>
+            <ul>
+                <li><strong>Ясность и точность:</strong> Четкое выражение мыслей и идей.</li>
+                <li><strong>Активное слушание:</strong> Полное внимание к собеседнику.</li>
+                <li><strong>Невербальные сигналы:</strong> Жесты, мимика, зрительный контакт.</li>
+                <li><strong>Обратная связь:</strong> Конструктивные комментарии и уточнения.</li>
+            </ul>
+        </div>
+
+        <!-- 3. Вербальные техники коммуникации -->
+        <div class="section">
+            <h3>Вербальные техники коммуникации</h3>
+            <p>Ключевые аспекты вербальной коммуникации включают:</p>
+            <ul>
+                <li><strong>Использование простого языка:</strong> Избегание сложных конструкций и терминов.</li>
+                <li><strong>Контроль тона голоса:</strong> Поддержание дружелюбного и уверенного тона.</li>
+                <li><strong>Структурирование речи:</strong> Логичное и последовательное изложение мыслей.</li>
+                <li><strong>Использование вопросов:</strong> Вовлечение собеседника через вопросы.</li>
+            </ul>
+        </div>
+
+        <!-- 4. Невербальные техники коммуникации -->
+        <div class="section">
+            <h3>Невербальные техники коммуникации</h3>
+            <p>Невербальные сигналы могут значительно повлиять на восприятие вашей речи:</p>
+            <ul>
+                <li><strong>Зрительный контакт:</strong> Поддержание соответствующего уровня глазного контакта.</li>
+                <li><strong>Жесты и мимика:</strong> Использование выразительных жестов для подкрепления слов.</li>
+                <li><strong>Поза:</strong> Открытая и уверенная поза.</li>
+                <li><strong>Темп речи:</strong> Поддержание умеренного темпа для лучшего понимания.</li>
+            </ul>
+        </div>
+
+        <!-- 5. Примеры использования -->
+        <div class="section">
+            <h3>Примеры использования техник</h3>
+            <div class="example">
+                <p><strong>Situation:</strong> Презентация проекта на работе.</p>
+                <p><strong>Sentence:</strong> "Thank you for attending my presentation. If you have any questions, feel free to ask."</p>
+            </div>
+            <div class="example">
+                <p><strong>Situation:</strong> Обсуждение идеи с коллегой.</p>
+                <p><strong>Sentence:</strong> "I understand your point of view. Let's explore this further together."</p>
+            </div>
+        </div>
+
+
+
+        <!-- 8. Итоги -->
+        <div class="section">
+            <h3>Итоги</h3>
+            <p>Эффективные коммуникативные навыки позволяют вам ясно и уверенно выражать свои мысли, улучшать взаимодействие с окружающими и достигать поставленных целей. Регулярная практика этих техник приведет к заметному улучшению ваших навыков общения на английском языке.</p>
+        </div>
+    </div>
+</body>
+</html>

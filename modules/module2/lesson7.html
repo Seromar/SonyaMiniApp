@@ -1,288 +1,273 @@
-<!-- modules/module2/lesson7.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Урок 7: Mastering English Collocations</title>
+    <style>
+        /* -- Единый стиль, аналогичный Уроку 4 -- */
 
-<style>
-    /* Локальные стили для урока */
-    .lesson-container {
-        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
-        overflow-y: auto; /* Добавление вертикальной прокрутки */
-        padding-right: 10px; /* Отступ для полосы прокрутки */
-    }
-
-    h2 {
-        text-align: center;
-        color: #fff;
-    }
-
-    .section {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    .section h3 {
-        margin-top: 0;
-        color: #333;
-    }
-
-    .section p,
-    .section li {
-        color: #333;
-    }
-
-    /* Таблицы */
-    .section table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-    .section th, .section td {
-        border: 1px solid #ccc;
-        padding: 8px;
-    }
-    .section th {
-        background-color: #f2f2f2;
-        text-align: left;
-    }
-
-    /* Примеры использования */
-    .example {
-        background-color: #e9ecef;
-        padding: 10px;
-        border-left: 4px solid #17a2b8;
-        margin-bottom: 10px;
-    }
-
-    /* Кнопка для проверки */
-    .submit-btn {
-        display: inline-block;
-        padding: 10px;
-        background-color: #8e2de2;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 10px 0;
-        transition: background-color 0.3s ease;
-    }
-    .submit-btn:hover {
-        background-color: #4a00e0;
-    }
-
-    /* Поля ввода и фидбек */
-    .quiz-question {
-        margin-bottom: 15px;
-    }
-    .quiz-question label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-    }
-    .quiz-question input[type="text"],
-    .quiz-question select {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .feedback {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 10px;
-        display: none;
-    }
-    .feedback.success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .feedback.error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-
-    /* Видео и аудио */
-    .media-container {
-        text-align: center;
-        margin: 20px 0;
-    }
-
-    .media-container video,
-    .media-container audio {
-        max-width: 100%;
-        height: auto;
-    }
-</style>
-
-<div class="lesson-container">
-    <h2>Урок 7: Mastering English Collocations (Освоение английских коллокаций)</h2>
-
-    <!-- Кнопка "Назад" -->
-    <button class="back-button" onclick="window.history.back()">
-        <img src="assets/images/back.png" alt="Назад" class="back-icon">
-        Назад
-    </button>
-
-    <!-- 1. Введение -->
-    <div class="section">
-        <h3>Введение</h3>
-        <p>**Коллокации** — это сочетания слов, которые часто используются вместе и звучат естественно для носителей языка. Освоение коллокаций улучшает беглость речи и делает её более естественной.</p>
-    </div>
-
-    <!-- 2. Что такое коллокации? -->
-    <div class="section">
-        <h3>Что такое коллокации?</h3>
-        <p>Коллокации — это устойчивые сочетания слов, например:</p>
-        <ul>
-            <li><strong>Make a decision</strong> (принять решение)</li>
-            <li><strong>Heavy rain</strong> (сильный дождь)</li>
-            <li><strong>Fast food</strong> (быстрая еда)</li>
-        </ul>
-        <p>Понимание и использование коллокаций помогает говорить более естественно и понятно для носителей языка.</p>
-    </div>
-
-    <!-- 3. Типы коллокаций -->
-    <div class="section">
-        <h3>Типы коллокаций</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Тип коллокации</th>
-                    <th>Примеры</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Глагол + существительное</td>
-                    <td>Make a mistake, Take a break, Give a presentation</td>
-                </tr>
-                <tr>
-                    <td>Прилагательное + существительное</td>
-                    <td>Strong coffee, High temperature, Quick shower</td>
-                </tr>
-                <tr>
-                    <td>Наречие + прилагательное</td>
-                    <td>Deeply involved, Highly unlikely, Strongly recommend</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- 4. Практические упражнения -->
-    <div class="section">
-        <h3>Практические упражнения</h3>
-        <ol>
-            <li>
-                <strong>Заполните пропуски:</strong>
-                <br>
-                She decided to ___ a new strategy to improve sales.
-                <br><input type="text" id="mc1" placeholder="Например, make">
-            </li>
-            <li>
-                <strong>Составьте предложение:</strong>
-                <br>
-                Используйте коллокацию "take a break" в предложении.
-                <br><input type="text" id="mc2" placeholder="Например, I need to take a break after this meeting.">
-            </li>
-            <li>
-                <strong>Выберите правильную коллокацию:</strong>
-                <br>
-                Which option correctly completes the sentence: "It's ___ rain today."
-                <br>
-                <select id="mc3">
-                    <option value="">Выберите ответ</option>
-                    <option value="strong">strong</option>
-                    <option value="fast">fast</option>
-                    <option value="deep">deep</option>
-                </select>
-            </li>
-        </ol>
-        <button class="submit-btn" onclick="checkCollocations()">Проверить</button>
-        <div class="feedback" id="collocations-feedback"></div>
-    </div>
-
-    <!-- 5. Видео урок -->
-    <div class="section">
-        <h3>Видео урок: Использование коллокаций в речи</h3>
-        <div class="media-container">
-            <video controls>
-                <source src="assets/videos/collocations_tips.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
-        </div>
-        <p>Просмотрите видео, чтобы узнать, как эффективно использовать коллокации в разговорной речи.</p>
-    </div>
-
-    <!-- 6. Аудио тренировка -->
-    <div class="section">
-        <h3>Аудио тренировка: Практика коллокаций</h3>
-        <div class="media-container">
-            <audio controls>
-                <source src="assets/audios/collocations_practice.mp3" type="audio/mpeg">
-                Ваш браузер не поддерживает аудио.
-            </audio>
-        </div>
-        <p>Послушайте примеры предложений с коллокациями и повторите их вслух.</p>
-    </div>
-
-    <!-- 7. Итоги -->
-    <div class="section">
-        <h3>Итоги</h3>
-        <p>Освоение коллокаций делает вашу речь более естественной и беглой. Регулярная практика поможет вам уверенно использовать их в различных контекстах.</p>
-    </div>
-</div>
-
-<script>
-    /************************************************************
-     * Задание: Collocations Exercises
-     ************************************************************/
-    function checkCollocations() {
-        const answers = {
-            mc1: 'make',
-            mc2: 'I need to take a break after this meeting.',
-            mc3: 'strong'
-        };
-
-        let score = 0;
-        let total = Object.keys(answers).length;
-
-        for (let key in answers) {
-            let userInput = document.getElementById(key).value.trim().toLowerCase();
-            let correctAnswer = answers[key].toLowerCase();
-
-            if (key === 'mc2') {
-                // Проверка корректности предложения
-                if (userInput === answers[key].toLowerCase()) {
-                    score++;
-                    document.getElementById(key).style.border = '2px solid #28a745';
-                } else {
-                    document.getElementById(key).style.border = '2px solid #dc3545';
-                }
-            } else if (key === 'mc3') {
-                if (userInput === correctAnswer) {
-                    score++;
-                    document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
-                } else {
-                    document.getElementById(key).style.borderColor = '#dc3545'; // Красный
-                }
-            } else {
-                if (userInput === correctAnswer) {
-                    score++;
-                    document.getElementById(key).style.borderColor = '#28a745'; // Зеленый
-                } else {
-                    document.getElementById(key).style.borderColor = '#dc3545'; // Красный
-                }
-            }
+        .lesson-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            background-color: #333; /* Тёмный фон */
+            padding: 20px;
+            border-radius: 10px;
         }
 
-        const feedback = document.getElementById('collocations-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Все упражнения выполнены правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте свои ответы.`;
+        h2 {
+            text-align: center;
+            color: #fff; /* Белый цвет заголовка */
         }
-    }
-</script>
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .section p,
+        .section li {
+            color: #333;
+        }
+
+        /* Таблицы */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        /* Примеры использования */
+        .example {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-left: 4px solid #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        /* Кнопка "Назад" */
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #ffe4c4;
+            color: #000;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: 120px;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #ffc299;
+        }
+        .back-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Кнопка для проверки */
+        .submit-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: #8e2de2;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #4a00e0;
+        }
+
+        /* Поля ввода и фидбек */
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        .quiz-question label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .quiz-question input[type="text"],
+        .quiz-question select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Дополнительно: стили для медиа (видео/аудио) */
+        .media-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .media-container video,
+        .media-container audio {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Кнопка "Next Lesson" (если требуется) */
+        .next-lesson-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+        }
+        .next-lesson-btn:hover {
+            background-color: #0056b3;
+        }
+        .next-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <h2>Урок 7: Mastering English Collocations (Освоение английских коллокаций)</h2>
+
+        <!-- Кнопка "Назад" -->
+        <button class="back-button"
+                onclick="
+                    // 1. Скрываем контент урока
+                    document.getElementById('lesson-content').classList.add('hidden');
+                    // 2. Очищаем содержимое
+                    document.getElementById('lesson-details').innerHTML = '';
+                    // 3. Показываем снова заголовок приложения
+                    document.getElementById('app-header').classList.remove('hidden');
+                    // 4. Показываем список уроков Модуля 2
+                    document.getElementById('module2-list').classList.remove('hidden');
+                ">
+            <img class="back-icon" src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="Back">
+            Назад
+        </button>
+
+        <!-- 1. Введение -->
+        <div class="section">
+            <h3>Введение</h3>
+            <p><strong>Коллокации</strong> — это сочетания слов, которые часто используются вместе и звучат естественно для носителей языка. Освоение коллокаций улучшает беглость речи и делает её более естественной.</p>
+        </div>
+
+        <!-- 2. Что такое коллокации? -->
+        <div class="section">
+            <h3>Что такое коллокации?</h3>
+            <p>Коллокации — это устойчивые сочетания слов, например:</p>
+            <ul>
+                <li><strong>Make a decision</strong> (принять решение)</li>
+                <li><strong>Heavy rain</strong> (сильный дождь)</li>
+                <li><strong>Fast food</strong> (быстрая еда)</li>
+            </ul>
+            <p>Понимание и использование коллокаций помогает говорить более естественно и понятно для носителей языка.</p>
+        </div>
+
+        <!-- 3. Типы коллокаций -->
+        <div class="section">
+            <h3>Типы коллокаций</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Тип коллокации</th>
+                        <th>Примеры</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Глагол + существительное</td>
+                        <td>Make a mistake, Take a break, Give a presentation</td>
+                    </tr>
+                    <tr>
+                        <td>Прилагательное + существительное</td>
+                        <td>Strong coffee, High temperature, Quick shower</td>
+                    </tr>
+                    <tr>
+                        <td>Наречие + прилагательное</td>
+                        <td>Deeply involved, Highly unlikely, Strongly recommend</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. Видео урок -->
+        <div class="section">
+            <h3>Видео урок: Использование коллокаций в речи</h3>
+            <div class="media-container">
+                <video controls>
+                    <source src="/assets/videos/video3.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            </div>
+            <p>Просмотрите видео, чтобы узнать, как эффективно использовать коллокации в разговорной речи.</p>
+        </div>
+
+        <!-- 5. Аудио тренировка -->
+        <div class="section">
+            <h3>Аудио тренировка: Практика коллокаций</h3>
+            <div class="media-container">
+                <audio controls>
+                    <source src="/assets/audios/audio3.mp3" type="audio/mpeg">
+                    Ваш браузер не поддерживает аудио.
+                </audio>
+            </div>
+            <p>Послушайте примеры предложений с коллокациями и повторите их вслух.</p>
+        </div>
+
+        <!-- 6. Итоги -->
+        <div class="section">
+            <h3>Итоги</h3>
+            <p>Освоение коллокаций делает вашу речь более естественной и беглой. Регулярная практика поможет вам уверенно использовать их в различных контекстах.</p>
+        </div>
+    </div>
+
+    <script>
+        // Здесь вы можете добавить дополнительные скрипты для интерактивных упражнений, если необходимо.
+    </script>
+</body>
+</html>

@@ -9,152 +9,276 @@ document.addEventListener('DOMContentLoaded', () => {
     const lessonDetails = document.getElementById('lesson-details');
     const appHeader = document.getElementById('app-header');
 
-    // --- НОВОЕ: обработчик для кнопки "Назад" в lesson1 (пример) ---
-    const backToModule1LessonBtn = document.getElementById('back-to-module1-lessons');
-    if (backToModule1LessonBtn) {
-        backToModule1LessonBtn.addEventListener('click', () => {
-            lessonContent.classList.add('hidden');
-            lessonDetails.innerHTML = '';
-            appHeader.classList.remove('hidden');
-            const module1List = document.getElementById('module1-list');
-            if (module1List) {
-                module1List.classList.remove('hidden');
-            }
-        });
+
+    
+
+    // Блокируем доступ к модулям 2 и 3 по умолчанию
+    const module2Btn = document.getElementById('module2-btn');
+    const module3Btn = document.getElementById('module3-btn');
+    if (module2Btn) {
+        module2Btn.disabled = true;
+        module2Btn.classList.add('disabled');
     }
-    // --- КОНЕЦ НОВОГО ---
+    if (module3Btn) {
+        module3Btn.disabled = true;
+        module3Btn.classList.add('disabled');
+    }
 
-    // Функция для создания элементов "Тест"
+    // Блокируем кнопки «Итоговый тест» по умолчанию
+    const finalTestButtons = document.querySelectorAll('.final-test-btn');
+    finalTestButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+    });
+
+    // --- Функции-помощники ---
+    
+    function getNextModule(modulePath) {
+        const modules = ['module1', 'module2', 'module3'];
+        const i = modules.indexOf(modulePath);
+        if (i === -1 || i === modules.length - 1) return null;
+        return modules[i + 1];
+    }
+
+    function unlockFinalTestInModule(modulePath) {
+        const finalBtn = document.querySelector(`.final-test-btn[data-module="${modulePath}"]`);
+        if (finalBtn) {
+            finalBtn.disabled = false;
+            finalBtn.classList.remove('disabled');
+        }
+    }
+
+    function unlockNextModule(modulePath) {
+        const nextModule = getNextModule(modulePath);
+        if (nextModule) {
+            const nextModuleBtn = document.getElementById(`${nextModule}-btn`);
+            if (nextModuleBtn) {
+                nextModuleBtn.disabled = false;
+                nextModuleBtn.classList.remove('disabled');
+            }
+        }
+    }
+
+    /**
+     * Разблокировать следующий элемент (следующий урок/тест) — НО без автоклика!
+     * completedFile: 'lesson3.html' или 'test1.html'
+     */
+    function unlockNext(modulePath, completedFile) {
+        const container = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
+        if (!container) return;
+    
+        const currentEl = container.querySelector(
+            `[data-lesson="${completedFile}"], [data-test="${completedFile}"]`
+        );
+        if (!currentEl) return;
+    
+        const order = parseInt(currentEl.dataset.order, 10);
+        const nextOrder = order + 1;
+        const nextEl = container.querySelector(`[data-order="${nextOrder}"]`);
+        if (nextEl) {
+            nextEl.disabled = false;
+            nextEl.classList.remove('locked', 'disabled');
+        }
+    
+        // --- ДОБАВЛЯЕМ УЧЁТ СТАТИСТИКИ ---
+        const uniqueID = `${modulePath}-${completedFile}`; 
+        // Чтобы не дублировать, проверим, не проходил ли уже
+        if (!window.completedItems.has(uniqueID)) {
+            window.completedItems.add(uniqueID);
+    
+            // Если это урок...
+            if (completedFile.includes('lesson')) {
+                window.userStats.lessonsCompleted += 1;
+            }
+            // Если это какой-то тест (промежуточный или итоговый)
+            if (completedFile.includes('test')) {
+                window.userStats.testsCompleted += 1;
+            }
+    
+            // Если это именно финальный тест (finaltest.html или finaltest2.html / finaltest3.html),
+            // считаем что модуль завершён
+            if (completedFile.includes('finaltest')) {
+                window.userStats.modulesCompleted += 1;
+            }
+        }
+        // --- КОНЕЦ добавленного кода для статистики ---
+    
+        // --- Остальная логика unlockNext (разблокировка итестов/модулей) ---
+        if (completedFile.includes('lesson10.html')) {
+            unlockFinalTestInModule(modulePath);
+        }
+        if (completedFile === 'finaltest.html') {
+            unlockNextModule(modulePath);
+        }
+    }
+
+    // --- Создание кнопки «Тест N» ---
     function createTestElement(testNumber, modulePath) {
-        const testBtn = document.createElement('button');
-        testBtn.textContent = `Тест ${testNumber}`;
-        testBtn.classList.add('test-button');
-        testBtn.dataset.test = `test${testNumber}.html`;
-        testBtn.dataset.module = modulePath;
-
-        testBtn.addEventListener('click', () => {
-            const testFile = testBtn.dataset.test;
-            const modulePathValue = testBtn.dataset.module;
-            // Пример для папки "modules/module1": fetch(`modules/${modulePathValue}/${testFile}`)
-            fetch(`modules/${modulePathValue}/${testFile}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
+        const btn = document.createElement('button');
+        btn.textContent = `Тест ${testNumber}`;
+        // Изначально блокируем
+        btn.classList.add('test-button', 'locked', 'disabled');
+        btn.dataset.test = `test${testNumber}.html`;
+        btn.dataset.module = modulePath;
+        // Порядок для сортировки
+        btn.dataset.order = testNumber * 2;
+    
+        // Важно: изначально disabled
+        btn.disabled = true;
+    
+        btn.addEventListener('click', () => {
+            if (btn.disabled) return; // нажимать нельзя, пока заблокирован
+    
+            const file = btn.dataset.test;
+            fetch(`modules/${modulePath}/${file}`)
+                .then(r => {
+                    if (!r.ok) throw new Error('Network error');
+                    return r.text();
                 })
-                .then(data => {
-                    loadContent(data, modulePathValue);
-                })
-                .catch(error => {
-                    console.error('Ошибка при загрузке теста:', error);
-                    alert('Не удалось загрузить тест. Попробуйте позже.');
+                .then(html => loadContent(html, modulePath))
+                .catch(e => {
+                    console.error('Ошибка:', e);
+                    alert('Не удалось загрузить тест.');
                 });
         });
-
-        return testBtn;
+        return btn;
     }
 
-    // Функция для добавления кнопки "Далее" или "Перейти к тесту"
+    // --- Количество уроков ---
+    function getTotalLessons(modulePath) {
+        const data = { module1: 10, module2: 10, module3: 10 };
+        return data[modulePath] || 0;
+    }
+
+    // --- Уроков на один тест (3) ---
+    function getTestsPerModule(modulePath) {
+        const data = { module1: 3, module2: 3, module3: 3 };
+        return data[modulePath] || 3;
+    }
+
+    // --- Кнопка «Далее» (на уроке) ---
     function addNextLessonButton(currentLessonNumber, modulePath) {
-        const existingNextBtn = lessonDetails.querySelector('.next-lesson-btn');
-        if (existingNextBtn) return;
-        
-        // Создаём кнопку
-        const nextBtn = document.createElement('button');
-        nextBtn.classList.add('next-lesson-btn', 'submit-btn');
+        const exists = lessonDetails.querySelector('.next-lesson-btn');
+        if (exists) return;
+
+        const btn = document.createElement('button');
+        btn.classList.add('next-lesson-btn', 'submit-btn');
+
+        // Если это 10-й урок => «Перейти к итоговому тесту»
+        if (currentLessonNumber === getTotalLessons(modulePath)) {
+            btn.textContent = 'Перейти к итоговому тесту';
+            btn.addEventListener('click', () => {
+                // Для модуля 2 используем finaltest2.html
+                // Для модуля 3 используем finaltest3.html
+                // Для остальных — finaltest.html
+                let finalFile = 'finaltest.html';
+                if (modulePath === 'module2') {
+                    finalFile = 'finaltest2.html';
+                } else if (modulePath === 'module3') {
+                    finalFile = 'finaltest3.html';
+                }
     
-        // Проверяем: это 10-й (последний) урок?
-        if (currentLessonNumber === 10) {
-            // Добавляем кнопку "Перейти к итоговому тесту"
-            nextBtn.textContent = 'Перейти к итоговому тесту';
-            nextBtn.addEventListener('click', () => {
-                // Загружаем finaltest.html из нужной папки:
-                fetch(`modules/${modulePath}/finaltest.html`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
+                fetch(`modules/${modulePath}/${finalFile}`)
+                    .then(r => {
+                        if (!r.ok) throw new Error('Network');
+                        return r.text();
                     })
-                    .then(data => {
-                        loadContent(data, modulePath);
+                    .then(html => {
+                        loadContent(html, modulePath);
+                        // Разблокируем итоговый тест (т.к. пользователь дошёл до 10 урока)
+                        unlockNext(modulePath, `lesson${currentLessonNumber}.html`);
                     })
-                    .catch(error => {
-                        console.error('Ошибка при загрузке итогового теста:', error);
-                        alert('Не удалось загрузить итоговый тест. Попробуйте позже.');
-                    });
+                    .catch(e => console.error(e));
             });
         } else {
-            // Обычная логика
-            const testsPerModule = getTestsPerModule(modulePath);
-            if (currentLessonNumber % testsPerModule === 0) {
-                // «Перейти к тесту»
-                const testNumber = currentLessonNumber / testsPerModule;
-                nextBtn.textContent = 'Перейти к тесту';
-                nextBtn.addEventListener('click', () => {
+            // Не последний урок
+            const tpm = getTestsPerModule(modulePath);
+            // Если currentLessonNumber % tpm === 0 => пора на тест
+            if (currentLessonNumber % tpm === 0) {
+                const testNumber = currentLessonNumber / tpm;
+                btn.textContent = 'Перейти к тесту';
+                btn.addEventListener('click', () => {
                     const testFile = `test${testNumber}.html`;
+                    // 1) Разблокируем следующий элемент (т.к. урок пройден)
+                    unlockNext(modulePath, `lesson${currentLessonNumber}.html`);
+                    // 2) Загружаем тест
                     fetch(`modules/${modulePath}/${testFile}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.text();
+                        .then(r => {
+                            if (!r.ok) throw new Error('Network');
+                            return r.text();
                         })
-                        .then(data => {
-                            loadContent(data, modulePath);
+                        .then(html => {
+                            loadContent(html, modulePath);
                         })
-                        .catch(error => {
-                            console.error('Ошибка при загрузке теста:', error);
-                            alert('Не удалось загрузить тест. Попробуйте позже.');
+                        .catch(e => console.error(e));
+                });
+            } else {
+                // Обычный урок => «Далее» (загружаем сразу следующий урок)
+                btn.textContent = 'Далее';
+                btn.addEventListener('click', () => {
+                    // 1) Разблокируем следующий элемент
+                    unlockNext(modulePath, `lesson${currentLessonNumber}.html`);
+
+                    // 2) Сразу загружаем следующий урок
+                    const nextLessonFile = `lesson${currentLessonNumber + 1}.html`;
+                    fetch(`modules/${modulePath}/${nextLessonFile}`)
+                        .then(r => {
+                            if (!r.ok) throw new Error('Network error');
+                            return r.text();
+                        })
+                        .then(html => {
+                            loadContent(html, modulePath);
+                        })
+                        .catch(e => {
+                            console.error('Ошибка при загрузке следующего урока:', e);
+                            alert('Не удалось загрузить следующий урок.');
                         });
                 });
-            } else {
-                // «Далее»
-                const nextLessonNumber = currentLessonNumber + 1;
-                nextBtn.textContent = 'Далее';
-                nextBtn.addEventListener('click', () => {
-                    const nextLessonBtn = document.querySelector(
-                        `.lessons-container[data-module="${modulePath}"] .lesson-button[data-lesson="lesson${nextLessonNumber}.html"]`
-                    );
-                    if (nextLessonBtn) {
-                        nextLessonBtn.click();
-                    } else {
-                        alert('Следующий урок не найден. Возможно, это последний урок.');
-                    }
-                });
             }
         }
-    
-        // Вставляем кнопку после последнего .section
-        const allSections = lessonDetails.querySelectorAll('.section');
-        if (allSections.length > 0) {
-            const lastSection = allSections[allSections.length - 1];
-            lastSection.insertAdjacentElement('afterend', nextBtn);
+
+        const sections = lessonDetails.querySelectorAll('.section');
+        if (sections.length > 0) {
+            sections[sections.length - 1].insertAdjacentElement('afterend', btn);
         } else {
-            lessonDetails.appendChild(nextBtn);
+            lessonDetails.appendChild(btn);
         }
     }
 
+    // --- Кнопка «Далее» после теста ---
     function addNextTestButton(currentTestNumber, modulePath) {
+        const existingNextBtn = lessonDetails.querySelector('.next-test-btn');
+        if (existingNextBtn) return;
+    
         const nextBtn = document.createElement('button');
-        nextBtn.classList.add('next-lesson-btn', 'submit-btn');
+        nextBtn.classList.add('next-test-btn', 'submit-btn');
         nextBtn.textContent = 'Далее';
     
-        // Допустим, после теста N идёт урок (3*N + 1)
-        const nextLessonNumber = currentTestNumber * 3 + 1;
+        // Формула следующего урока: (текущий тест N) => следующий урок = 3*N + 1
+        const nextLessonNumber = currentTestNumber * getTestsPerModule(modulePath) + 1;
     
         nextBtn.addEventListener('click', () => {
-            const nextLessonBtn = document.querySelector(
-                `.lessons-container[data-module="${modulePath}"] .lesson-button[data-lesson="lesson${nextLessonNumber}.html"]`
-            );
-            if (nextLessonBtn) {
-                nextLessonBtn.click();
-            } else {
-                alert('Следующий урок не найден. Возможно, это последний урок.');
-            }
+            // Считаем, что пользователь «завершил» этот тест:
+            const completedTestFile = `test${currentTestNumber}.html`;
+            unlockNext(modulePath, completedTestFile);
+    
+            // Сразу грузим следующий урок 
+            const nextLessonFile = `lesson${nextLessonNumber}.html`;
+            fetch(`modules/${modulePath}/${nextLessonFile}`)
+                .then(r => {
+                    if (!r.ok) throw new Error('Network error');
+                    return r.text();
+                })
+                .then(html => {
+                    loadContent(html, modulePath);
+                })
+                .catch(e => {
+                    console.error('Ошибка при загрузке следующего урока:', e);
+                    alert('Не удалось загрузить следующий урок.');
+                });
         });
     
+        // Добавляем кнопку «Далее» под контентом
         const allSections = lessonDetails.querySelectorAll('.section');
         if (allSections.length > 0) {
             const lastSection = allSections[allSections.length - 1];
@@ -164,227 +288,185 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-   // Функция loadContent(...)
-    function loadContent(data, modulePath) {
-        lessonDetails.innerHTML = data;
+    // --- Загрузка контента (урок или тест) ---
+    function loadContent(html, modulePath) {
+        lessonDetails.innerHTML = html;
         mainButtons.classList.add('hidden');
-        moduleMenus.forEach(menu => menu.classList.add('hidden'));
-        lessonsListContainers.forEach(container => container.classList.add('hidden'));
+        moduleMenus.forEach(m => m.classList.add('hidden'));
+        lessonsListContainers.forEach(c => c.classList.add('hidden'));
         lessonContent.classList.remove('hidden');
-        appHeader.classList.add('hidden'); 
+        appHeader.classList.add('hidden');
 
-        // === Смотрим: это урок или тест? ===
-        if (data.includes('Тест') || data.includes('Test')) {
-            // Парсим номер теста
-            const testNumberRegex = /Тест\s+(\d+)/i; 
-            const matchTest = data.match(testNumberRegex);
-            if (matchTest && matchTest[1]) {
-                const currentTestNumber = parseInt(matchTest[1], 10);
-                addNextTestButton(currentTestNumber, modulePath);
+        // Определяем, тест это или урок
+        if (html.includes('Тест') || html.includes('Test')) {
+            // Парсим номер (Тест 1, Тест 2...)
+            const re = /Тест\s+(\d+)/i;
+            const match = html.match(re);
+            if (match && match[1]) {
+                const testNum = parseInt(match[1], 10);
+                addNextTestButton(testNum, modulePath);
             }
-            
-            // --- Если это "Итоговый тест" (или содержит "finaltest.html"), добавим кнопку "Закончить" ---
-            if (data.includes('Итоговый тест') || data.includes('finaltest.html')) {
-                addFinishButtonForModule1();
+            // Итоговый тест?
+            if (html.includes('Итоговый тест') || html.includes('finaltest.html')) {
+                addFinishButton(modulePath);
             }
         } else {
-            // Это урок, добавляем кнопку "Далее"
-            const regex = /Урок\s+(\d+)/i;
-            const match = data.match(regex);
+            // Это урок
+            const re = /Урок\s+(\d+)/i;
+            const match = html.match(re);
             if (match && match[1]) {
-                const currentLessonNumber = parseInt(match[1], 10);
-                addNextLessonButton(currentLessonNumber, modulePath);
-
-                // **Новая часть: если загружается урок 10, инициализируем Drag & Drop**
-                if (currentLessonNumber === 10) {
+                const lessonNum = parseInt(match[1], 10);
+                addNextLessonButton(lessonNum, modulePath);
+                // Урок 10 => возможно, инициализация DnD
+                if (lessonNum === 10) {
                     initializeLesson10();
                 }
             }
         }
     }
 
-    // Функция добавляет кнопку "Закончить" в конец .quiz (для итогового теста)
-    function addFinishButtonForModule1() {
+    // --- Кнопка «Закончить» (итоговый тест) ---
+    function addFinishButton(modulePath) {
         const quizDiv = lessonDetails.querySelector('.quiz');
         if (!quizDiv) return;
-
         if (quizDiv.querySelector('.finish-btn')) return;
 
-        const finishBtn = document.createElement('button');
-        finishBtn.classList.add('finish-btn');
-        finishBtn.textContent = 'Закончить';
+        const btn = document.createElement('button');
+        btn.classList.add('finish-btn');
+        btn.textContent = 'Закончить';
 
-        finishBtn.style.marginTop = '20px';
-        finishBtn.style.width = '100%';
-        finishBtn.style.backgroundColor = '#17a2b8';
-        finishBtn.style.color = '#fff';
-        finishBtn.style.border = 'none';
-        finishBtn.style.borderRadius = '10px';
-        finishBtn.style.fontSize = '18px';
-        finishBtn.style.padding = '10px';
-        finishBtn.style.cursor = 'pointer';
-        finishBtn.style.transition = 'background-color 0.3s ease';
+        // Стили (вынести в CSS при желании)
+        btn.style.width = '100%'; 
+        btn.style.marginTop = '20px';
+        btn.style.backgroundColor = '#17a2b8';
+        btn.style.color = '#fff';
+        btn.style.borderRadius = '10px';
+        btn.style.fontSize = '18px';
 
-        finishBtn.addEventListener('click', () => {
-            document.getElementById('lesson-content').classList.add('hidden');
-            document.getElementById('lesson-details').innerHTML = '';
-            document.getElementById('app-header').classList.remove('hidden');
-            document.getElementById('module1-menu').classList.remove('hidden');
+        btn.addEventListener('click', () => {
+            // Скрываем контент
+            lessonContent.classList.add('hidden');
+            lessonDetails.innerHTML = '';
+            appHeader.classList.remove('hidden');
+            // Показываем меню текущего модуля
+            document.getElementById(`${modulePath}-menu`).classList.remove('hidden');
+            // Разблокируем следующий модуль
+            unlockNextModule(modulePath);
         });
 
         const feedbackDiv = quizDiv.querySelector('.feedback');
         if (feedbackDiv) {
-            feedbackDiv.insertAdjacentElement('afterend', finishBtn);
+            feedbackDiv.insertAdjacentElement('afterend', btn);
         } else {
-            quizDiv.appendChild(finishBtn);
+            quizDiv.appendChild(btn);
         }
     }
 
-    // Добавление кнопки итогового теста (если нужно)
-    function addFinalTest(modulePath) {
-        const testBtn = document.createElement('button');
-        testBtn.textContent = `Итоговый тест`;
-        testBtn.classList.add('test-button');
-        testBtn.dataset.test = `finaltest.html`;
-        testBtn.dataset.module = modulePath;
-
-        testBtn.addEventListener('click', () => {
-            const testFile = testBtn.dataset.test;
-            const modulePathValue = testBtn.dataset.module;
-            fetch(`modules/${modulePathValue}/${testFile}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    loadContent(data, modulePathValue);
-                })
-                .catch(error => {
-                    console.error('Ошибка при загрузке итогового теста:', error);
-                    alert('Не удалось загрузить итоговый тест. Попробуйте позже.');
-                });
-        });
-
-        lessonDetails.appendChild(testBtn);
-    }
-
-    // Общее количество уроков (пример)
-    function getTotalLessons(modulePath) {
-        const moduleData = {
-            'module1': 10,
-            'module2': 10,
-            'module3': 10
-        };
-        return moduleData[modulePath] || 0;
-    }
-
-    // Сколько уроков между тестами
-    function getTestsPerModule(modulePath) {
-        const testsPerModuleData = {
-            'module1': 3,
-            'module2': 3,
-            'module3': 3
-        };
-        return testsPerModuleData[modulePath] || 3;
-    }
-
-    // Переход в меню модуля
-    moduleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const modulePath = button.id.replace('-btn', '');
-            mainButtons.classList.add('hidden');
-            moduleMenus.forEach(menu => menu.classList.toggle('hidden', menu.id !== `${modulePath}-menu`));
-        });
-    });
-
-    // Назад к списку модулей
-    backToMainBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            moduleMenus.forEach(menu => menu.classList.add('hidden'));
-            mainButtons.classList.remove('hidden');
-        });
-    });
-
-    // Переход к списку уроков модуля
-    const lessonsButtons = document.querySelectorAll('.lessons-btn');
-    lessonsButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modulePath = btn.dataset.module;
-            moduleMenus.forEach(menu => menu.classList.add('hidden'));
-            lessonsListContainers.forEach(container => {
-                container.classList.toggle('hidden', container.dataset.module !== modulePath);
-            });
-            lessonContent.classList.add('hidden');
-            lessonDetails.innerHTML = '';
-        });
-    });
-
-    // Назад к меню модуля
-    backToModuleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const moduleNum = btn.id.replace('back-to-module', '');
-            const modulePath = `module${moduleNum}`;
-            lessonsListContainers.forEach(container => container.classList.add('hidden'));
-            moduleMenus.forEach(menu => {
-                if (menu.id === `${modulePath}-menu`) {
-                    menu.classList.remove('hidden');
-                }
-            });
-            lessonContent.classList.add('hidden');
-            lessonDetails.innerHTML = '';
-        });
-    });
-
-    // Автоматически создать список уроков + промежуточные тесты
+    // --- populateLessons: создаём уроки и промежуточные тесты (блокируем все кроме первого урока) ---
     function populateLessons(modulePath, totalLessons, testsPerModule) {
-        const lessonsList = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
-        if (!lessonsList) return;
-        const backToModuleBtn = lessonsList.querySelector(`#back-to-module${modulePath.slice(-1)}`);
-
+        const container = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
+        if (!container) return;
+        const backBtn = container.querySelector(`#back-to-module${modulePath.slice(-1)}`);
+        let order = 1;
+    
         for (let i = 1; i <= totalLessons; i++) {
             const lessonBtn = document.createElement('button');
             lessonBtn.textContent = `Урок ${i}`;
-            lessonBtn.classList.add('lesson-button');
+            // Изначально блокируем
+            lessonBtn.classList.add('lesson-button', 'locked', 'disabled');
             lessonBtn.dataset.lesson = `lesson${i}.html`;
             lessonBtn.dataset.module = modulePath;
-
+            lessonBtn.dataset.order = order;
+    
+            // Только Урок №1 разблокирован:
+            if (i === 1) {
+                lessonBtn.disabled = false;
+                lessonBtn.classList.remove('locked', 'disabled');
+            } else {
+                lessonBtn.disabled = true;
+            }
+    
             lessonBtn.addEventListener('click', () => {
-                const lessonFile = lessonBtn.dataset.lesson;
-                const modulePathValue = lessonBtn.dataset.module;
-                fetch(`modules/${modulePathValue}/${lessonFile}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
+                if (lessonBtn.disabled) return;
+                const file = lessonBtn.dataset.lesson;
+                fetch(`modules/${modulePath}/${file}`)
+                    .then(r => {
+                        if (!r.ok) throw new Error('Network error');
+                        return r.text();
                     })
-                    .then(data => {
-                        loadContent(data, modulePathValue);
-                    })
-                    .catch(error => {
-                        console.error('Ошибка при загрузке урока:', error);
-                        alert('Не удалось загрузить урок. Попробуйте позже.');
+                    .then(html => loadContent(html, modulePath))
+                    .catch(e => {
+                        console.error(e);
+                        alert('Ошибка загрузки урока.');
                     });
             });
-
-            // Вставляем кнопку урока перед кнопкой "Назад"
-            lessonsList.insertBefore(lessonBtn, backToModuleBtn);
-
-            // После каждых testsPerModule уроков — вставляем промежуточный тест (кроме последнего урока)
+    
+            container.insertBefore(lessonBtn, backBtn);
+            order++;
+    
+            // После каждого 3-го урока (testsPerModule = 3), но не после 10-го
             if (i % testsPerModule === 0 && i < totalLessons) {
                 const testNumber = i / testsPerModule;
-                const testElement = createTestElement(testNumber, modulePath);
-                lessonsList.insertBefore(testElement, backToModuleBtn);
+                const testEl = createTestElement(testNumber, modulePath);
+                testEl.dataset.order = order;
+                container.insertBefore(testEl, backBtn);
+                order++;
             }
         }
     }
 
-    // Инициализируем списки уроков (пример на 10 уроков в каждом модуле)
+    // Инициализация уроков
     populateLessons('module1', 10, 3);
     populateLessons('module2', 10, 3);
     populateLessons('module3', 10, 3);
+
+    // Кнопки модулей => показываем меню
+    moduleButtons.forEach(b => {
+        b.addEventListener('click', () => {
+            const mp = b.id.replace('-btn', '');
+            mainButtons.classList.add('hidden');
+            moduleMenus.forEach(mm => {
+                mm.classList.add('hidden');
+                if (mm.id === `${mp}-menu`) mm.classList.remove('hidden');
+            });
+        });
+    });
+
+    // Кнопка «Назад к списку модулей»
+    backToMainBtns.forEach(b => {
+        b.addEventListener('click', () => {
+            moduleMenus.forEach(m => m.classList.add('hidden'));
+            mainButtons.classList.remove('hidden');
+        });
+    });
+
+    // Кнопка «Уроки»
+    const lessonsBtns = document.querySelectorAll('.lessons-btn');
+    lessonsBtns.forEach(b => {
+        b.addEventListener('click', () => {
+            const mp = b.dataset.module;
+            moduleMenus.forEach(m => m.classList.add('hidden'));
+            lessonsListContainers.forEach(c => {
+                c.classList.toggle('hidden', c.dataset.module !== mp);
+            });
+            lessonContent.classList.add('hidden');
+            lessonDetails.innerHTML = '';
+        });
+    });
+
+    // Кнопка «Назад к меню модуля»
+    backToModuleBtns.forEach(b => {
+        b.addEventListener('click', () => {
+            const n = b.id.replace('back-to-module', '');
+            const mp = `module${n}`;
+            lessonsListContainers.forEach(c => c.classList.add('hidden'));
+            moduleMenus.forEach(m => {
+                if (m.id === `${mp}-menu`) m.classList.remove('hidden');
+            });
+            lessonContent.classList.add('hidden');
+            lessonDetails.innerHTML = '';
+        });
+    });
 
     // Делаем loadContent доступной глобально
     window.loadContent = loadContent;
@@ -393,48 +475,54 @@ document.addEventListener('DOMContentLoaded', () => {
      * Функция проверки Теста 1
      */
     window.checkTest = function() {
-        const answers = {
-            tq1: 'thank you',
-            tq2: 'are',
-            tq3: 'am',
-            tq4: 'good morning',
-            tq5: 'bought',
-            tq6: 'goes',
-            tq7: 'how are you',
-            tq8: 'have',
-            tq9: 'was',
-            tq10: 'sorry, i am late'
-        };
+    // Подбираем корректные ответы под реальные вопросы
+    const answers = {
+        tq1: 'thank you',       // Q1: "Спасибо" -> "thank you"
+        tq2: 'are',             // Q2: "They ___ students." -> "are"
+        tq3: 'am',              // Q3: "I ___ happy." -> "am"
+        tq4: 'доброе утро',     // Q4: "Good morning" in Russian -> "доброе утро" 
+                                //   (или "dobroe utro" — на ваше усмотрение)
+        tq5: 'is',              // Q5: "She ___ a doctor." -> "is"
+        tq6: 'are',             // Q6: "They ___ here." -> "are"
+        tq7: 'goodbye',         // Q7: "До свидания" -> "goodbye"
+        tq8: 'am',              // Q8: "I ___ a student." -> "am"
+        tq9: 'is',              // Q9: "He ___ a teacher." -> "is"
+        tq10: 'excuse me'       // Q10: "Извините" -> "excuse me"
+    };
 
-        let score = 0;
-        const total = Object.keys(answers).length;
+    let score = 0;
+    const total = Object.keys(answers).length;
 
-        for (const key in answers) {
-            const input = document.getElementById(key);
-            if (!input) continue;
+    for (const key in answers) {
+        const input = document.getElementById(key);
+        if (!input) continue;
 
-            const userAnswer = input.value.trim().toLowerCase();
-            const correctAnswer = answers[key].toLowerCase();
+        // Считываем ответ
+        const userAnswer = input.value.trim().toLowerCase();
+        const correctAnswer = answers[key].toLowerCase();
 
-            if (userAnswer === correctAnswer) {
-                score++;
-                input.style.borderColor = '#28a745'; // зеленый
-            } else {
-                input.style.borderColor = '#dc3545'; // красный
-            }
-        }
-
-        const feedback = document.getElementById('test-feedback');
-        if (!feedback) return;
-
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+        if (userAnswer === correctAnswer) {
+            score++;
+            // Подсветим зелёным
+            input.style.borderColor = '#28a745';
         } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+            // Подсветим красным
+            input.style.borderColor = '#dc3545';
         }
+    }
+
+    // Отображаем результат
+    const feedback = document.getElementById('test-feedback');
+    if (!feedback) return;
+
+    feedback.style.display = 'block';
+    if (score === total) {
+        feedback.className = 'feedback success';
+        feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+    } else {
+        feedback.className = 'feedback error';
+        feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+    }
     };
 
     /**
@@ -495,17 +583,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * Функция проверки Теста 3
      */
     window.checkTest3 = function() {
+        // Подбираем ответы в соответствии с вопросами в HTML
         const answers = {
-            q1: 'had known',
-            q2: 'i should have warned you, but i forgot.',
-            q3: 'have I seen',
-            q4: 'finish',
-            q5: 'what i need is some rest.',
-            q6: 'were',
-            q7: 'would have acted',
-            q8: 'if she hadn’t been late, she would be helping us now.',
-            q9: 'she must have been very tired.',
-            q10: 'attend'
+            q1: 'he should have come yesterday', 
+            q2: 'had known',
+            q3: 'should have',
+            q4: 'if i were rich, i would be traveling around the world.',
+            q5: 'might have',
+            q6: 'would have',
+            q7: 'i could have helped if i had known.',
+            q8: 'could have',
+            q9: 'must have',
+            q10: "if they hadn't been late, they would have caught the train."
         };
 
         let score = 0;
@@ -515,55 +604,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = document.getElementById(key);
             if (!input) continue;
 
-            let userAnswer = '';
-            if (input.tagName.toLowerCase() === 'select') {
-                userAnswer = input.value.trim().toLowerCase();
-            } else {
-                userAnswer = input.value.trim().toLowerCase();
-            }
-
+            // Считываем ответ пользователя
+            let userAnswer = input.value.trim().toLowerCase();
+            // Удалим финальную точку, если она есть, чтобы не мешала проверке
+            userAnswer = userAnswer.replace(/\.+$/, '');
+            
+            // Правильный ответ
             let correctAnswer = answers[key].toLowerCase();
+            // Аналогично, если хотите, убираем у правильного ответа финальную точку
+            correctAnswer = correctAnswer.replace(/\.+$/, '');
 
-            // Для некоторых вопросов можно принимать варианты ответов
-            if (key === 'q2') {
-                const acceptableAnswers = [
-                    'i should have warned you, but i forgot.',
-                    'i should have warned you but i forgot.',
-                    'i should have warned you but forgot.',
-                    'i should have warned you but i forgot'
-                ];
-                if (acceptableAnswers.includes(userAnswer)) {
-                    correctAnswer = userAnswer; // Всё в порядке
-                } else {
-                    correctAnswer = 'incorrect';
-                }
-            } else if (key === 'q5') {
-                const acceptableAnswers = [
-                    'what i need is some rest.',
-                    'what i need is some rest'
-                ];
-                if (acceptableAnswers.includes(userAnswer)) {
-                    correctAnswer = userAnswer;
-                } else {
-                    correctAnswer = 'incorrect';
-                }
-            } else if (key === 'q8') {
-                const acceptableAnswers = [
-                    'if she hadn’t been late, she would be helping us now.',
-                    "if she hadn't been late, she would be helping us now."
-                ];
-                if (acceptableAnswers.includes(userAnswer)) {
-                    correctAnswer = userAnswer;
-                } else {
-                    correctAnswer = 'incorrect';
-                }
-            }
-
-            if (userAnswer === correctAnswer && correctAnswer !== 'incorrect') {
+            // Проверка точного совпадения
+            if (userAnswer === correctAnswer) {
                 score++;
-                input.style.borderColor = '#28a745'; // зеленый
+                input.style.borderColor = '#28a745'; // Зеленый
             } else {
-                input.style.borderColor = '#dc3545'; // красный
+                input.style.borderColor = '#dc3545'; // Красный
             }
         }
 
@@ -581,19 +637,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
-     * Функция проверки Итогового теста
+     * Функция проверки Итогового теста (finaltest.html)
      */
     window.checkFinalTest = function() {
+        // Теперь ответы соответствуют реальному содержимому finaltest.html
         const answers = {
-            q1: 'if i had studied harder, i would have passed the exam',
+            // 1) "If I ___ (to know) about your plan..." => "had known"
+            q1: 'had known',
+            // 2) "Я должен был предупредить тебя, но забыл." => перфектный модальный
             q2: 'i should have warned you, but i forgot.',
+            // 3) "Never ___ (I / to see) such an incredible performance." => "have I seen"
             q3: 'have i seen',
+            // 4) "It is crucial that he ___ (to finish) the project..." => "finish"
             q4: 'finish',
+            // 5) "What I need is some rest."
             q5: 'what i need is some rest',
+            // 6) смешанное условие: "If she ___ here now..."
+            // (в вашем примере: "were")
             q6: 'were',
+            // 7) "Had I known the truth, I ___ differently." => "would have acted"
             q7: 'would have acted',
+            // 8) "Если бы она не опоздала, она бы помогала нам сейчас"
+            // Ожидается: "if she hadn’t been late, she would be helping us now"
             q8: 'if she hadn’t been late, she would be helping us now',
+            // 9) "She must have been very tired."
             q9: 'she must have been very tired',
+            // 10) "The boss insists that she ___ (to attend) the meeting" => "attend"
             q10: 'attend'
         };
 
@@ -613,8 +682,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let correctAnswer = answers[key].toLowerCase();
 
-            // Для некоторых вопросов можно принимать варианты ответов
+            // Добавим "допустимые ответы" для некоторых вопросов
             if (key === 'q2') {
+                // Вопрос 2: "I should have warned you, but I forgot." — несколько способов
                 const acceptableAnswers = [
                     'i should have warned you, but i forgot.',
                     'i should have warned you but i forgot.',
@@ -622,11 +692,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     'i should have warned you but i forgot'
                 ];
                 if (acceptableAnswers.includes(userAnswer)) {
-                    correctAnswer = userAnswer; // Всё в порядке
+                    correctAnswer = userAnswer; // Принимаем как верный
                 } else {
                     correctAnswer = 'incorrect';
                 }
             } else if (key === 'q5') {
+                // Вопрос 5: "What I need is some rest." — без/с точкой
                 const acceptableAnswers = [
                     'what i need is some rest',
                     'what i need is some rest.'
@@ -637,9 +708,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     correctAnswer = 'incorrect';
                 }
             } else if (key === 'q8') {
+                // Вопрос 8: "If she hadn’t been late, she would be helping us now."
+                // Добавим все популярные варианты (прямой апостроф, наклонный апостроф, бэктик)
                 const acceptableAnswers = [
-                    'if she hadn’t been late, she would be helping us now',
-                    "if she hadn't been late, she would be helping us now"
+                    "if she hadn't been late, she would be helping us now",
+                    "if she hadn’t been late, she would be helping us now",
+                    "if she hadn`t been late, she would be helping us now"
                 ];
                 if (acceptableAnswers.includes(userAnswer)) {
                     correctAnswer = userAnswer;
@@ -647,6 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     correctAnswer = 'incorrect';
                 }
             } else if (key === 'q9') {
+                // Вопрос 9: "She must have been very tired." — без/с точкой
                 const acceptableAnswers = [
                     'she must have been very tired',
                     'she must have been very tired.'
@@ -658,6 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // Окончательная проверка
             if (userAnswer === correctAnswer && correctAnswer !== 'incorrect') {
                 score++;
                 input.style.borderColor = '#28a745'; // зеленый
@@ -680,10 +756,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Добавление кнопки "Итоговый тест" для каждого модуля
-    const finalTestButtons = document.querySelectorAll('.final-test-btn');
+   
+    
     finalTestButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
         btn.addEventListener('click', () => {
             const modulePath = btn.dataset.module;
+            let testFile = 'finaltest.html';  // По умолчанию для module1
+            if (modulePath === 'module2') {
+                testFile = 'finaltest2.html';
+            }
+
             fetch(`modules/${modulePath}/finaltest.html`)
                 .then(response => {
                     if (!response.ok) {
@@ -2007,138 +2091,1066 @@ document.addEventListener('DOMContentLoaded', () => {
      * Инициализация Drag & Drop для урока 10
      */
     function initializeLesson10() {
-        //---------------------------------
-        // ЗАДАНИЕ 4 (Inversion)
-        //---------------------------------
-        // 2 контейнера: начальный (container10a) и dropZone1 (drop-zone)
-        const container4 = document.getElementById('container10a');
-        const dropZone4 = document.getElementById('drop-zone');
+        // --- Задание 4 ---
         const dragItems1 = document.querySelectorAll('.draggable1');
+        const dropZone1 = document.getElementById('drop-zone');
     
-        // Обработка всех слов draggable1
         dragItems1.forEach(item => {
-            // DRAGSTART: запоминаем, откуда пользователь берет элемент
-            item.addEventListener('dragstart', e => {
+            // Запоминаем, где слово лежало изначально
+            item.dataset.originParent = item.parentElement.id;
+    
+            item.addEventListener('dragstart', function(e) {
+                // Указываем, что переносим по "id"
                 e.dataTransfer.setData('text/plain', e.target.id);
                 e.dataTransfer.effectAllowed = 'move';
-                // Ставим флажок dropped=false (не упал)
-                item.dataset.dropped = 'false';
-                // Запоминаем id текущего родителя
-                item.dataset.originParent = item.parentElement.id;
-                item.style.opacity = '0.4';
+                // Ставим флажок: "ещё не упало"
+                item.dataset.dropped = "false";
+                e.target.style.opacity = '0.4';
             });
     
-            // DRAGEND: если dropped=false, вернём слово обратно
-            item.addEventListener('dragend', e => {
-                item.style.opacity = '1';
-                if (item.dataset.dropped === 'false') {
-                    // Ищем родительский контейнер
+            item.addEventListener('dragend', function(e) {
+                e.target.style.opacity = '1';
+                // Если dropped осталось "false", значит уронили мимо drop-zone
+                if (item.dataset.dropped === "false") {
+                    // Возвращаем в родной контейнер
                     const origin = document.getElementById(item.dataset.originParent);
                     origin.appendChild(item);
                 }
             });
         });
     
-        // Сделаем и container4, и dropZone4 «droppable»
-    
-        // container4 (начальный) как зона сброса
-        container4.addEventListener('dragover', e => {
+        dropZone1.addEventListener('dragover', function(e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
-            container4.classList.add('dragover');
+            dropZone1.classList.add('dragover');
         });
-        container4.addEventListener('dragleave', e => {
-            container4.classList.remove('dragover');
+    
+        dropZone1.addEventListener('dragleave', function(e) {
+            dropZone1.classList.remove('dragover');
         });
-        container4.addEventListener('drop', e => {
+    
+        dropZone1.addEventListener('drop', function(e) {
             e.preventDefault();
-            container4.classList.remove('dragover');
+            dropZone1.classList.remove('dragover');
+            // Получаем id
             const id = e.dataTransfer.getData('text/plain');
-            const dragged = document.getElementById(id);
-            dragged.dataset.dropped = 'true';  // упал успешно
-            container4.appendChild(dragged);
+            const draggedElement = document.getElementById(id);
+            // Помечаем, что упал успешно
+            draggedElement.dataset.dropped = "true";
+            dropZone1.appendChild(draggedElement);
         });
     
-        // dropZone4 (целевой)
-        dropZone4.addEventListener('dragover', e => {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            dropZone4.classList.add('dragover');
-        });
-        dropZone4.addEventListener('dragleave', e => {
-            dropZone4.classList.remove('dragover');
-        });
-        dropZone4.addEventListener('drop', e => {
-            e.preventDefault();
-            dropZone4.classList.remove('dragover');
-            const id = e.dataTransfer.getData('text/plain');
-            const dragged = document.getElementById(id);
-            dragged.dataset.dropped = 'true'; // упал успешно
-            dropZone4.appendChild(dragged);
-        });
-    
-    
-        //---------------------------------
-        // ЗАДАНИЕ 8 (What-cleft)
-        //---------------------------------
-        // 2 контейнера: начальный (container10b) и dropZone2
-        const container8 = document.getElementById('container10b');
-        const dropZone8 = document.getElementById('drop-zone2');
+        // --- Задание 8 ---
         const dragItems2 = document.querySelectorAll('.draggable2');
+        const dropZone2 = document.getElementById('drop-zone2');
     
         dragItems2.forEach(item => {
-            item.addEventListener('dragstart', e => {
+            // Запоминаем родительский контейнер
+            item.dataset.originParent = item.parentElement.id;
+    
+            item.addEventListener('dragstart', function(e) {
                 e.dataTransfer.setData('text/plain', e.target.id);
                 e.dataTransfer.effectAllowed = 'move';
-                item.dataset.dropped = 'false';
-                item.dataset.originParent = item.parentElement.id;
-                item.style.opacity = '0.4';
+                item.dataset.dropped = "false";
+                e.target.style.opacity = '0.4';
             });
     
-            item.addEventListener('dragend', e => {
-                item.style.opacity = '1';
-                if (item.dataset.dropped === 'false') {
+            item.addEventListener('dragend', function(e) {
+                e.target.style.opacity = '1';
+                // Если флажок не установился -> возвращаем обратно
+                if (item.dataset.dropped === "false") {
                     const origin = document.getElementById(item.dataset.originParent);
                     origin.appendChild(item);
                 }
             });
         });
     
-        // container8 как зона сброса
-        container8.addEventListener('dragover', e => {
+        dropZone2.addEventListener('dragover', function(e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
-            container8.classList.add('dragover');
-        });
-        container8.addEventListener('dragleave', e => {
-            container8.classList.remove('dragover');
-        });
-        container8.addEventListener('drop', e => {
-            e.preventDefault();
-            container8.classList.remove('dragover');
-            const id = e.dataTransfer.getData('text/plain');
-            const dragged = document.getElementById(id);
-            dragged.dataset.dropped = 'true';
-            container8.appendChild(dragged);
+            dropZone2.classList.add('dragover');
         });
     
-        // dropZone8 (целевой) 
-        dropZone8.addEventListener('dragover', e => {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            dropZone8.classList.add('dragover');
+        dropZone2.addEventListener('dragleave', function(e) {
+            dropZone2.classList.remove('dragover');
         });
-        dropZone8.addEventListener('dragleave', e => {
-            dropZone8.classList.remove('dragover');
-        });
-        dropZone8.addEventListener('drop', e => {
+    
+        dropZone2.addEventListener('drop', function(e) {
             e.preventDefault();
-            dropZone8.classList.remove('dragover');
+            dropZone2.classList.remove('dragover');
             const id = e.dataTransfer.getData('text/plain');
-            const dragged = document.getElementById(id);
-            dragged.dataset.dropped = 'true';
-            dropZone8.appendChild(dragged);
+            const draggedElement = document.getElementById(id);
+            draggedElement.dataset.dropped = "true";
+            dropZone2.appendChild(draggedElement);
         });
     }
+
+    /**
+ * Функция добавляет кнопку "Закончить" в конец .quiz (для итогового теста)
+ * @param {string} modulePath - путь текущего модуля, например "module1"
+ */
+    function addFinishButton(modulePath) {
+        const quizDiv = lessonDetails.querySelector('.quiz');
+        if (!quizDiv) return;
+    
+        if (quizDiv.querySelector('.finish-btn')) return;
+        const finishBtn = document.createElement('button');
+        finishBtn.classList.add('finish-btn');
+        finishBtn.textContent = 'Закончить';
+    
+        // Стилизация (можно вынести в CSS)
+        finishBtn.style.marginTop = '20px';
+        finishBtn.style.width = '100%';
+        finishBtn.style.backgroundColor = '#17a2b8';
+        finishBtn.style.color = '#fff';
+        finishBtn.style.border = 'none';
+        finishBtn.style.borderRadius = '10px';
+        finishBtn.style.fontSize = '18px';
+        finishBtn.style.padding = '10px';
+        finishBtn.style.cursor = 'pointer';
+        finishBtn.style.transition = 'background-color 0.3s ease';
+    
+        finishBtn.addEventListener('click', () => {
+            // Скрываем контент, возвращаемся в меню текущего модуля
+            lessonContent.classList.add('hidden');
+            lessonDetails.innerHTML = '';
+            appHeader.classList.remove('hidden');
+            document.getElementById(`${modulePath}-menu`).classList.remove('hidden');
+    
+            // Разблокируем следующий модуль
+            unlockNextModule(modulePath);
+        });
+    
+        const feedbackDiv = quizDiv.querySelector('.feedback');
+        if (feedbackDiv) {
+            feedbackDiv.insertAdjacentElement('afterend', finishBtn);
+        } else {
+            quizDiv.appendChild(finishBtn);
+        }
+    }
+
+    /**
+     * Функция проверки Итогового теста для Модуля 2
+     * (см. finaltest2.html)
+     */
+    window.checkFinalTest2 = function() {
+        // Составляем объект ответов: ключи соответствуют ID (q21, q22, ...)
+        const answers = {
+            q21: 'if i had known in advance, i would have prepared',
+            q22: 'have i heard',
+            q23: 'arrive',
+            q24: 'what i want is some peace and quiet',
+            q25: 'would have left',
+            q26: 'had been',
+            q27: 'he should have arrived earlier',
+            q28: 'had realized',
+            q29: 'must have had',
+            q210: 'it was her kindness that impressed me the most'
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const key in answers) {
+            const input = document.getElementById(key);
+            if (!input) continue;
+
+            let userAnswer = input.value.trim().toLowerCase();
+            // Снимем финальные точки, если они есть
+            userAnswer = userAnswer.replace(/\.+$/, '');
+            let correctAnswer = answers[key].toLowerCase();
+
+            // При необходимости добавляем "acceptableAnswers" для вариантов
+            if (key === 'q27') {
+                // Допустим, принимаем "He must have arrived earlier."
+                // или "He should have arrived earlier."
+                const accept = [
+                    'he should have arrived earlier',
+                    'he must have arrived earlier'
+                ];
+                if (accept.includes(userAnswer)) {
+                    correctAnswer = userAnswer; 
+                } else {
+                    correctAnswer = 'incorrect';
+                }
+            } 
+            else if (key === 'q24') {
+                // "What I want is some peace and quiet."
+                // Принимаем вариант с точкой?
+                const accept = [
+                    'what i want is some peace and quiet',
+                    'what i want is some peace and quiet.'
+                ];
+                if (accept.includes(userAnswer)) {
+                    correctAnswer = userAnswer;
+                } else {
+                    correctAnswer = 'incorrect';
+                }
+            }
+
+            // Проверка совпадения
+            if (userAnswer === correctAnswer && correctAnswer !== 'incorrect') {
+                score++;
+                input.style.borderColor = '#28a745';
+            } else {
+                input.style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('finaltest2-feedback');
+        if (!feedback) return;
+
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    /**
+     * Тест 1 (Модуль 2): Advanced Verb Tenses
+     * ID вопросов: q1..q10 (каждый свой)
+     */
+    window.checkTest1 = function() {
+        // Правильные ответы
+        const answers = {
+            q1: 'had finished',             // #1 If she ___ her work early...
+            q2: 'will have been living',    // #2 By this time next year, I ___
+            q3: 'had + been + глагол-ing',  // #3 Past Perfect Continuous
+            q4: 'they have been building the bridge since 2018 and it\'s still not finished', 
+                                            // #4 (упростим проверку, можно более гибко)
+            q5: 'had known',                // #5 If I ___ about the traffic...
+            q6: 'has been working',         // #6 She ___ (тут Present Perfect Continuous)
+            q7: 'will have finished',       // #7 By the time you arrive, we ___
+            q8: 'she had been reading the book when i called', 
+                                            // #8 Convert to Past Perf. Continuous
+            q9: 'had left',                 // #9 If they ___ earlier...
+            q10: 'will have been studying'  // #10 By the end of this month, I ___
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const key in answers) {
+            const userEl = document.getElementById(key);
+            if (!userEl) continue; // на случай опечаток
+            // Считываем ответ
+            let userAnswer = userEl.value.trim().toLowerCase();
+            // Удалим финальную точку, если есть
+            userAnswer = userAnswer.replace(/\.+$/, '');
+
+            let correctAnswer = answers[key].toLowerCase();
+
+            // Можно добавить "варианты ответов" для тех вопросов, где допускаются синонимы
+            // if (key === 'q4') { ... }
+
+            // Проверяем точное совпадение (или делаем более гибко)
+            if (userAnswer === correctAnswer) {
+                score++;
+                userEl.style.borderColor = '#28a745'; // зеленый
+            } else {
+                userEl.style.borderColor = '#dc3545'; // красный
+            }
+        }
+
+        // Показываем результат
+        const feedback = document.getElementById('test1-feedback');
+        if (feedback) {
+            feedback.style.display = 'block';
+            if (score === total) {
+                feedback.className = 'feedback success';
+                feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+            }
+        }
+    };
+
+
+    /**
+     * Тест 2 (Модуль 2): Phrasal Verbs and Idiomatic Expressions
+     * ID вопросов: q1..q10 (каждый свой)
+     */
+    window.checkTest2 = function() {
+        const answers = {
+            q1: 'take care of someone/something', // #1 look after
+            q2: 'give away',                      // #2 She decided to ___
+            q3: 'dogs',                           // #3 It's raining cats and ___
+            q4: 'to initiate conversation',       // #4 break the ice
+            q5: 'wind down',                      // #5 After a long day, he likes to ___
+            q6: 'fix up',                         // #6 I need to ___ my car
+            q7: 'reveal a secret',                // #7 spill the beans
+            q8: 'tear down',                      // #8 They decided to ___ the old building
+            q9: 'blue',                           // #9 once in a ___ moon
+            q10: 'reject an offer'                // #10 turn down
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const key in answers) {
+            const userEl = document.getElementById(key);
+            if (!userEl) continue;
+            let userAnswer = userEl.value.trim().toLowerCase();
+            // Снимем точку или вопросительный знак, если есть
+            userAnswer = userAnswer.replace(/[.?!]+$/, '');
+
+            let correctAnswer = answers[key].toLowerCase();
+
+            // Для фразовых глаголов можно допустить варианты (например, 'give away' vs 'giveaway'),
+            // но в примере всё строго :)
+            if (userAnswer === correctAnswer) {
+                score++;
+                userEl.style.borderColor = '#28a745';
+            } else {
+                userEl.style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('test2-feedback');
+        if (feedback) {
+            feedback.style.display = 'block';
+            if (score === total) {
+                feedback.className = 'feedback success';
+                feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+            }
+        }
+    };
+
+
+    /**
+     * Тест 3 (Модуль 2): Advanced Conditional Structures
+     * ID вопросов: q1..q10 (каждый свой)
+     */
+    window.checkTest3 = function() {
+        const answers = {
+            q1: 'had',            // #1 If I ___ (had) more time
+            q2: 'had known',      // #2 If they ___ about the traffic...
+            q3: 'if he had exercised, he wouldn\'t be out of shape now', 
+                                // #3 Mixed cond: didn't exercise -> out of shape now
+            q4: 'should',         // #4 If you ___ see her
+            q5: 'were',           // #5 If I ___ (were) you
+            q6: 'had studied',    // #6 If she ___ harder
+            q7: 'if they had invested in stocks, they would be wealthy now',
+                                // #7 Mixed cond
+            q8: 'might',          // #8 If he ___ come to the meeting
+            q9: 'had left',       // #9 If you ___ earlier
+            q10: 'had known'      // #10 If I ___ about the concert, I would be attending
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const key in answers) {
+            const userEl = document.getElementById(key);
+            if (!userEl) continue;
+            let userAnswer = userEl.value.trim().toLowerCase();
+            userAnswer = userAnswer.replace(/\.+$/, '');
+
+            let correctAnswer = answers[key].toLowerCase();
+
+            // Можно допустить варианты с апострофом etc.
+            if (userAnswer === correctAnswer) {
+                score++;
+                userEl.style.borderColor = '#28a745';
+            } else {
+                userEl.style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('test3-feedback');
+        if (feedback) {
+            feedback.style.display = 'block';
+            if (score === total) {
+                feedback.className = 'feedback success';
+                feedback.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+            }
+        }
+    };
+
+    window.checkIdioms = function() {
+        // Массив или объект с "правильными" ответами
+        const answers = {
+            ie1: "don't spill the beans",
+            ie2: "once in a blue moon",
+            ie3: "under the weather"
+        };
+    
+        let score = 0;
+        let total = Object.keys(answers).length;
+    
+        // 1) Проверка поля ie1
+        let user1 = document.getElementById('ie1').value.trim().toLowerCase();
+        if (user1 === answers.ie1) {
+            score++;
+            document.getElementById('ie1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('ie1').style.borderColor = '#dc3545';
+        }
+    
+        // 2) Проверка поля ie2
+        let user2 = document.getElementById('ie2').value.trim().toLowerCase();
+        if (user2 === answers.ie2) {
+            score++;
+            document.getElementById('ie2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('ie2').style.borderColor = '#dc3545';
+        }
+    
+        // 3) Проверка селекта ie3
+        let user3 = document.getElementById('ie3').value;
+        if (user3 === answers.ie3) {
+            score++;
+            document.getElementById('ie3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('ie3').style.borderColor = '#dc3545';
+        }
+    
+        const feedback = document.getElementById('idioms-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все ответы верны.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+
+    window.checkPhrasalVerbs = function() {
+        const answers = {
+            pe1: "don't spill the beans", // Пример (можно менять под реальную задачу)
+            pe2: "turn down",
+            pe3: "turn down"
+        };
+    
+        let score = 0;
+        const total = Object.keys(answers).length;
+    
+        // 1) Проверка поля pe1
+        let user1 = document.getElementById('pe1').value.trim().toLowerCase();
+        // Удаляем финальную точку
+        user1 = user1.replace(/\.+$/, '');
+        if (user1 === answers.pe1) {
+            score++;
+            document.getElementById('pe1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('pe1').style.borderColor = '#dc3545';
+        }
+    
+        // 2) Проверка поля pe2
+        let user2 = document.getElementById('pe2').value.trim().toLowerCase();
+        user2 = user2.replace(/\.+$/, '');
+        if (user2 === answers.pe2) {
+            score++;
+            document.getElementById('pe2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('pe2').style.borderColor = '#dc3545';
+        }
+    
+        // 3) Проверка селекта pe3
+        let user3 = document.getElementById('pe3').value;
+        if (user3 === answers.pe3) {
+            score++;
+            document.getElementById('pe3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('pe3').style.borderColor = '#dc3545';
+        }
+    
+        const feedback = document.getElementById('phrasal-verbs-feedback');
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = 'Отлично! Все ответы верны.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    // Функция проверки итогового теста для Модуля 3
+    window.checkFinalTest3 = function() {
+        // Правильные ответы
+        const answers = {
+            q31: 'realized', 
+            q32: 'had started',
+            q33: 'did we expect',
+            q34: 'what is crucial now is your determination',
+            q35: 'it is honesty that i need more than anything',
+            q36: 'be',
+            q37: 'would have spoken',
+            q38: 'must have done',
+            q39: 'hadn’t forgotten',  // принимаем варианты апострофа: hadn’t / hadn't
+            q310: 'what i really want is a bit of peace'
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const key in answers) {
+            const input = document.getElementById(key);
+            if (!input) continue;
+
+            // Считываем ответ
+            let userAnswer = '';
+            if (input.tagName.toLowerCase() === 'select') {
+                userAnswer = input.value.trim().toLowerCase();
+            } else {
+                userAnswer = input.value.trim().toLowerCase();
+            }
+
+            // Удаляем точки/апострофы, если хотите (или добавляйте "acceptableAnswers")
+            userAnswer = userAnswer.replace(/\.+$/, '');
+
+            let correctAnswer = answers[key].toLowerCase();
+
+            // Добавим варианты, если нужно
+            // Если q39: hadn’t / hadn't
+            if (key === 'q39') {
+                const variants = [
+                    'hadn’t forgotten',
+                    "hadn't forgotten"
+                ];
+                if (variants.includes(userAnswer)) {
+                    correctAnswer = userAnswer;
+                } else {
+                    correctAnswer = 'incorrect';
+                }
+            }
+            
+            // Проверка
+            if (userAnswer === correctAnswer && correctAnswer !== 'incorrect') {
+                score++;
+                input.style.borderColor = '#28a745';
+            } else {
+                input.style.borderColor = '#dc3545';
+            }
+        }
+
+        const feedback = document.getElementById('finaltest3-feedback');
+        if (!feedback) return;
+
+        feedback.style.display = 'block';
+        if (score === total) {
+            feedback.className = 'feedback success';
+            feedback.textContent = `Превосходно! Все ответы верны (${score} из ${total}).`;
+        } else {
+            feedback.className = 'feedback error';
+            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    /******************************************************************************
+     *            ФУНКЦИИ ДЛЯ ПРОВЕРКИ ТЕСТОВ МОДУЛЯ 3
+     ******************************************************************************/
+
+    // === Тест 1: Advanced Grammar Test (test1.html) ===
+    window.checkAdvancedGrammarTest1 = function() {
+        // Пример правильных ответов (корректируйте на свои):
+        // Задание 1: tg1, tg2
+        // "If she _______ (have) more time, she _______ (travel) abroad."
+        // "The report _______ (submit) by the end of the day."
+        // Пусть будет:
+        // tg1: "had, would travel"
+        // tg2: "must be submitted" (либо "should be submitted", в зависимости от ваших условий)
+
+        const correctAnswers = {
+            tg1: ["had, would travel", "had would travel"], 
+            tg2: ["must be submitted", "should be submitted", "is to be submitted"] // можно несколько вариантов
+        };
+
+        let score = 0;
+        let total = 2;
+
+        // tg1
+        let user1 = document.getElementById('tg1').value.trim().toLowerCase();
+        // Удаляем лишние точки/запятые
+        user1 = user1.replace(/[.,]+$/g, '');
+        // Проверяем, входит ли ответ в массив допустимых
+        if (correctAnswers.tg1.map(a => a.toLowerCase()).includes(user1)) {
+            score++;
+            document.getElementById('tg1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg1').style.borderColor = '#dc3545';
+        }
+
+        // tg2
+        let user2 = document.getElementById('tg2').value.trim().toLowerCase();
+        user2 = user2.replace(/[.,]+$/g, '');
+        if (correctAnswers.tg2.map(a => a.toLowerCase()).includes(user2)) {
+            score++;
+            document.getElementById('tg2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg2').style.borderColor = '#dc3545';
+        }
+
+        // Показываем результат
+        const fb = document.getElementById('advancedgrammartest1-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Отлично! Все ответы верны (${score} из ${total}).`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    window.checkSentenceTransformationTest1 = function() {
+        // Задание 2 (test1.html): Преобразование предложений
+        // "The experiment was conducted by the research team."
+        // "They have finished the project."
+        // "If I were the manager, I would implement new policies."
+
+        // Примерные "правильные" варианты (подстраивайтесь под вашу логику)
+        const correctAnswers = {
+            tg_rw1: "the research team conducted the experiment",
+            tg_rw2: "the project has been finished by them",
+            tg_rw3: "if i were the manager, i would implement new policies"
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1)
+        let user1 = document.getElementById('tg_rw1').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user1 === correctAnswers.tg_rw1) {
+            score++;
+            document.getElementById('tg_rw1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_rw1').style.borderColor = '#dc3545';
+        }
+
+        // 2)
+        let user2 = document.getElementById('tg_rw2').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user2 === correctAnswers.tg_rw2) {
+            score++;
+            document.getElementById('tg_rw2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_rw2').style.borderColor = '#dc3545';
+        }
+
+        // 3)
+        let user3 = document.getElementById('tg_rw3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user3 === correctAnswers.tg_rw3) {
+            score++;
+            document.getElementById('tg_rw3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_rw3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('sentencetransformationtest1-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Замечательно! Предложения преобразованы верно.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Правильных ответов: ${score} из ${total}. Проверьте ещё раз.`;
+        }
+    };
+
+    window.checkModalVerbsTest1 = function() {
+        // Задание 3 (test1.html): Модальные глаголы
+        // tg_modal1 => "can"
+        // tg_modal2 => "must"
+        // tg_modal3 => "could"
+
+        let correct = {
+            tg_modal1: 'can',
+            tg_modal2: 'must',
+            tg_modal3: 'could'
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1
+        let user1 = document.getElementById('tg_modal1').value;
+        if (user1 === correct.tg_modal1) {
+            score++;
+            document.getElementById('tg_modal1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_modal1').style.borderColor = '#dc3545';
+        }
+
+        // 2
+        let user2 = document.getElementById('tg_modal2').value;
+        if (user2 === correct.tg_modal2) {
+            score++;
+            document.getElementById('tg_modal2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_modal2').style.borderColor = '#dc3545';
+        }
+
+        // 3
+        let user3 = document.getElementById('tg_modal3').value;
+        if (user3 === correct.tg_modal3) {
+            score++;
+            document.getElementById('tg_modal3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('tg_modal3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('modalverbs_test1-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Отлично! Модальные глаголы выбраны верно.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    // === Тест 2: Advanced Structures Test (test2.html) ===
+    window.checkAdvancedStructuresTest2 = function() {
+        // ... аналогичная логика
+        // as1, as2
+        const correct = {
+            as1: ["it was he", "it was my teacher", "it was john"], // пример
+            as2: ["rarely", "seldom"] // пример
+        };
+
+        let score = 0;
+        let total = 2;
+
+        let user1 = document.getElementById('as1').value.trim().toLowerCase();
+        let user2 = document.getElementById('as2').value.trim().toLowerCase();
+
+        // Проверка as1
+        if (correct.as1.some(ans => ans === user1)) {
+            score++;
+            document.getElementById('as1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as1').style.borderColor = '#dc3545';
+        }
+        // Проверка as2
+        if (correct.as2.includes(user2)) {
+            score++;
+            document.getElementById('as2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as2').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('advancedstructures_test2-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Отлично! Все пропуски заполнены верно.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    window.checkSentenceTransformationTest2 = function() {
+        // as_rw1, as_rw2, as_rw3
+        // и т.д.
+        // Логика аналогична предыдущему
+        // ...
+
+        let correct = {
+            as_rw1: "never has she visited paris",
+            as_rw2: "all they have is one goal",
+            as_rw3: "if he had studied harder, he would pass the exam"
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1
+        let user1 = document.getElementById('as_rw1').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user1 === correct.as_rw1) {
+            score++;
+            document.getElementById('as_rw1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_rw1').style.borderColor = '#dc3545';
+        }
+
+        // 2
+        let user2 = document.getElementById('as_rw2').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user2 === correct.as_rw2) {
+            score++;
+            document.getElementById('as_rw2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_rw2').style.borderColor = '#dc3545';
+        }
+
+        // 3
+        let user3 = document.getElementById('as_rw3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user3 === correct.as_rw3) {
+            score++;
+            document.getElementById('as_rw3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_rw3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('sentencetransformationtest2-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Отлично! Все предложения преобразованы верно.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}.`;
+        }
+    };
+
+    window.checkModalVerbsTest2 = function() {
+        // as_modal1, as_modal2, as_modal3
+        // ...
+        let correct = {
+            as_modal1: 'must',
+            as_modal2: 'can',
+            as_modal3: ['had, would get', 'had would get']  // или т.д.
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1
+        let user1 = document.getElementById('as_modal1').value;
+        if (user1.toLowerCase() === correct.as_modal1) {
+            score++;
+            document.getElementById('as_modal1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_modal1').style.borderColor = '#dc3545';
+        }
+
+        // 2
+        let user2 = document.getElementById('as_modal2').value;
+        if (user2.toLowerCase() === correct.as_modal2) {
+            score++;
+            document.getElementById('as_modal2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_modal2').style.borderColor = '#dc3545';
+        }
+
+        // 3
+        let user3 = document.getElementById('as_modal3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        // Можно проверить массив acceptableAnswers
+        if (correct.as_modal3.includes(user3)) {
+            score++;
+            document.getElementById('as_modal3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('as_modal3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('modalverbs_test2-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Замечательно! Все модальные формы верны.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}.`;
+        }
+    };
+
+    // === Тест 3: Comprehensive Grammar Test (test3.html) ===
+    window.checkComprehensiveGrammarTest = function() {
+        // cg1, cg2, cg3
+        // ...
+        let correct = {
+            cg1: ['she needs', 'she need'],  // Скажем, "she needs"
+            cg2: ['were, would take', 'were would take'], 
+            cg3: ['must have', 'should have', 'could have']
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1
+        let user1 = document.getElementById('cg1').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (correct.cg1.includes(user1)) {
+            score++;
+            document.getElementById('cg1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg1').style.borderColor = '#dc3545';
+        }
+
+        // 2
+        let user2 = document.getElementById('cg2').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (correct.cg2.includes(user2)) {
+            score++;
+            document.getElementById('cg2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg2').style.borderColor = '#dc3545';
+        }
+
+        // 3
+        let user3 = document.getElementById('cg3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (correct.cg3.includes(user3)) {
+            score++;
+            document.getElementById('cg3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('comprehensivegrammar-test-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = `Отлично! Все ответы в Задании 1 верны.`;
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}. Попробуйте ещё раз.`;
+        }
+    };
+
+    window.checkSentenceTransformationTest3 = function() {
+        // cg_rw1, cg_rw2, cg_rw3
+        // ...
+        let correct = {
+            cg_rw1: 'rarely has she visited museums',
+            cg_rw2: 'all they have is one goal',
+            cg_rw3: 'if he had studied harder, he would pass the exam'
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // ...
+        let user1 = document.getElementById('cg_rw1').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user1 === correct.cg_rw1) {
+            score++;
+            document.getElementById('cg_rw1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_rw1').style.borderColor = '#dc3545';
+        }
+
+        let user2 = document.getElementById('cg_rw2').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user2 === correct.cg_rw2) {
+            score++;
+            document.getElementById('cg_rw2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_rw2').style.borderColor = '#dc3545';
+        }
+
+        let user3 = document.getElementById('cg_rw3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (user3 === correct.cg_rw3) {
+            score++;
+            document.getElementById('cg_rw3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_rw3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('sentencetransformationtest3-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = 'Отлично! Предложения преобразованы верно.';
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}.`;
+        }
+    };
+
+    window.checkModalVerbsTest3 = function() {
+        // cg_modal1, cg_modal2, cg_modal3
+        // ...
+        let correct = {
+            cg_modal1: 'could',
+            cg_modal2: 'can',
+            cg_modal3: ['had, would get', 'had would get']
+        };
+
+        let score = 0;
+        let total = 3;
+
+        // 1
+        let user1 = document.getElementById('cg_modal1').value.toLowerCase();
+        if (user1 === correct.cg_modal1) {
+            score++;
+            document.getElementById('cg_modal1').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_modal1').style.borderColor = '#dc3545';
+        }
+
+        // 2
+        let user2 = document.getElementById('cg_modal2').value.toLowerCase();
+        if (user2 === correct.cg_modal2) {
+            score++;
+            document.getElementById('cg_modal2').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_modal2').style.borderColor = '#dc3545';
+        }
+
+        // 3
+        let user3 = document.getElementById('cg_modal3').value.trim().toLowerCase().replace(/[.,]+$/g, '');
+        if (correct.cg_modal3.includes(user3)) {
+            score++;
+            document.getElementById('cg_modal3').style.borderColor = '#28a745';
+        } else {
+            document.getElementById('cg_modal3').style.borderColor = '#dc3545';
+        }
+
+        const fb = document.getElementById('modalverbs_test3-feedback');
+        fb.style.display = 'block';
+        if (score === total) {
+            fb.className = 'feedback success';
+            fb.textContent = 'Отлично! С модальными глаголами всё в порядке.';
+        } else {
+            fb.className = 'feedback error';
+            fb.textContent = `Верно: ${score} из ${total}.`;
+        }
+    };
+
+    const statsBtn = document.getElementById('stats-btn');
+    statsBtn.addEventListener('click', showStats);
+
+    const statsCloseBtn = document.getElementById('stats-close-btn');
+    statsCloseBtn.addEventListener('click', function() {
+        // 1) Прячем окно статистики
+        document.getElementById('stats-modal').classList.add('hidden');
+        // 2) Показываем главный экран с модулями
+        mainButtons.classList.remove('hidden');
+        // 3) А все возможные экраны уроков/тестов/меню модулей скрываем
+        moduleMenus.forEach(m => m.classList.add('hidden'));
+        lessonsListContainers.forEach(c => c.classList.add('hidden'));
+        lessonContent.classList.add('hidden');
+    });
+    // Храним общие счётчики
+    window.userStats = {
+        modulesCompleted: 0,   // Сколько модулей целиком завершено (т.е. прошли итоговый тест)
+        lessonsCompleted: 0,   // Сколько уроков пользователь прошёл
+        testsCompleted: 0      // Сколько тестов пользователь прошёл (включая промежуточные и итоговые)
+    };
+    
+    // Храним набор "пройденных" элементов: "module1-lesson1.html", "module2-test1.html" и т.п.
+    window.completedItems = new Set();
+
+    function showStats() {
+        const { modulesCompleted, lessonsCompleted, testsCompleted } = window.userStats;
+    
+        // 1) Находим нашу модалку и контент
+        const statsModal = document.getElementById('stats-modal');
+        const statsContent = document.getElementById('stats-content');
+    
+        // 2) Формируем HTML
+        statsContent.innerHTML = `
+            <h3>Моя статистика</h3>
+            <p>Модулей завершено: ${modulesCompleted} / 3</p>
+            <p>Уроков завершено: ${lessonsCompleted} / 30</p>
+            <p>Тестов пройдено: ${testsCompleted} / 12</p>
+        `;
+    
+        // 3) Показываем модальное окно
+        statsModal.classList.remove('hidden');
+    }
+
+        
     
 });

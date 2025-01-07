@@ -1,543 +1,247 @@
-<!-- modules/module3/lesson5.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Урок 5: Advanced Usage of Modal Verbs</title>
+    <style>
+        /* Единый стиль, аналогичный Уроку 1 */
 
-<style>
-    /* Локальные стили для урока */
-    .lesson-container {
-        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
-        overflow-y: auto; /* Добавление вертикальной прокрутки */
-        padding-right: 10px; /* Отступ для полосы прокрутки */
-    }
+        .lesson-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            background-color: #333; /* Тёмный фон */
+            padding: 20px;
+            border-radius: 10px;
+        }
 
-    h2 {
-        text-align: center;
-        color: #fff;
-    }
+        h2 {
+            text-align: center;
+            color: #fff; /* Белый цвет заголовка */
+        }
 
-    .section {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    .section h3 {
-        margin-top: 0;
-        color: #333;
-    }
+        .section h3 {
+            margin-top: 0;
+            color: #333;
+        }
 
-    .section p,
-    .section li {
-        color: #333;
-    }
+        .section p,
+        .section li {
+            color: #333; 
+        }
 
-    /* Таблицы */
-    .section table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-    .section th, .section td {
-        border: 1px solid #ccc;
-        padding: 8px;
-    }
-    .section th {
-        background-color: #f2f2f2;
-        text-align: left;
-    }
+        /* Таблицы (если нужны) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
 
-    /* Кнопка для проверки */
-    .submit-btn {
-        display: inline-block;
-        padding: 10px;
-        background-color: #8e2de2;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 10px 0;
-        transition: background-color 0.3s ease;
-    }
-    .submit-btn:hover {
-        background-color: #4a00e0;
-    }
+        /* Кнопка "Назад" */
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #ffe4c4;
+            color: #000;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: 120px;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #ffc299;
+        }
+        .back-icon {
+            width: 20px;
+            height: 20px;
+        }
 
-    /* Поля ввода и фидбек */
-    .quiz-question {
-        margin-bottom: 15px;
-    }
-    .quiz-question label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-    }
-    .quiz-question input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .quiz-question select {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .feedback {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 10px;
-        display: none;
-    }
-    .feedback.success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .feedback.error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
+        /* Стили для кнопок "submit-btn" */
+        .submit-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: #8e2de2;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #4a00e0;
+        }
 
-    /* Радиокнопки */
-    .radio-group {
-        margin-left: 20px;
-    }
-    .radio-group input[type="radio"] {
-        margin-right: 8px;
-    }
+        /* Поля ввода, select и feedback */
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        .quiz-question label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .quiz-question input[type="text"], 
+        .quiz-question select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            display: none;
+        }
+        .finish-btn {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block; /* Видна сразу */
+        }
+        .finish-btn:hover {
+            background-color: #117a8b;
+        }
+        /* Кнопка "Next Lesson" (если требуется) */
+        .next-lesson-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+        }
+        .next-lesson-btn:hover {
+            background-color: #0056b3;
+        }
+        .next-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <h2>Урок 5: Advanced Usage of Modal Verbs (Расширенное использование модальных глаголов)</h2>
 
-    /* Drag & Drop */
-    .drag-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-    }
-    .draggable {
-        padding: 8px 12px;
-        background-color: #ffc107;
-        border-radius: 8px;
-        cursor: move;
-        user-select: none;
-    }
-    .drop-zone {
-        flex: 1 1 100%;
-        min-height: 50px;
-        border: 2px dashed #ccc;
-        border-radius: 10px;
-        padding: 10px;
-        transition: border-color 0.3s;
-    }
-    .drop-zone.dragover {
-        border-color: #28a745; /* Зеленый при наведении */
-    }
+        <!-- Кнопка "Назад" -->
+        <button class="back-button"
+                onclick="
+                    // 1. Скрываем контент урока
+                    document.getElementById('lesson-content').classList.add('hidden');
+                    // 2. Очищаем содержимое
+                    document.getElementById('lesson-details').innerHTML = '';
+                    // 3. Показываем снова заголовок приложения
+                    document.getElementById('app-header').classList.remove('hidden');
+                    // 4. Показываем список уроков Модуля 3
+                    document.getElementById('module3-list').classList.remove('hidden');
+                ">
+            <img class="back-icon" src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="Back">
+            Назад
+        </button>
 
-    /* Кнопка "Назад" */
-    .back-button {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background-color: #ffe4c4;
-        color: #000;
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin-bottom: 20px;
-        text-decoration: none;
-        width: 120px;
-        justify-content: center;
-        transition: background-color 0.3s;
-    }
-    .back-button:hover {
-        background-color: #ffc299;
-    }
-    .back-icon {
-        width: 20px;
-        height: 20px;
-    }
-</style>
-
-<div class="lesson-container">
-    <h2>Урок 2: Mixed Conditionals (Смешанные условные предложения)</h2>
-
-    <!-- Кнопка "Назад" -->
-    <button class="back-button" onclick="window.history.back()">
-        <img src="back.png" alt="Назад" class="back-icon">
-        Назад
-    </button>
-
-    <!-- 1. Введение в смешанные условные предложения -->
-    <div class="section">
-        <h3>Введение в смешанные условные предложения</h3>
-        <p>Смешанные условные предложения (Mixed Conditionals) сочетают времена из различных типов условных предложений для выражения сложных временных отношений между условием и результатом.</p>
-        <p>Они обычно используются, когда условие относится к прошлому, а результат — к настоящему, или наоборот.</p>
-    </div>
-
-    <!-- 2. Типы смешанных условных предложений -->
-    <div class="section">
-        <h3>Типы смешанных условных предложений</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Тип</th>
-                    <th>Структура</th>
-                    <th>Пример</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Тип 1</td>
-                    <td>If + Past Perfect, would + Base Verb</td>
-                    <td>If I had studied harder, I would have a better job now.</td>
-                </tr>
-                <tr>
-                    <td>Тип 2</td>
-                    <td>If + Past Simple, would have + Past Participle</td>
-                    <td>If I were taller, I would have joined the basketball team.</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Смешанные условные предложения позволяют выразить причины или последствия событий в различных временных контекстах.</p>
-    </div>
-
-    <!-- 3. Задание 1: Заполните пропуски (Mixed Conditionals) -->
-    <div class="section">
-        <h3>Задание 1: Заполните пропуски (Mixed Conditionals)</h3>
-        <p>Заполните пропуски правильной формой глагола:</p>
-        <div class="quiz-question">
-            <label>1. If she _______ (not miss) the bus, she _______ (be) here now.</label>
-            <input type="text" id="mc1" placeholder="Например: had not missed, would be">
+        <!-- 1. Введение в модальные глаголы -->
+        <div class="section">
+            <h3>Введение в модальные глаголы</h3>
+            <p>Модальные глаголы (Modal Verbs) используются для выражения возможностей, вероятностей, разрешений, обязанностей и других модальных значений. Расширенное использование модальных глаголов включает их комбинацию с другими структурами для выражения более сложных значений.</p>
         </div>
-        <div class="quiz-question">
-            <label>2. If I _______ (know) about the meeting, I _______ (attend) it.</label>
-            <input type="text" id="mc2" placeholder="Например: had known, would have attended">
+
+        <!-- 2. Расширенные модальные глаголы и их функции -->
+        <div class="section">
+            <h3>Расширенные модальные глаголы и их функции</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модальный глагол</th>
+                        <th>Функция</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Should</td>
+                        <td>Совет, рекомендация</td>
+                        <td>You should see a doctor.</td>
+                    </tr>
+                    <tr>
+                        <td>Could</td>
+                        <td>Возможность в прошлом, вежливые просьбы</td>
+                        <td>Could you help me?</td>
+                    </tr>
+                    <tr>
+                        <td>Must</td>
+                        <td>Необходимость, обязанность</td>
+                        <td>You must wear a helmet.</td>
+                    </tr>
+                    <tr>
+                        <td>Ought to</td>
+                        <td>Совет, моральная обязанность</td>
+                        <td>You ought to apologize.</td>
+                    </tr>
+                    <tr>
+                        <td>Shall</td>
+                        <td>Предложения, намерения</td>
+                        <td>Shall we dance?</td>
+                    </tr>
+                    <tr>
+                        <td>Might</td>
+                        <td>Возможность, вероятность</td>
+                        <td>It might rain today.</td>
+                    </tr>
+                    <tr>
+                        <td>Need to</td>
+                        <td>Необходимость</td>
+                        <td>You need to finish your homework.</td>
+                    </tr>
+                    <tr>
+                        <td>Dare</td>
+                        <td>Смелость, вызов</td>
+                        <td>Dare you jump off the cliff?</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Важно помнить, что модальные глаголы не изменяются по лицам и числам, всегда используются в форме основы.</p>
         </div>
-        <button class="submit-btn" onclick="checkMixedConditionals()">Проверить</button>
-        <div class="feedback" id="mixedconditionals-feedback"></div>
     </div>
-
-    <!-- 4. Задание 2: Сопоставьте предложения с типом -->
-    <div class="section">
-        <h3>Задание 2: Сопоставьте предложения с типом смешанного условного предложения</h3>
-        <p>Сопоставьте предложения с типом смешанного условного предложения: <strong>Тип 1</strong> или <strong>Тип 2</strong>.</p>
-        <div class="quiz-question">
-            <label>1. If I had taken that job, I would be living abroad now.</label>
-            <select id="mc_match1">
-                <option value="">Выберите тип</option>
-                <option value="Type 1">Тип 1</option>
-                <option value="Type 2">Тип 2</option>
-            </select>
-        </div>
-        <div class="quiz-question">
-            <label>2. If they were more organized, they would have completed the project on time.</label>
-            <select id="mc_match2">
-                <option value="">Выберите тип</option>
-                <option value="Type 1">Тип 1</option>
-                <option value="Type 2">Тип 2</option>
-            </select>
-        </div>
-        <button class="submit-btn" onclick="checkMixedMatching()">Проверить</button>
-        <div class="feedback" id="mixedmatching-feedback"></div>
-    </div>
-
-    <!-- 5. Задание 3: Radio Quiz (Mixed Conditionals) -->
-    <div class="section">
-        <h3>Задание 3: Определите тип смешанного условного предложения</h3>
-        <p>Выберите правильный тип смешанного условного предложения:</p>
-        <div class="quiz-question">
-            <label>1. "If she had listened to the advice, she would be successful now."</label>
-            <div class="radio-group">
-                <label><input type="radio" name="mc3" value="Type 1">Type 1</label><br>
-                <label><input type="radio" name="mc3" value="Type 2">Type 2</label>
-            </div>
-        </div>
-        <div class="quiz-question">
-            <label>2. "If I were more diligent, I would have finished the assignment yesterday."</label>
-            <div class="radio-group">
-                <label><input type="radio" name="mc4" value="Type 1">Type 1</label><br>
-                <label><input type="radio" name="mc4" value="Type 2">Type 2</label>
-            </div>
-        </div>
-        <button class="submit-btn" onclick="checkMixedQuiz()">Проверить</button>
-        <div class="feedback" id="mixedquiz-feedback"></div>
-    </div>
-
-    <!-- 6. Задание 4: Drag & Drop (Mixed Conditionals) -->
-    <div class="section">
-        <h3>Задание 4: Соберите смешанное условное предложение</h3>
-        <p>Соберите предложение: <em>"If I had studied harder, I would have a better job now."</em></p>
-        <div class="drag-container">
-            <div class="draggable" draggable="true">if</div>
-            <div class="draggable" draggable="true">i</div>
-            <div class="draggable" draggable="true">had</div>
-            <div class="draggable" draggable="true">studied</div>
-            <div class="draggable" draggable="true">harder,</div>
-            <div class="draggable" draggable="true">i</div>
-            <div class="draggable" draggable="true">would</div>
-            <div class="draggable" draggable="true">have</div>
-            <div class="draggable" draggable="true">a</div>
-            <div class="draggable" draggable="true">better</div>
-            <div class="draggable" draggable="true">job</div>
-            <div class="draggable" draggable="true">now.</div>
-        </div>
-        <div class="drop-zone" id="drop-zone-mc"></div>
-        <button class="submit-btn" onclick="checkMixedDrag()">Проверить</button>
-        <div class="feedback" id="mixeddrag-feedback"></div>
-    </div>
-
-    <!-- 7. Задание 5: Rewrite Sentences (Mixed Conditionals) -->
-    <div class="section">
-        <h3>Задание 5: Перепишите предложения с использованием смешанных условных предложений</h3>
-        <p>Используйте соответствующие типы смешанных условных предложений для переписывания:</p>
-        <ol>
-            <li>
-                "He didn't practice enough, so he doesn't play well now."
-                <br><input type="text" id="mc_rw1" placeholder="Например: If he had practiced enough, he would play well now.">
-            </li>
-            <li>
-                "If she were more confident, she would have accepted the offer."
-                <br><input type="text" id="mc_rw2" placeholder="Например: If she were more confident, she would have accepted the offer.">
-            </li>
-            <li>
-                "I missed the meeting because I was late."
-                <br><input type="text" id="mc_rw3" placeholder="Например: If I had not been late, I would not have missed the meeting.">
-            </li>
-        </ol>
-        <button class="submit-btn" onclick="checkMixedRewrite()">Проверить</button>
-        <div class="feedback" id="mixedrewrite-feedback"></div>
-    </div>
-</div>
-
-<script>
-    /************************************************************
-     * Задание 1: Mixed Conditionals
-     ************************************************************/
-    function checkMixedConditionals() {
-        // Примеры эталонных ответов
-        // mc1 -> "had not missed, would be"
-        // mc2 -> "had known, would have attended"
-
-        let correct = [
-            { 
-                id: 'mc1', 
-                structure: [
-                    "had not missed, would be",
-                    "hadn't missed, would be"
-                ] 
-            },
-            {
-                id: 'mc2', 
-                structure: [
-                    "had known, would have attended",
-                    "had known, would attend"
-                ] 
-            }
-        ];
-
-        let score = 0;
-        correct.forEach(item => {
-            let user = document.getElementById(item.id).value.trim().toLowerCase();
-            // Разделяем на части
-            let parts = user.split(',');
-            if (parts.length === 2) {
-                let part1 = parts[0].trim();
-                let part2 = parts[1].trim();
-                if (item.structure.includes(`${part1}, ${part2}`)) {
-                    score++;
-                    document.getElementById(item.id).style.border = '2px solid #28a745';
-                } else {
-                    document.getElementById(item.id).style.border = '2px solid #dc3545';
-                }
-            } else {
-                document.getElementById(item.id).style.border = '2px solid #dc3545';
-            }
-        });
-
-        const feedback = document.getElementById('mixedconditionals-feedback');
-        feedback.style.display = 'block';
-        if (score === correct.length) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Смешанные условные предложения сформированы правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте структуру предложений.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 2: Mixed Conditionals Matching
-     ************************************************************/
-    function checkMixedMatching() {
-        // mc_match1: "Type 1"
-        // mc_match2: "Type 2"
-
-        let answers = { mc_match1: 'Type 1', mc_match2: 'Type 2' };
-        let score = 0;
-        let total = 2;
-
-        for (let key in answers) {
-            let user = document.getElementById(key).value;
-            if (user === answers[key]) {
-                score++;
-                document.getElementById(key).style.borderColor = '#28a745';
-            } else {
-                document.getElementById(key).style.borderColor = '#dc3545';
-            }
-        }
-
-        const feedback = document.getElementById('mixedmatching-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Вы правильно сопоставили типы смешанных условных предложений.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте типы условных предложений.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 3: Radio Quiz (Mixed Conditionals)
-     ************************************************************/
-    function checkMixedQuiz() {
-        // mc3 -> "Type 1"
-        // mc4 -> "Type 2"
-
-        const correct = { mc3: 'Type 1', mc4: 'Type 2' };
-        let total = 2;
-        let score = 0;
-
-        // mc3
-        let userAnswer3 = '';
-        document.getElementsByName('mc3').forEach(radio => {
-            if (radio.checked) userAnswer3 = radio.value;
-        });
-        if (userAnswer3 === correct.mc3) score++;
-
-        // mc4
-        let userAnswer4 = '';
-        document.getElementsByName('mc4').forEach(radio => {
-            if (radio.checked) userAnswer4 = radio.value;
-        });
-        if (userAnswer4 === correct.mc4) score++;
-
-        const feedback = document.getElementById('mixedquiz-feedback');
-        feedback.style.display = 'block';
-
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 4: Drag & Drop (Mixed Conditionals)
-     ************************************************************/
-    const dragItemsMC = document.querySelectorAll('.draggable');
-    const dropZoneMC = document.getElementById('drop-zone-mc');
-    let dragSourceMC = null;
-
-    dragItemsMC.forEach(item => {
-        item.addEventListener('dragstart', handleDragStartMC);
-        item.addEventListener('dragend', handleDragEndMC);
-    });
-    dropZoneMC.addEventListener('dragover', handleDragOverMC);
-    dropZoneMC.addEventListener('drop', handleDropMC);
-
-    function handleDragStartMC(e) {
-        dragSourceMC = e.target;
-        e.dataTransfer.setData('text/plain', e.target.textContent);
-        e.target.style.opacity = '0.4';
-    }
-    function handleDragEndMC(e) {
-        e.target.style.opacity = '1';
-    }
-    function handleDragOverMC(e) {
-        e.preventDefault();
-        dropZoneMC.classList.add('dragover');
-    }
-    function handleDropMC(e) {
-        e.preventDefault();
-        dropZoneMC.classList.remove('dragover');
-        if (dragSourceMC) {
-            dropZoneMC.appendChild(dragSourceMC);
-            dragSourceMC = null;
-        }
-    }
-
-    function checkMixedDrag() {
-        // "If I had studied harder, I would have a better job now."
-        const words = Array.from(dropZoneMC.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
-        let userSentence = words.join(' ');
-
-        const correctSentence = "if i had studied harder, i would have a better job now.";
-        const feedback = document.getElementById('mixeddrag-feedback');
-        feedback.style.display = 'block';
-
-        if (userSentence === correctSentence) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Превосходно! Смешанное условное предложение собрано правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 5: Mixed Conditionals Rewrite
-     ************************************************************/
-    function checkMixedRewrite() {
-        // mc_rw1: "If he had practiced enough, he would be playing well now."
-        // mc_rw2: "If she were more confident, she would have accepted the offer."
-        // mc_rw3: "If I had not been late, I would not have missed the meeting."
-
-        let user1 = document.getElementById('mc_rw1').value.trim().toLowerCase();
-        let user2 = document.getElementById('mc_rw2').value.trim().toLowerCase();
-        let user3 = document.getElementById('mc_rw3').value.trim().toLowerCase();
-
-        let score = 0;
-        let total = 3;
-
-        // Первый
-        if (user1 === "if he had practiced enough, he would be playing well now" ||
-            user1 === "if he had practiced enough he would be playing well now.") {
-            score++;
-            document.getElementById('mc_rw1').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('mc_rw1').style.border = '2px solid #dc3545';
-        }
-
-        // Второй
-        if (user2 === "if she were more confident, she would have accepted the offer" ||
-            user2 === "if she were more confident she would have accepted the offer.") {
-            score++;
-            document.getElementById('mc_rw2').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('mc_rw2').style.border = '2px solid #dc3545';
-        }
-
-        // Третий
-        if (user3 === "if i had not been late, i would not have missed the meeting" ||
-            user3 === "if i had not been late i would not have missed the meeting.") {
-            score++;
-            document.getElementById('mc_rw3').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('mc_rw3').style.border = '2px solid #dc3545';
-        }
-
-        const feedback = document.getElementById('mixedrewrite-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Все предложения переписаны с использованием смешанных условных предложений правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте структуру предложений.`;
-        }
-    }
-</script>
+</body>
+</html>

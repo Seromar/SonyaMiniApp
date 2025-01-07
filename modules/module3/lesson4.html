@@ -1,550 +1,222 @@
-<!-- modules/module3/lesson4.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Урок 4: Relative Clauses</title>
+    <style>
+        /* Единый стиль, аналогичный Уроку 1 */
 
-<style>
-    /* Локальные стили для урока */
-    .lesson-container {
-        max-height: 80vh; /* Ограничение высоты контейнера для прокрутки */
-        overflow-y: auto; /* Добавление вертикальной прокрутки */
-        padding-right: 10px; /* Отступ для полосы прокрутки */
-    }
+        .lesson-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            background-color: #333; /* Тёмный фон */
+            padding: 20px;
+            border-radius: 10px;
+        }
 
-    h2 {
-        text-align: center;
-        color: #fff;
-    }
+        h2 {
+            text-align: center;
+            color: #fff; /* Белый цвет заголовка */
+        }
 
-    .section {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-    .section h3 {
-        margin-top: 0;
-        color: #333;
-    }
+        .section h3 {
+            margin-top: 0;
+            color: #333;
+        }
 
-    .section p,
-    .section li {
-        color: #333;
-    }
+        .section p,
+        .section li {
+            color: #333; 
+        }
 
-    /* Таблицы */
-    .section table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-    .section th, .section td {
-        border: 1px solid #ccc;
-        padding: 8px;
-    }
-    .section th {
-        background-color: #f2f2f2;
-        text-align: left;
-    }
+        /* Таблицы (если нужны) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
 
-    /* Кнопка для проверки */
-    .submit-btn {
-        display: inline-block;
-        padding: 10px;
-        background-color: #8e2de2;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 10px 0;
-        transition: background-color 0.3s ease;
-    }
-    .submit-btn:hover {
-        background-color: #4a00e0;
-    }
+        /* Кнопка "Назад" */
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #ffe4c4;
+            color: #000;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: 120px;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #ffc299;
+        }
+        .back-icon {
+            width: 20px;
+            height: 20px;
+        }
 
-    /* Поля ввода и фидбек */
-    .quiz-question {
-        margin-bottom: 15px;
-    }
-    .quiz-question label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-    }
-    .quiz-question input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .quiz-question select {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .feedback {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 10px;
-        display: none;
-    }
-    .feedback.success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .feedback.error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
+        /* Стили для кнопок "submit-btn" */
+        .submit-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: #8e2de2;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #4a00e0;
+        }
 
-    /* Радиокнопки */
-    .radio-group {
-        margin-left: 20px;
-    }
-    .radio-group input[type="radio"] {
-        margin-right: 8px;
-    }
+        /* Поля ввода, select и feedback */
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        .quiz-question label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .quiz-question input[type="text"], 
+        .quiz-question select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            display: none;
+        }
+        .finish-btn {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block; /* Видна сразу */
+        }
+        .finish-btn:hover {
+            background-color: #117a8b;
+        }
+        /* Кнопка "Next Lesson" (если требуется) */
+        .next-lesson-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+        }
+        .next-lesson-btn:hover {
+            background-color: #0056b3;
+        }
+        .next-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <h2>Урок 4: Relative Clauses (Определительные и неопределительные относительные придаточные предложения)</h2>
 
-    /* Drag & Drop */
-    .drag-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-    }
-    .draggable {
-        padding: 8px 12px;
-        background-color: #ffc107;
-        border-radius: 8px;
-        cursor: move;
-        user-select: none;
-    }
-    .drop-zone {
-        flex: 1 1 100%;
-        min-height: 50px;
-        border: 2px dashed #ccc;
-        border-radius: 10px;
-        padding: 10px;
-        transition: border-color 0.3s;
-    }
-    .drop-zone.dragover {
-        border-color: #28a745; /* Зеленый при наведении */
-    }
+        <!-- Кнопка "Назад" -->
+        <button class="back-button"
+                onclick="
+                    // 1. Скрываем контент урока
+                    document.getElementById('lesson-content').classList.add('hidden');
+                    // 2. Очищаем содержимое
+                    document.getElementById('lesson-details').innerHTML = '';
+                    // 3. Показываем снова заголовок приложения
+                    document.getElementById('app-header').classList.remove('hidden');
+                    // 4. Показываем список уроков Модуля 3
+                    document.getElementById('module3-list').classList.remove('hidden');
+                ">
+            <img class="back-icon" src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="Back">
+            Назад
+        </button>
 
-    /* Кнопка "Назад" */
-    .back-button {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background-color: #ffe4c4;
-        color: #000;
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        margin-bottom: 20px;
-        text-decoration: none;
-        width: 120px;
-        justify-content: center;
-        transition: background-color 0.3s;
-    }
-    .back-button:hover {
-        background-color: #ffc299;
-    }
-    .back-icon {
-        width: 20px;
-        height: 20px;
-    }
-</style>
+        <!-- 1. Введение в относительные придаточные предложения -->
+        <div class="section">
+            <h3>Введение в относительные придаточные предложения</h3>
+            <p>Относительные придаточные предложения (Relative Clauses) используются для добавления дополнительной информации о существительном или местоимении в основном предложении. Они вводятся относительными местоимениями: <strong>who, whom, whose, which, that</strong>.</p>
+            <p>Существует два типа относительных придаточных предложений:</p>
+            <ul>
+                <li><strong>Определительные (Defining)</strong> – Предоставляют необходимую информацию для уточнения существительного. Не отделяются запятыми.</li>
+                <li><strong>Неопределительные (Non-defining)</strong> – Добавляют дополнительную, но не обязательную информацию. Отделяются запятыми.</li>
+            </ul>
+        </div>
 
-<div class="lesson-container">
-    <h2>Урок 4: Relative Clauses (Определительные и неопределительные относительные придаточные предложения)</h2>
-
-    <!-- Кнопка "Назад" -->
-    <button class="back-button" onclick="window.history.back()">
-        <img src="back.png" alt="Назад" class="back-icon">
-        Назад
-    </button>
-
-    <!-- 1. Введение в относительные придаточные предложения -->
-    <div class="section">
-        <h3>Введение в относительные придаточные предложения</h3>
-        <p>Относительные придаточные предложения (Relative Clauses) используются для добавления дополнительной информации о существительном или местоимении в основном предложении. Они вводятся относительными местоимениями: <strong>who, whom, whose, which, that</strong>.</p>
-        <p>Существует два типа относительных придаточных предложений:</p>
-        <ul>
-            <li><strong>Определительные (Defining)</strong> – Предоставляют необходимую информацию для уточнения существительного. Не отделяются запятыми.</li>
-            <li><strong>Неопределительные (Non-defining)</strong> – Добавляют дополнительную, но не обязательную информацию. Отделяются запятыми.</li>
-        </ul>
+        <!-- 2. Структуры относительных придаточных предложений -->
+        <div class="section">
+            <h3>Структуры относительных придаточных предложений</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Относительное местоимение</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Определительные</td>
+                        <td>who, whom, whose, which, that</td>
+                        <td>The teacher <strong>who</strong> helped me is very kind.</td>
+                    </tr>
+                    <tr>
+                        <td>Неопределительные</td>
+                        <td>who, which, whose</td>
+                        <td>Paris, <strong>which</strong> is the capital of France, is beautiful.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Важно выбирать правильное относительное местоимение в зависимости от роли в предложении и типа придаточного.</p>
+        </div>
     </div>
-
-    <!-- 2. Структуры относительных придаточных предложений -->
-    <div class="section">
-        <h3>Структуры относительных придаточных предложений</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Тип</th>
-                    <th>Относительное местоимение</th>
-                    <th>Пример</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Определительные</td>
-                    <td>who, whom, whose, which, that</td>
-                    <td>The teacher <strong>who</strong> helped me is very kind.</td>
-                </tr>
-                <tr>
-                    <td>Неопределительные</td>
-                    <td>who, which, whose</td>
-                    <td>Paris, <strong>which</strong> is the capital of France, is beautiful.</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Важно выбирать правильное относительное местоимение в зависимости от роли в предложении и типа придаточного.</p>
-    </div>
-
-    <!-- 3. Задание 1: Заполните пропуски (Relative Pronouns) -->
-    <div class="section">
-        <h3>Задание 1: Заполните пропуски (Relative Pronouns)</h3>
-        <p>Заполните пропуски подходящими относительными местоимениями: <strong>who, whom, whose, which, that</strong>.</p>
-        <div class="quiz-question">
-            <label>1. The author _______ wrote this book is famous.</label>
-            <input type="text" id="rc1" placeholder="Например: who">
-        </div>
-        <div class="quiz-question">
-            <label>2. The car, _______ color is red, is mine.</label>
-            <input type="text" id="rc2" placeholder="Например: whose">
-        </div>
-        <div class="quiz-question">
-            <label>3. The movie _______ we watched last night was thrilling.</label>
-            <input type="text" id="rc3" placeholder="Например: which">
-        </div>
-        <button class="submit-btn" onclick="checkRelativePronouns()">Проверить</button>
-        <div class="feedback" id="relativepronouns-feedback"></div>
-    </div>
-
-    <!-- 4. Задание 2: Matching (Defining and Non-defining) -->
-    <div class="section">
-        <h3>Задание 2: Сопоставьте предложения с типом придаточного</h3>
-        <p>Сопоставьте предложения с типом относительного придаточного предложения: <strong>Определительное</strong> или <strong>Неопределительное</strong>.</p>
-        <div class="quiz-question">
-            <label>1. My brother, _______ lives in New York, is visiting us.</label>
-            <select id="rc_match1">
-                <option value="">Выберите тип</option>
-                <option value="Non-defining">Неопределительное</option>
-                <option value="Defining">Определительное</option>
-            </select>
-        </div>
-        <div class="quiz-question">
-            <label>2. Students _______ study hard achieve good results.</label>
-            <select id="rc_match2">
-                <option value="">Выберите тип</option>
-                <option value="Non-defining">Неопределительное</option>
-                <option value="Defining">Определительное</option>
-            </select>
-        </div>
-        <button class="submit-btn" onclick="checkRelativeMatching()">Проверить</button>
-        <div class="feedback" id="relativematching-feedback"></div>
-    </div>
-
-    <!-- 5. Задание 3: Radio Quiz (Relative Clauses) -->
-    <div class="section">
-        <h3>Задание 3: Определите относительное местоимение</h3>
-        <p>Выберите правильное относительное местоимение для каждого предложения:</p>
-        <div class="quiz-question">
-            <label>1. The scientist _______ discovered the new element was awarded a Nobel Prize.</label>
-            <div class="radio-group">
-                <label><input type="radio" name="rc3" value="who">who</label><br>
-                <label><input type="radio" name="rc3" value="which">which</label><br>
-                <label><input type="radio" name="rc3" value="whose">whose</label>
-            </div>
-        </div>
-        <div class="quiz-question">
-            <label>2. The painting _______ is hanging in the gallery is priceless.</label>
-            <div class="radio-group">
-                <label><input type="radio" name="rc4" value="that">that</label><br>
-                <label><input type="radio" name="rc4" value="whom">whom</label><br>
-                <label><input type="radio" name="rc4" value="who">who</label>
-            </div>
-        </div>
-        <button class="submit-btn" onclick="checkRelativeQuiz()">Проверить</button>
-        <div class="feedback" id="relativequiz-feedback"></div>
-    </div>
-
-    <!-- 6. Задание 4: Drag & Drop (Relative Clauses) -->
-    <div class="section">
-        <h3>Задание 4: Соберите предложение с относительным придаточным</h3>
-        <p>Соберите предложение: <em>"The book that you gave me is fascinating."</em></p>
-        <div class="drag-container">
-            <div class="draggable" draggable="true">the</div>
-            <div class="draggable" draggable="true">book</div>
-            <div class="draggable" draggable="true">that</div>
-            <div class="draggable" draggable="true">you</div>
-            <div class="draggable" draggable="true">gave</div>
-            <div class="draggable" draggable="true">me</div>
-            <div class="draggable" draggable="true">is</div>
-            <div class="draggable" draggable="true">fascinating.</div>
-        </div>
-        <div class="drop-zone" id="drop-zone-rc"></div>
-        <button class="submit-btn" onclick="checkRelativeDrag()">Проверить</button>
-        <div class="feedback" id="relativedrag-feedback"></div>
-    </div>
-
-    <!-- 7. Задание 5: Rewrite Sentences (Relative Clauses) -->
-    <div class="section">
-        <h3>Задание 5: Перепишите предложения с относительными придаточными</h3>
-        <p>Перепишите предложения, добавив относительное придаточное предложение:</p>
-        <ol>
-            <li>
-                "I have a friend. He lives in Canada."
-                <br><input type="text" id="rc_rw1" placeholder="Например: I have a friend who lives in Canada.">
-            </li>
-            <li>
-                "This is the house. It was built in 1900."
-                <br><input type="text" id="rc_rw2" placeholder="Например: This is the house that was built in 1900.">
-            </li>
-            <li>
-                "She bought a car. The car is very expensive."
-                <br><input type="text" id="rc_rw3" placeholder="Например: She bought a car which is very expensive.">
-            </li>
-        </ol>
-        <button class="submit-btn" onclick="checkRelativeRewrite()">Проверить</button>
-        <div class="feedback" id="relativerrewrite-feedback"></div>
-    </div>
-</div>
-
-<script>
-(function() {
-    /************************************************************
-     * Задание 1: Relative Pronouns
-     ************************************************************/
-    function checkRelativePronouns() {
-        // Примеры эталонных ответов
-        // rc1 -> "who"
-        // rc2 -> "whose"
-        // rc3 -> "which"
-
-        let correct = [
-            { 
-                id: 'rc1', 
-                structure: [
-                    "who",
-                    "whom"
-                ] 
-            },
-            {
-                id: 'rc2', 
-                structure: [
-                    "whose"
-                ] 
-            },
-            {
-                id: 'rc3', 
-                structure: [
-                    "which",
-                    "that"
-                ] 
-            }
-        ];
-
-        let score = 0;
-        correct.forEach(item => {
-            let user = document.getElementById(item.id).value.trim().toLowerCase();
-            if (item.structure.includes(user)) {
-                score++;
-                document.getElementById(item.id).style.border = '2px solid #28a745';
-            } else {
-                document.getElementById(item.id).style.border = '2px solid #dc3545';
-            }
-        });
-
-        const feedback = document.getElementById('relativepronouns-feedback');
-        feedback.style.display = 'block';
-        if (score === correct.length) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Вы правильно использовали относительные местоимения.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${correct.length}. Проверьте использование относительных местоимений.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 2: Relative Clauses Matching
-     ************************************************************/
-    function checkRelativeMatching() {
-        // rc_match1: Non-defining
-        // rc_match2: Defining
-
-        let answers = { rc_match1: 'Non-defining', rc_match2: 'Defining' };
-        let score = 0;
-        let total = 2;
-
-        for (let key in answers) {
-            let user = document.getElementById(key).value;
-            if (user === answers[key]) {
-                score++;
-                document.getElementById(key).style.borderColor = '#28a745';
-            } else {
-                document.getElementById(key).style.borderColor = '#dc3545';
-            }
-        }
-
-        const feedback = document.getElementById('relativematching-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Вы правильно сопоставили типы относительных придаточных предложений.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте типы придаточных предложений.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 3: Radio Quiz (Relative Clauses)
-     ************************************************************/
-    function checkRelativeQuiz() {
-        // rc3 -> "who"
-        // rc4 -> "that"
-
-        const correct = { rc3: 'who', rc4: 'that' };
-        let total = 2;
-        let score = 0;
-
-        // rc3
-        let userAnswer3 = '';
-        document.getElementsByName('rc3').forEach(radio => {
-            if (radio.checked) userAnswer3 = radio.value;
-        });
-        if (userAnswer3 === correct.rc3) score++;
-
-        // rc4
-        let userAnswer4 = '';
-        document.getElementsByName('rc4').forEach(radio => {
-            if (radio.checked) userAnswer4 = radio.value;
-        });
-        if (userAnswer4 === correct.rc4) score++;
-
-        const feedback = document.getElementById('relativequiz-feedback');
-        feedback.style.display = 'block';
-
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = `Отличная работа! Все ответы верны (${score}/${total}).`;
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Попробуйте ещё раз.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 4: Drag & Drop (Relative Clauses)
-     ************************************************************/
-    const dragItemsRC = document.querySelectorAll('.draggable');
-    const dropZoneRC = document.getElementById('drop-zone-rc');
-    let dragSourceRC = null;
-
-    dragItemsRC.forEach(item => {
-        item.addEventListener('dragstart', handleDragStartRC);
-        item.addEventListener('dragend', handleDragEndRC);
-    });
-    dropZoneRC.addEventListener('dragover', handleDragOverRC);
-    dropZoneRC.addEventListener('drop', handleDropRC);
-
-    function handleDragStartRC(e) {
-        dragSourceRC = e.target;
-        e.dataTransfer.setData('text/plain', e.target.textContent);
-        e.target.style.opacity = '0.4';
-    }
-    function handleDragEndRC(e) {
-        e.target.style.opacity = '1';
-    }
-    function handleDragOverRC(e) {
-        e.preventDefault();
-        dropZoneRC.classList.add('dragover');
-    }
-    function handleDropRC(e) {
-        e.preventDefault();
-        dropZoneRC.classList.remove('dragover');
-        if (dragSourceRC) {
-            dropZoneRC.appendChild(dragSourceRC);
-            dragSourceRC = null;
-        }
-    }
-
-    function checkRelativeDrag() {
-        // "The book that you gave me is fascinating."
-        const words = Array.from(dropZoneRC.querySelectorAll('.draggable')).map(el => el.textContent.toLowerCase());
-        let userSentence = words.join(' ');
-
-        const correctSentence = "the book that you gave me is fascinating.";
-        const feedback = document.getElementById('relativedrag-feedback');
-        feedback.style.display = 'block';
-
-        if (userSentence === correctSentence) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Превосходно! Относительное придаточное предложение собрано правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Не совсем так. Получилось: "${userSentence}". Исправьте порядок слов.`;
-        }
-    }
-
-    /************************************************************
-     * Задание 5: Relative Clauses Rewrite
-     ************************************************************/
-    function checkRelativeRewrite() {
-        // rc_rw1: "I have a friend who lives in Canada."
-        // rc_rw2: "This is the house that was built in 1900."
-        // rc_rw3: "She bought a car which is very expensive."
-
-        let user1 = document.getElementById('rc_rw1').value.trim().toLowerCase();
-        let user2 = document.getElementById('rc_rw2').value.trim().toLowerCase();
-        let user3 = document.getElementById('rc_rw3').value.trim().toLowerCase();
-
-        let score = 0;
-        let total = 3;
-
-        // Первый
-        if (user1 === "i have a friend who lives in canada" ||
-            user1 === "i have a friend who lives in canada.") {
-            score++;
-            document.getElementById('rc_rw1').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('rc_rw1').style.border = '2px solid #dc3545';
-        }
-
-        // Второй
-        if (user2 === "this is the house that was built in 1900" ||
-            user2 === "this is the house that was built in 1900.") {
-            score++;
-            document.getElementById('rc_rw2').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('rc_rw2').style.border = '2px solid #dc3545';
-        }
-
-        // Третий
-        if (user3 === "she bought a car which is very expensive" ||
-            user3 === "she bought a car which is very expensive.") {
-            score++;
-            document.getElementById('rc_rw3').style.border = '2px solid #28a745';
-        } else {
-            document.getElementById('rc_rw3').style.border = '2px solid #dc3545';
-        }
-
-        const feedback = document.getElementById('relativerrewrite-feedback');
-        feedback.style.display = 'block';
-        if (score === total) {
-            feedback.className = 'feedback success';
-            feedback.textContent = 'Отлично! Все предложения переписаны с относительными придаточными правильно.';
-        } else {
-            feedback.className = 'feedback error';
-            feedback.textContent = `Правильных ответов: ${score} из ${total}. Проверьте структуру предложений.`;
-        }
-    }
-})();
-</script>
+</body>
+</html>
