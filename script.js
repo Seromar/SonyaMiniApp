@@ -369,9 +369,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
     const userIdDisplayEl = document.getElementById("user-id-display");
-    if (userIdDisplayEl) {
-        userIdDisplayEl.textContent = `Ваш user_id: ${userId}`;
-    }
+    
 
     
 
