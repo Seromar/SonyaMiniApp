@@ -65,7 +65,7 @@ async function loadUserDataFromServer(userId) {
         }
         
         // Восстанавливаем разблокированные элементы (если есть функция restoreUnlockedItems)
-        // restoreUnlockedItems();
+        restoreUnlockedItems();
       } else {
         console.log("Документ для этого userId не найден в Firestore.");
       }
@@ -3268,15 +3268,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         lessonsListContainers.forEach(c => c.classList.add('hidden'));
         lessonContent.classList.add('hidden');
     });
-    // Храним общие счётчики
-    window.userStats = {
-        modulesCompleted: 0,   // Сколько модулей целиком завершено (т.е. прошли итоговый тест)
-        lessonsCompleted: 0,   // Сколько уроков пользователь прошёл
-        testsCompleted: 0      // Сколько тестов пользователь прошёл (включая промежуточные и итоговые)
-    };
     
-    // Храним набор "пройденных" элементов: "module1-lesson1.html", "module2-test1.html" и т.п.
-    window.completedItems = new Set();
 
     function showStats() {
         const { modulesCompleted, lessonsCompleted, testsCompleted } = window.userStats;
