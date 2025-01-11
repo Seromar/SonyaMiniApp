@@ -129,6 +129,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.userId = userId
     console.log("Запущено для userId:", userId);
 
+    const userIdDisplayEl = document.getElementById("user-id-display");
+    if (userIdDisplayEl) {
+        userIdDisplayEl.textContent = `Ваш user_id: ${userId}`;
+    }
+
     // Сначала загружаем прогресс (если есть)
     await loadUserDataFromServer(userId);
 
