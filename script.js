@@ -1,9 +1,84 @@
+/* ----- ИНИЦИАЛИЗАЦИЯ FIREBASE ----- */
+const firebaseConfig = {
+    apiKey: "AIzaSyBmJ7sTBI46ZS0TlxhNfr-i_OhwwwqMZK8",
+    authDomain: "miniapp-82895.firebaseapp.com",
+    projectId: "miniapp-82895",
+    storageBucket: "miniapp-82895.firebasestorage.app",
+    messagingSenderId: "433321660637",
+    appId: "1:433321660637:web:f6491893642207605e8b34",
+    measurementId: "G-4C43EDDZ6Y"
+};
+  
+// Инициализация firebase (compat):
+firebase.initializeApp(firebaseConfig);
+
+// Получаем доступ к Firestore
+const db = firebase.firestore();
+
+/* ----- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ----- */
+window.userStats = {
+    modulesCompleted: 0,
+    lessonsCompleted: 0,
+    testsCompleted: 0,
+};
+window.completedItems = new Set();
+
+/* ----- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ FIRESTORE ----- */
+async function loadUserDataFromServer(userId) {
+    try {
+      const docRef = db.collection("user_progress").doc(userId);
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+        const savedData = docSnap.data();
+        console.log("Данные пользователя:", savedData);
+        
+        if (savedData.userStats) {
+          window.userStats = savedData.userStats;
+        }
+        if (savedData.completedItems) {
+          window.completedItems = new Set(savedData.completedItems);
+        }
+        
+        // Восстанавливаем разблокированные элементы (если есть функция restoreUnlockedItems)
+        // restoreUnlockedItems();
+      } else {
+        console.log("Документ для этого userId не найден в Firestore.");
+      }
+    } catch (error) {
+      console.error("Ошибка при загрузке данных из Firestore:", error);
+    }
+}
+
+async function saveUserDataToServer(userId) {
+    try {
+      const docRef = db.collection("user_progress").doc(userId);
+      const dataToSave = {
+        userStats: window.userStats,
+        completedItems: Array.from(window.completedItems),
+      };
+      await docRef.set(dataToSave, { merge: true });
+      console.log("Прогресс сохранён:", dataToSave);
+    } catch (error) {
+      console.error("Ошибка при сохранении данных в Firestore:", error);
+    }
+}
+
+/* ----- ЛОГИКА ПОЛУЧЕНИЯ user_id И СТАРТОВОЙ ЗАГРУЗКИ ----- */
 function getTelegramUserId() {
+    // Пробуем вытащить user_id из query-параметров
     const params = new URLSearchParams(window.location.search);
-    return params.get('user_id');
-  }
+    return params.get('user_id') || "guest";
+}
+
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const userId = getTelegramUserId();
+    console.log("Запущено для userId:", userId);
+
+    // Сначала загружаем прогресс (если есть)
+    await loadUserDataFromServer(userId);
+
+
     const moduleButtons = document.querySelectorAll('.button[id$="-btn"]');
     const mainButtons = document.getElementById('main-buttons');
     const moduleMenus = document.querySelectorAll('.buttons.hidden[id$="-menu"]');
@@ -14,59 +89,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const lessonDetails = document.getElementById('lesson-details');
     const appHeader = document.getElementById('app-header');
 
-    const userId = getTelegramUserId() || "guest";
-    window.userId = userId; // сохраним глобальноке
 
-    console.log("Приложение запущено для user_id:", userId);
-
-    // Загрузим данные из localStorage/сервера, если есть
-    await loadUserDataFromServer(userId);
-
-    async function loadUserDataFromServer(userId) {
-        try {
-            const savedDataJson = localStorage.getItem(`appdata_${userId}`);
-            if (!savedDataJson) {
-                console.log("Нет сохранённых данных для", userId);
-                return;
-            }
-            const savedData = JSON.parse(savedDataJson);
-            
-            if (savedData.userStats) {
-                window.userStats = savedData.userStats;
-            }
-            if (savedData.completedItems) {
-                window.completedItems = new Set(savedData.completedItems);
-            }
-            // Пробуем восстановить разблокированные элементы
-            restoreUnlockedItems();
-        } catch (err) {
-            console.error("Ошибка при загрузке данных:", err);
-        }
-    }
-
-    function restoreUnlockedItems() {
-        // Для каждого uniqueID в completedItems повторим
-        // логику разблокировки 
-        // (осторожнее с тем, что unlockNext() может сдвинуть порядок;
-        //  возможно, потребуется более тонкая реализация)
-        for (const uid of window.completedItems) {
-            const [modulePath, filename] = uid.split("-");
-            // Пример: uid="module1-lesson5.html"
-            // modulePath="module1", filename="lesson5.html"
-            unlockNext(modulePath, filename);
-        }
-    }
     
-    // Пример функции сохранения
-    function saveUserDataToServer(userId) {
-        const dataToSave = {
-            userStats: window.userStats,
-            completedItems: Array.from(window.completedItems)
-        };
-        // локально
-        localStorage.setItem(`appdata_${userId}`, JSON.stringify(dataToSave));
-        // при желании - fetch на сервер
-    }
+    
 
     
 
