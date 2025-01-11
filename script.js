@@ -95,11 +95,17 @@ function getTelegramUserId() {
     return params.get('user_id') || "guest";
 }
 
-function restoreUnlockItem(modulePath, fileName) {
+/**
+ * Разблокировать в интерфейсе конкретный урок/тест (без сохранения статистики).
+ * @param {string} modulePath  (e.g. 'module1')
+ * @param {string} fileName    (e.g. 'lesson3.html' or 'test1.html')
+ * @param {boolean} [unlockNext=true] Нужно ли разблокировать следующий по порядку
+ */
+function restoreUnlockItem(modulePath, fileName, unlockNext = true) {
     const container = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
     if (!container) return;
 
-    // Находим саму кнопку
+    // Находим кнопку
     const currentBtn = container.querySelector(
         `[data-lesson="${fileName}"], [data-test="${fileName}"]`
     );
@@ -109,35 +115,55 @@ function restoreUnlockItem(modulePath, fileName) {
     currentBtn.disabled = false;
     currentBtn.classList.remove('locked', 'disabled');
 
-    // Если это lesson10 => разблокируем финальный тест в этом модуле
+    // Если это lesson10 => разблокируем финальный тест
     if (fileName.includes('lesson10.html')) {
         unlockFinalTestInModule(modulePath);
     }
-    // Если это finaltest => разблокируем следующий модуль
+    // Если это финальный тест => разблокируем следующий модуль
     if (fileName.includes('finaltest')) {
         unlockNextModule(modulePath);
     }
 
-    // А теперь разблокируем «следующую» кнопку по порядку
-    const order = parseInt(currentBtn.dataset.order, 10);
-    const nextOrder = order + 1;
-    const nextBtn = container.querySelector(`[data-order="${nextOrder}"]`);
-    if (nextBtn) {
-        nextBtn.disabled = false;
-        nextBtn.classList.remove('locked', 'disabled');
+    // Разблокируем следующую кнопку по порядку (если нужно)
+    if (unlockNext) {
+        const order = parseInt(currentBtn.dataset.order, 10);
+        const nextOrder = order + 1;
+        const nextBtn = container.querySelector(`[data-order="${nextOrder}"]`);
+        if (nextBtn) {
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('locked', 'disabled');
+        }
     }
 }
 
 function restoreUnlockedItems() {
-    // Перебираем все UID из completedItems
-    // Пример UID: "module1-lesson3.html"
     for (const uid of window.completedItems) {
+        // uid типа "module1-lesson3.html"
         const [modulePath, fileName] = uid.split("-");
+        // Разблокируем *этот* элемент, а также следующий
+        restoreUnlockItem(modulePath, fileName, true);
+    }
 
-        // Разблокируем текущий урок/тест
-        restoreUnlockItem(modulePath, fileName);
+    // Также проверяем, сколько модулей пройдено — и разблокируем следующие
+    // Например:
+    if (window.userStats.modulesCompleted >= 1) {
+        // Разблокируем Модуль2
+        const m2Btn = document.getElementById('module2-btn');
+        if (m2Btn) {
+            m2Btn.disabled = false;
+            m2Btn.classList.remove('disabled');
+        }
+    }
+    if (window.userStats.modulesCompleted >= 2) {
+        // Разблокируем Модуль3
+        const m3Btn = document.getElementById('module3-btn');
+        if (m3Btn) {
+            m3Btn.disabled = false;
+            m3Btn.classList.remove('disabled');
+        }
     }
 }
+
 
 
   
@@ -154,15 +180,14 @@ function restoreUnlockedItems() {
 }
 
 function lockAllButFirstLesson() {
-    // Находим все кнопки уроков и тестов
+    // Блокируем все кнопки уроков и тестов
     const allLessonButtons = document.querySelectorAll('.lesson-button, .test-button');
     allLessonButtons.forEach(btn => {
-        // По умолчанию блокируем
         btn.disabled = true;
         btn.classList.add('locked', 'disabled');
     });
 
-    // Разблокируем самый первый урок в module1 — lesson1.html
+    // Разблокируем Урок1 в module1
     const module1List = document.querySelector('.lessons-container[data-module="module1"]');
     if (module1List) {
         const firstLessonBtn = module1List.querySelector('[data-lesson="lesson1.html"]');
@@ -179,6 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     lockAllButFirstLesson();
 
     const userId = getTelegramUserId();
+
     window.userId = userId
     console.log("Запущено для userId:", userId);
 
@@ -563,28 +589,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- populateLessons: создаём уроки и промежуточные тесты (блокируем все кроме первого урока) ---
     function populateLessons(modulePath, totalLessons, testsPerModule) {
+        // ...
+        // (как в вашем коде, только уберите оттуда всё про «блокировать»
+        //  потому что уже сделали lockAllButFirstLesson)
         const container = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
         if (!container) return;
         const backBtn = container.querySelector(`#back-to-module${modulePath.slice(-1)}`);
-        let order = 1;
     
+        let order = 1;
         for (let i = 1; i <= totalLessons; i++) {
             const lessonBtn = document.createElement('button');
             lessonBtn.textContent = `Урок ${i}`;
-            // Изначально блокируем
-            lessonBtn.classList.add('lesson-button', 'locked', 'disabled');
+            lessonBtn.classList.add('lesson-button', 'locked', 'disabled'); 
+            // (disabled=true по умолчанию поставили выше, но можем здесь)
             lessonBtn.dataset.lesson = `lesson${i}.html`;
             lessonBtn.dataset.module = modulePath;
-            lessonBtn.dataset.order = order;
+            lessonBtn.dataset.order = order++;
     
-            // Только Урок №1 разблокирован:
-            if (i === 1) {
-                lessonBtn.disabled = false;
-                lessonBtn.classList.remove('locked', 'disabled');
-            } else {
-                lessonBtn.disabled = true;
-            }
-    
+            // Ссылка на обработчик клика
             lessonBtn.addEventListener('click', () => {
                 if (lessonBtn.disabled) return;
                 const file = lessonBtn.dataset.lesson;
@@ -594,22 +616,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         return r.text();
                     })
                     .then(html => loadContent(html, modulePath))
-                    .catch(e => {
-                        console.error(e);
-                        alert('Ошибка загрузки урока.');
-                    });
+                    .catch(e => console.error('Ошибка:', e));
             });
     
             container.insertBefore(lessonBtn, backBtn);
-            order++;
     
-            // После каждого 3-го урока (testsPerModule = 3), но не после 10-го
+            // После каждых testsPerModule уроков создаём тест-кнопку (кроме последнего урока)
             if (i % testsPerModule === 0 && i < totalLessons) {
                 const testNumber = i / testsPerModule;
                 const testEl = createTestElement(testNumber, modulePath);
-                testEl.dataset.order = order;
+                testEl.dataset.order = order++;
                 container.insertBefore(testEl, backBtn);
-                order++;
             }
         }
     }
