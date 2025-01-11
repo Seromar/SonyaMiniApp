@@ -70,6 +70,34 @@ function getTelegramUserId() {
     return params.get('user_id') || "guest";
 }
 
+function restoreUnlockedItems() {
+    // Для каждого UID вида "module1-lesson3.html" в completedItems
+    for (const uid of window.completedItems) {
+      // Разделяем на modulePath и имя файла
+      // Пример: uid="module1-lesson5.html" => modulePath="module1", file="lesson5.html"
+      const [modulePath, file] = uid.split("-");
+      
+      // Разблокируем следующее
+      // Но осторожно: если мы делаем `unlockNext(modulePath, file)`, 
+      // оно может “автоматически” разблокировать следующее после 3.html => 4.html и т.п. 
+      // В целом, это должно работать, но иногда порядок важен.
+      // Можно просто разблокировать нужную кнопку:
+      unlockItem(modulePath, file);
+    }
+}
+  
+  // Допустим, делаем функцию unlockItem(...)
+  function unlockItem(modulePath, fileName) {
+    const container = document.querySelector(`.lessons-container[data-module="${modulePath}"]`);
+    if (!container) return;
+  
+    const btn = container.querySelector(`[data-lesson="${fileName}"], [data-test="${fileName}"]`);
+    if (!btn) return;
+  
+    btn.disabled = false;
+    btn.classList.remove('locked', 'disabled');
+}
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = getTelegramUserId();
@@ -78,6 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Сначала загружаем прогресс (если есть)
     await loadUserDataFromServer(userId);
 
+    restoreUnlockedItems();
 
     const moduleButtons = document.querySelectorAll('.button[id$="-btn"]');
     const mainButtons = document.getElementById('main-buttons');
