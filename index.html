@@ -1,107 +1,99 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MiniApp</title>
+
+  <!-- Подключение Telegram WebApp JS -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <!-- Подключение Firebase (v9 compat) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <!--  
-    Вариант "compat" упрощает использование Firestore в стиле v8:
-      firebase.initializeApp(config), firebase.firestore(), db.collection(...) и т.д.
-    Если вы используете v9+ modular syntax (import ... from 'firebase/app'), 
-    тогда нужно иную структуру + сборщик (webpack/parcel). 
-  -->
-
-  <!-- Иконки (для "назад" и т.п.) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   
+  <!-- Иконки -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
   <!-- Ваш основной CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <div class="container">
-    <!-- Заголовок приложения -->
-    <div class="header" id="app-header">
-      <img src="assets/images/Logo.png" alt="Logo">
-      <div class="title">Learn English</div>
-    </div>
-    
-    <!-- Основные кнопки модулей -->
-    <div class="buttons" id="main-buttons">
-      <button class="button" id="module1-btn">Модуль 1</button>
-      <button class="button" id="module2-btn">Модуль 2</button>
-      <button class="button" id="module3-btn">Модуль 3</button>
-      
-      <!-- Новая кнопка статистики -->
-      <button class="button" id="stats-btn">Моя статистика</button>
-    </div>
-
-    <!-- Меню каждого модуля -->
-    <div class="buttons hidden" id="module1-menu">
-      <button class="button lessons-btn" data-module="module1">Уроки</button>
-      <button class="button final-test-btn" data-module="module1">Итоговый тест</button>
-      <button class="back-button" id="back-to-main-module1">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-    </div>
-
-    <div class="buttons hidden" id="module2-menu">
-      <button class="button lessons-btn" data-module="module2">Уроки</button>
-      <button class="button final-test-btn" data-module="module2">Итоговый тест</button>
-      <button class="back-button" id="back-to-main-module2">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-    </div>
-    
-    <div class="buttons hidden" id="module3-menu">
-      <button class="button lessons-btn" data-module="module3">Уроки</button>
-      <button class="button final-test-btn" data-module="module3">Итоговый тест</button>
-      <button class="back-button" id="back-to-main-module3">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-    </div>
-    
-    <!-- Список уроков (и тестов) внутри каждого модуля -->
-    <div class="lessons-container hidden" id="module1-list" data-module="module1">
-      <button class="back-button" id="back-to-module1">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <!-- Кнопки Урок1..Урок10 + Тест1..Тест3 будут добавлены скриптом -->
-    </div>
-
-    <div class="lessons-container hidden" id="module2-list" data-module="module2">
-      <button class="back-button" id="back-to-module2">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <!-- Кнопки Уроков и Тестов Модуля 2 -->
-    </div>
-    
-    <div class="lessons-container hidden" id="module3-list" data-module="module3">
-      <button class="back-button" id="back-to-module3">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <!-- Кнопки Уроков и Тестов Модуля 3 -->
-    </div>
-    
-    <!-- Контейнер для отображения HTML урока или теста -->
-    <div class="lesson-content hidden" id="lesson-content">
-      <div id="lesson-details"><!-- Подгружается контент --></div>
-    </div>
+<div class="container">
+  <!-- Заголовок приложения -->
+  <div class="header" id="app-header">
+    <img src="assets/images/Logo.png" alt="Logo">
+    <div class="title">Learn English</div>
+  </div>
+  
+  <!-- Основные кнопки модулей -->
+  <div class="buttons" id="main-buttons">
+    <button class="button" id="module1-btn">Модуль 1</button>
+    <button class="button" id="module2-btn">Модуль 2</button>
+    <button class="button" id="module3-btn">Модуль 3</button>
+    <button class="button" id="stats-btn">Моя статистика</button>
   </div>
 
-  <!-- Модальное окно для статистики -->
-  <div id="stats-modal" class="stats-modal hidden">
-    <div class="stats-content" id="stats-content">
-        <!-- Сюда вставляем текст со статистикой -->
-    </div>
-    <button class="close-button" id="stats-close-btn">Закрыть</button>
+  <!-- Меню каждого модуля -->
+  <div class="buttons hidden" id="module1-menu">
+    <button class="button lessons-btn" data-module="module1">Уроки</button>
+    <button class="button final-test-btn" data-module="module1">Итоговый тест</button>
+    <button class="back-button" id="back-to-main-module1">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
   </div>
 
-  <!-- Подключаем script.js -->
-  <script src="script.js"></script>
+  <div class="buttons hidden" id="module2-menu">
+    <button class="button lessons-btn" data-module="module2">Уроки</button>
+    <button class="button final-test-btn" data-module="module2">Итоговый тест</button>
+    <button class="back-button" id="back-to-main-module2">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+  </div>
+  
+  <div class="buttons hidden" id="module3-menu">
+    <button class="button lessons-btn" data-module="module3">Уроки</button>
+    <button class="button final-test-btn" data-module="module3">Итоговый тест</button>
+    <button class="back-button" id="back-to-main-module3">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <!-- Списки уроков для каждого модуля (заполняются скриптом) -->
+  <div class="lessons-container hidden" id="module1-list" data-module="module1">
+    <button class="back-button" id="back-to-module1">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <!-- Кнопки Урок1..Урок10 + Тесты будут тут -->
+  </div>
+
+  <div class="lessons-container hidden" id="module2-list" data-module="module2">
+    <button class="back-button" id="back-to-module2">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+  </div>
+  
+  <div class="lessons-container hidden" id="module3-list" data-module="module3">
+    <button class="back-button" id="back-to-module3">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <!-- Контейнер для отображения HTML урока или теста -->
+  <div class="lesson-content hidden" id="lesson-content">
+    <div id="lesson-details"><!-- Подгружается HTML контент --></div>
+  </div>
+</div>
+
+<!-- Модальное окно для статистики -->
+<div id="stats-modal" class="stats-modal hidden">
+  <div class="stats-content" id="stats-content"></div>
+  <button class="close-button" id="stats-close-btn">Закрыть</button>
+</div>
+
+<!-- Ваш основной script.js -->
+<script src="script.js"></script>
+
 </body>
 </html>

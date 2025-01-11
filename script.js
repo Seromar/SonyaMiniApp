@@ -1,3 +1,28 @@
+let tgUserId = null; // Будем хранить user_id от Telegram
+
+// Если открыто внутри Telegram WebApp:
+if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+    // Пытаемся получить данные initDataUnsafe
+    const initData = Telegram.WebApp.initDataUnsafe || {};
+    if (initData.user && initData.user.id) {
+        tgUserId = String(initData.user.id);
+        console.log('Запущено в Telegram WebApp, user_id =', tgUserId);
+    } else {
+        console.log('Нет initData.user.id в Telegram WebApp!');
+    }
+} else {
+    console.log('Не в Telegram WebApp, возможно в браузере.');
+}
+
+// Фолбек: если tgUserId всё ещё null, возьмём ?user_id=... из URL
+if (!tgUserId) {
+    const params = new URLSearchParams(window.location.search);
+    tgUserId = params.get('user_id') || 'guest';
+}
+console.log('Итоговый userId =', tgUserId);
+
+
+
 /* ----- ИНИЦИАЛИЗАЦИЯ FIREBASE ----- */
 const firebaseConfig = {
     apiKey: "AIzaSyBmJ7sTBI46ZS0TlxhNfr-i_OhwwwqMZK8",
@@ -101,6 +126,7 @@ function restoreUnlockedItems() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = getTelegramUserId();
+    window.userId = userId
     console.log("Запущено для userId:", userId);
 
     // Сначала загружаем прогресс (если есть)
