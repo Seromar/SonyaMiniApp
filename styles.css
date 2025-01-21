@@ -91,6 +91,9 @@ body {
 
 /* Стили для кнопок "Тест" */
 .test-button {
+    margin: 0 auto;         
+
+    transform: translateX(4%);
     background-color: #ffc107;
     color: #fff;
 }
@@ -269,8 +272,8 @@ body {
 
 /* Кнопка «Закрыть» */
 .close-button {
-    margin-right: 200px;
-    margin-top: 340px; /* отступ сверху, чтобы была внизу */
+    margin-right: 450px;
+    margin-top: 400px; /* отступ сверху, чтобы была внизу */
     background: #dc3545;
     color: #fff;
     border: none;
