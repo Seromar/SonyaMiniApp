@@ -242,46 +242,54 @@ body {
     display: none;
   }
   
+/* Модальное окно статистики */
 .stats-modal {
-    
-    position: fixed;        /* Чтобы окно было поверх контента */
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.6); /* полупрозрачный фон */
     display: flex;
-    justify-content: center; /* центрируем по горизонтали */
-    align-items: center;     /* центрируем по вертикали */
-    z-index: 9999;           /* поверх всего */
-}
-
-/* Контейнер "stats-content" внутри модалки */
-.stats-content {
-    margin-left: 250px;
-    margin-right: -235px;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  /* Контейнер статистики */
+  .stats-content {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 300px; /* ширина содержимого по вкусу */
-    position: relative;
-    display: flex;
-    flex-direction: column; /* чтобы содержимое располагалось столбцом */
-    justify-content: flex-start;
-    align-items: center;
-}
-
-/* Кнопка «Закрыть» */
-.close-button {
-    margin-right: 450px;
-    margin-top: 400px; /* отступ сверху, чтобы была внизу */
+    width: 300px;
+    max-width: 90%; /* для мобильных устройств */
+    box-sizing: border-box;
+    position: relative; /* для абсолютного позиционирования кнопки */
+  }
+  
+  /* Кнопка "Закрыть" внутри статистического окна */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: #dc3545;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    padding: 10px 30px;
+    border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 16px;
-}
+    font-size: 14px;
+    width: 100px;    
+    height: 30px;
+  }
+  
+  /* При необходимости можно добавить адаптивность */
+  @media (max-width: 600px) {
+    .stats-content {
+      width: 90%;
+      padding: 15px;
+    }
+  }
 
 @media (max-width: 600px) {
     table tr {
