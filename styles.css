@@ -271,16 +271,19 @@ body {
   .close-button {
     position: absolute;
     top: 10px;
-    right: 10px;
-    background: #dc3545;
-    color: #fff;
+    left: 10px;      /* Выравнивание по левому краю */
+    right: auto;     /* Сброс значения right */
+    background: transparent; /* Прозрачный фон, можно заменить на другой, если нужно */
     border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
     cursor: pointer;
-    font-size: 14px;
-    width: 100px;    
-    height: 30px;
+    font-size: 18px; /* Размер иконки */
+    color: grey;     /* Цвет иконки */
+    padding: 5px;    /* Добавим немного отступов для кликабельной области */
+  }
+
+  .close-button i {
+    font-size: inherit; /* Наследует размер, заданный для кнопки */
+    color: inherit;     /* Наследует цвет, заданный для кнопки */
   }
   
   /* При необходимости можно добавить адаптивность */
