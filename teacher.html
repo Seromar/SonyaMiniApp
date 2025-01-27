@@ -13,6 +13,18 @@
     h2 {
       margin-top: 0;
     }
+    /* Поле поиска */
+    .search-container {
+      margin-bottom: 20px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
     /* Контейнер для одного «пользователя» */
     .user-block {
       margin-bottom: 10px;
@@ -39,10 +51,33 @@
     .user-details.visible {
       display: block; /* показываем, если есть класс .visible */
     }
+    /* Сообщение о не найденном пользователе */
+    .no-result {
+      display: none;
+      padding: 10px;
+      background-color: #ffe6e6;
+      border: 1px solid #ffcccc;
+      border-radius: 8px;
+      color: #cc0000;
+    }
+    .no-result.visible {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <h2>Teacher Panel — Список пользователей</h2>
+
+  <!-- Контейнер для поиска -->
+  <div class="search-container">
+    <input type="text" id="search-input" class="search-input" placeholder="Поиск по user ID..." />
+  </div>
+
+  <!-- Сообщение о не найденном пользователе -->
+  <div id="no-result" class="no-result">
+    Такой user ID не найден.
+  </div>
+
   <div id="user-list">
     <!-- Для каждого пользователя мы будем создавать .user-block -->
   </div>
@@ -68,6 +103,11 @@
     const db = firebase.firestore();
 
     const userListDiv = document.getElementById('user-list');
+    const searchInput = document.getElementById('search-input');
+    const noResultDiv = document.getElementById('no-result');
+
+    // Объект для хранения ссылок на карточки пользователей по userId
+    const userBlocks = {};
 
     // Загружаем список всех документов из коллекции user_progress
     async function loadAllUsers() {
@@ -87,6 +127,7 @@
       // Главный контейнер для одного пользователя
       const userBlock = document.createElement('div');
       userBlock.classList.add('user-block');
+      userBlock.setAttribute('data-user-id', userId); // Добавляем атрибут для фильтрации
 
       // Верхняя строка с userId (кликабельная)
       const userItem = document.createElement('div');
@@ -105,6 +146,9 @@
       });
 
       userListDiv.appendChild(userBlock);
+
+      // Сохраняем ссылку на блок в объекте
+      userBlocks[userId] = userBlock;
     }
 
     // Функция показывает/скрывает блок userDetails
@@ -145,6 +189,53 @@
         userDetailsDiv.innerHTML = `<p>Ошибка при загрузке статистики для ${userId}</p>`;
       }
     }
+
+    // Функция для фильтрации пользователей по поисковому запросу
+    function filterUsers(query) {
+      const normalizedQuery = query.trim().toLowerCase();
+      let found = false;
+
+      // Если запрос пустой, показываем всех и скрываем сообщение о не найденном пользователе
+      if (normalizedQuery === "") {
+        Object.values(userBlocks).forEach(block => {
+          block.style.display = 'block';
+        });
+        noResultDiv.classList.remove('visible');
+        return;
+      }
+
+      // Проверяем, существует ли такой userId
+      const matchedBlock = userBlocks[normalizedQuery];
+      if (matchedBlock) {
+        // Показываем только найденный блок
+        Object.values(userBlocks).forEach(block => {
+          if (block === matchedBlock) {
+            block.style.display = 'block';
+            found = true;
+          } else {
+            block.style.display = 'none';
+          }
+        });
+      } else {
+        // Если не найден, скрываем все блоки и показываем сообщение
+        Object.values(userBlocks).forEach(block => {
+          block.style.display = 'none';
+        });
+      }
+
+      // Показываем или скрываем сообщение о не найденном пользователе
+      if (matchedBlock) {
+        noResultDiv.classList.remove('visible');
+      } else {
+        noResultDiv.classList.add('visible');
+      }
+    }
+
+    // Добавляем обработчик события на поле поиска
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      filterUsers(query);
+    });
 
     // При загрузке страницы сразу отображаем список
     loadAllUsers();

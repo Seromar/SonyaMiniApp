@@ -17,7 +17,7 @@ if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
 // Фолбек: если tgUserId всё ещё null, возьмём ?user_id=... из URL
 if (!tgUserId) {
     const params = new URLSearchParams(window.location.search);
-    tgUserId = params.get('user_id') || 'guest6';
+    tgUserId = params.get('user_id') || 'guest8';
 }
 console.log('Итоговый userId =', tgUserId);
 
@@ -90,7 +90,7 @@ async function saveUserDataToServer(userId) {
 function getTelegramUserId() {
     // Пробуем вытащить user_id из query-параметров
     const params = new URLSearchParams(window.location.search);
-    return params.get('user_id') || "guest6";
+    return params.get('user_id') || "guest8";
 }
 
 function restoreUnlockItem(modulePath, fileName) {
@@ -327,21 +327,42 @@ function unlockItemsByStats() {
 }
 
 
+/**
+ * Функция, когда пользователь «завершает» урок или тест.
+ * @param {string} type - 'lesson' | 'test' | 'final'
+ * @param {string} modulePath - например, 'module1'
+ * @param {string} fileName - например, 'lesson3.html' или 'test1.html'
+ */
 function finishLessonOrTest(type, modulePath, fileName) {
-    // type: 'lesson', 'test', 'final'
-    // 1) Инкремент userStats
-    if (type==='lesson') {
-      window.userStats.lessonsCompleted++;
-    } else if (type==='test') {
-      window.userStats.testsCompleted++;
-    } else if (type==='final') {
-      window.userStats.finalTestsCompleted++;
-      // также modulesCompleted++ если хотите
+    // Создаём уникальный идентификатор для конкретного урока/теста
+    const uid = `${modulePath}-${fileName}`;
+
+    // Проверяем, не было ли уже добавлено в completedItems
+    if (window.completedItems.has(uid)) {
+      // Если уже есть — это значит, что статистику мы уже обновляли, повторно инкрементить не нужно
+      console.log("Этот урок/тест уже отмечен как завершён:", uid);
+      return;
     }
 
+    // Добавляем в Set (теперь он считается пройденным)
+    window.completedItems.add(uid);
+
+    // В зависимости от типа — инкрементируем соответствующий счётчик.
+    // Но обязательно делаем «зажим» (clamp), чтобы не превышало максимальных значений.
+    if (type === 'lesson') {
+      window.userStats.lessonsCompleted = Math.min(window.userStats.lessonsCompleted + 1, 30);
+    } else if (type === 'test') {
+      window.userStats.testsCompleted = Math.min(window.userStats.testsCompleted + 1, 9);
+    } else if (type === 'final') {
+      window.userStats.finalTestsCompleted = Math.min(window.userStats.finalTestsCompleted + 1, 3);
+      // Если хотите одновременно засчитывать завершение модуля:
+      // window.userStats.modulesCompleted = ... (по желанию)
+    }
+
+    // Теперь сохраняем обновлённые данные в Firestore
     saveUserDataToServer(window.userId);
 
-    // 2) Перезапустить логику разблокировок
+    // Вызов лирики разблокировок
     unlockItemsByStats();
 }
 
